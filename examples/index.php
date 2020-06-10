@@ -10,31 +10,24 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-// $array = [1, 2, 3, 4];
-$array = ['one' => 1, 'two' => 2, 'three' => 3, 'four' => 4, 'five' => 5];
+$arr = [1, 2, 3, 4, 5, 6];
 
-JsArray::bind($array);
+$res = JsArray::bind($arr)->every(
+	function ($item) {
+		return $item < 6;
+	}
+);
 
-// JsArray::forEach(
-// 	function ($item, $index) {
-// 		print_r($index . ' => ' . $item . "\n");
-// 	}
-// );
-
-// $newArr = JsArray::map(
-// 	function ($item, $index) {
-// 		return $item * $item + $index;
-// 	}
-// );
-
-$filteredArr = JsArray::filter(
-	function ($item, $index) {
-		return strlen($item) <= 3;
-	},
-	true
+$some = JsArray::some(
+	function ($item) {
+		return $item < 6;
+	}
 );
 
 echo '<xmp>';
-print_r($filteredArr);
+var_dump($res);
+echo '</xmp>';
+echo '<xmp>';
+var_dump($some);
 echo '</xmp>';
 die();

@@ -75,7 +75,7 @@ class JsBase implements JsPhpCoreInterface
 		$calledByClass = \get_called_class();
 		$type = ltrim(explode("\\", $calledByClass)[count(explode("\\", $calledByClass)) - 1], 'Js');
 
-		if (empty(self::$elements))
+		if (!isset(self::$elements))
 		{
 			throw new \Exception(\sprintf('You have to bind your %s first.', $type));
 		}
@@ -101,5 +101,17 @@ class JsBase implements JsPhpCoreInterface
 				}
 			break;
 		}
+	}
+
+	/**
+	 * Get elements. This is not directly called with the class
+	 * but can call with any chaining method.
+	 *
+	 * @return	array
+	 * @since	1.0.0
+	 */
+	public function get()
+	{
+		return self::$elements;
 	}
 }

@@ -32,4 +32,13 @@ interface JsPhpCoreInterface
 	 * @since	1.0.0
 	 */
 	public static function reset();
+
+	/**
+	 * Get elements
+	 *
+	 * @return	array|object|string
+	 * @sine	1.0.0
+	 */
+	public function get();
+
 }

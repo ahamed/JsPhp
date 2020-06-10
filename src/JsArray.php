@@ -81,7 +81,9 @@ class JsArray extends JsBase
 			$modifiedArray[$key] = $modifiedItem;
 		}
 
-		return $modifiedArray;
+		parent::bind($modifiedArray);
+
+		return (new self);
 	}
 
 	/**
@@ -132,6 +134,143 @@ class JsArray extends JsBase
 			}
 		}
 
-		return $filteredArray;
+		parent::bind($filteredArray);
+
+		return (new self);
+	}
+
+	/**
+	 * Reduce function to loop through an array and returns
+	 * a new array based on it's callback.
+	 *
+	 * @param	func	$callback	Callback function which takes (accumulator, currentValue, index)
+	 * 								as it's arguments and returns the accumulator.
+	 * @param	mixed	$initial	Initial value. If this is not defined then the first index of
+	 * 								array will be used as the initial value.
+	 *
+	 * @return	self
+	 * @since	1.0.0
+	 */
+	public static function reduce($callback, $initial = null)
+	{
+		/**
+		 * Check if the callback is a valid callable function
+		 */
+		if (!\is_callable($callback))
+		{
+			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
+		}
+
+		parent::check();
+
+		if (!isset($initial))
+		{
+			$accumulator = static::$elements[0];
+			$skipFirst = 1;
+		}
+		else
+		{
+			$accumulator = $initial;
+		}
+
+		foreach (static::$elements as $key => $item)
+		{
+			if (isset($skipFirst))
+			{
+				unset($skipFirst);
+				continue;
+			}
+
+			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $key]);
+		}
+
+		if (\is_array($accumulator))
+		{
+			parent::bind($accumulator);
+
+			return (new self);
+		}
+
+		return $accumulator;
+	}
+
+	/**
+	 * Every is a function which returns a boolean value if every value of an array has passed
+	 * a specific condition,
+	 *
+	 * @param	func	$callback	The callback function which defines the rule. If each and
+	 * 								every element of the array has passed the rule then it returns
+	 * 								true. Otherwise it returns false.
+	 *
+	 * @return	boolean				True if each and every element passes the condition, false otherwise.
+	 * @since	1.0.0
+	 */
+	public static function every($callback)
+	{
+		/**
+		 * Check if the callback is a valid callable function
+		 */
+		if (!\is_callable($callback))
+		{
+			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
+		}
+
+		parent::check();
+
+		$passed = 0;
+		$length = count(static::$elements);
+
+		foreach (static::$elements as $key => $item)
+		{
+			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = !empty($condition) ? true : false;
+
+			if ($condition === true)
+			{
+				$passed++;
+			}
+		}
+
+		return $passed === $length;
+	}
+
+	/**
+	 * Some is a function which returns a boolean value if only one element of an array has passed
+	 * a specific condition,
+	 *
+	 * @param	func	$callback	The callback function which defines the rule. If any element
+	 * 								of the array has passed the rule then it returns
+	 * 								true. If all elements fail the test then returns false.
+	 *
+	 * @return	boolean				True if only one element passes the condition, false if all elements fail the test otherwise.
+	 * @since	1.0.0
+	 */
+	public static function some($callback)
+	{
+		/**
+		 * Check if the callback is a valid callable function
+		 */
+		if (!\is_callable($callback))
+		{
+			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
+		}
+
+		parent::check();
+
+		$passed = false;
+
+		foreach (static::$elements as $key => $item)
+		{
+			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = !empty($condition) ? true : false;
+
+			if ($condition === true)
+			{
+				$passed = true;
+				break;
+			}
+		}
+
+		return $passed;
 	}
 }
