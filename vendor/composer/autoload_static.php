@@ -9,15 +9,20 @@ class ComposerStaticInit727fff65a8342b3584e8f665d01eb259
     public static $prefixLengthsPsr4 = array (
         'A' => 
         array (
-            'Ahamed\\Jhp\\' => 11,
+            'Ahamed\\JsPhp\\' => 13,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Ahamed\\Jhp\\' => 
+        'Ahamed\\JsPhp\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
+    );
+
+    public static $classMap = array (
+        'Ahamed\\JsPhp\\Core\\Interfaces\\JsPhpCoreInterface' => __DIR__ . '/../..' . '/src/Core/Interfaces/JsPhpCoreInterface.php',
+        'Ahamed\\JsPhp\\JsArray' => __DIR__ . '/../..' . '/src/JsArray.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -25,6 +30,7 @@ class ComposerStaticInit727fff65a8342b3584e8f665d01eb259
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit727fff65a8342b3584e8f665d01eb259::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit727fff65a8342b3584e8f665d01eb259::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit727fff65a8342b3584e8f665d01eb259::$classMap;
 
         }, null, ClassLoader::class);
     }

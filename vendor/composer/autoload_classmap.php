@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Ahamed\\JsPhp\\Core\\Interfaces\\JsPhpCoreInterface' => $baseDir . '/src/Core/Interfaces/JsPhpCoreInterface.php',
+    'Ahamed\\JsPhp\\JsArray' => $baseDir . '/src/JsArray.php',
 );
