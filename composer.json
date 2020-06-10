@@ -1,0 +1,18 @@
+{
+	"name": "ahamed/jhp",
+	"description": "A php library for implementing Array, Object, String methods in JavaScript way.",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "ahamed",
+			"email": "sajeeb07ahamed@gmail.com"
+		}
+	],
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Ahamed\\Jhp\\": "src/"
+		}
+	}
+}
