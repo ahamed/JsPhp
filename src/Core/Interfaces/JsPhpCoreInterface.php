@@ -18,12 +18,13 @@ interface JsPhpCoreInterface
 	 * The bind function to store the element
 	 * i.e. the array|object|string for being modification
 	 *
-	 * @param   array|object|string     $elements    The element in which the methods will be applied.
+	 * @param   array|object|string     $elements    	The element in which the methods will be applied.
+	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
 	 *
-	 * @return  self
+	 * @return  void
 	 * @since   1.0.0
 	 */
-	public static function bind($elements);
+	public function bind($elements, $immutability = true);
 
 	/**
 	 * Reset the elements
@@ -31,7 +32,7 @@ interface JsPhpCoreInterface
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function reset();
+	public function reset();
 
 	/**
 	 * Get elements

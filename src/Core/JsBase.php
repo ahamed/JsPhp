@@ -24,23 +24,32 @@ class JsBase implements JsPhpCoreInterface
 	 *
 	 * @since	1.0.0
 	 */
-	protected static $elements = null;
+	protected $elements = null;
+
+	/**
+	 * Constructor function.
+	 *
+	 * @param	array|object|string		$elements	The input elements.
+	 *
+	 * @since	1.0.0
+	 */
+	public function __construct($elements)
+	{
+		$this->elements = $elements;
+	}
 
 	/**
 	 * Bind the elements which are being modified
 	 *
-	 * @param	array|object|string		$elements	The elements are being modified
+	 * @param	array|object|string		$elements		The elements are being modified
+	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
 	 *
-	 * @return	self
+	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function bind($elements)
+	public function bind($elements, $immutability = true)
 	{
-		if (!empty($elements))
-		{
-			self::$elements = $elements;
-		}
-		else
+		if (!isset($elements))
 		{
 			$calledByClass = \get_called_class();
 			$type = ltrim(explode("\\", $calledByClass)[count(explode("\\", $calledByClass)) - 1], 'Js');
@@ -48,7 +57,10 @@ class JsBase implements JsPhpCoreInterface
 			throw new \UnexpectedValueException(\sprintf('You have to pass a non empty %s as a parameter', $type));
 		}
 
-		return (new static);
+		if (!$immutability)
+		{
+			$this->elements = $elements;
+		}
 	}
 
 	/**
@@ -57,9 +69,31 @@ class JsBase implements JsPhpCoreInterface
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function reset()
+	public function reset()
 	{
-		self::$elements = null;
+		$this->elements = [];
+	}
+
+	/**
+	 * Check if the given callback function is a callable.
+	 * If not then throw an exception.
+	 *
+	 * @param	func	$callback	The callback function.
+	 *
+	 * @return	void
+	 * @throws	InvalidArgumentException
+	 * @since	1.0.0
+	 */
+	protected function isCallable($callback)
+	{
+		if (!\is_callable($callback))
+		{
+			$trace = debug_backtrace();
+			$caller = $trace[1];
+			$method = $caller['class'] . "\\" . $caller['function'] . "()";
+
+			throw new \InvalidArgumentException(sprintf("The first parameter of \"%s\" must be a callable function", $method));
+		}
 	}
 
 	/**
@@ -70,12 +104,12 @@ class JsBase implements JsPhpCoreInterface
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	protected static function check()
+	protected function check()
 	{
 		$calledByClass = \get_called_class();
 		$type = ltrim(explode("\\", $calledByClass)[count(explode("\\", $calledByClass)) - 1], 'Js');
 
-		if (!isset(self::$elements))
+		if (!isset($this->elements))
 		{
 			throw new \Exception(\sprintf('You have to bind your %s first.', $type));
 		}
@@ -83,19 +117,19 @@ class JsBase implements JsPhpCoreInterface
 		switch ($type)
 		{
 			case 'Array':
-				if (!\is_array(self::$elements))
+				if (!\is_array($this->elements))
 				{
 					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
 				}
 			break;
 			case 'Object':
-				if (!\is_object(self::$elements))
+				if (!\is_object($this->elements))
 				{
 					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
 				}
 			break;
 			case 'String':
-				if (!\is_string(self::$elements))
+				if (!\is_string($this->elements))
 				{
 					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
 				}
@@ -107,11 +141,11 @@ class JsBase implements JsPhpCoreInterface
 	 * Get elements. This is not directly called with the class
 	 * but can call with any chaining method.
 	 *
-	 * @return	array
+	 * @return	array|object|string
 	 * @since	1.0.0
 	 */
 	public function get()
 	{
-		return self::$elements;
+		return $this->elements;
 	}
 }

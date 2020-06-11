@@ -8,269 +8,120 @@
 namespace Ahamed\JsPhp;
 
 use Ahamed\JsPhp\Core\JsBase;
+use Ahamed\JsPhp\Traits\ArrayBasicsTrait;
+use Ahamed\JsPhp\Traits\ArrayConditionalTrait;
+use Ahamed\JsPhp\Traits\ArrayIteratorTrait;
+use Ahamed\JsPhp\Traits\ArrayModifierTrait;
+use Ahamed\JsPhp\Traits\ArraySearchingTrait;
 
 
 /**
- * JsArray class gives the array methods
+ * JsArray an abstract class gives the array methods
  *
  * @since   1.0.0
  */
 class JsArray extends JsBase
 {
 	/**
-	 * Method to iterate through an array and apply the callback
-	 * function to each element and return the element
+	 * Import Array traits
+	 */
+	use ArrayBasicsTrait;
+	use ArrayModifierTrait;
+	use ArraySearchingTrait;
+	use ArrayConditionalTrait;
+	use ArrayIteratorTrait;
+
+	/**
+	 * Constructor function
 	 *
-	 * @param	func	$callback	The callback function
+	 * @param	array	$elements	The array of elements
 	 *
-	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function forEach($callback)
+	public function __construct($elements)
 	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
-		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
-		}
-
-		parent::check();
-
-		foreach (static::$elements as $key => $item)
-		{
-			\call_user_func_array($callback, [$item, $key]);
-		}
+		parent::__construct($elements);
 	}
 
 	/**
-	 * Method to iterate through an array and apply an modification
-	 * to each elements and returns a new array.
+	 * Bind the elements which are being modified
 	 *
-	 * @param	func	$callback	The callback function. This function must have a
-	 * 								return value. If there is no return value then it
-	 * 								returns `null`.
-	 *
-	 * @return	array	Modified array
-	 * @since	1.0.0
-	 */
-	public static function map($callback)
-	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
-		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
-		}
-
-		parent::check();
-
-		$modifiedArray = [];
-
-		foreach (static::$elements as $key => $item)
-		{
-			$modifiedItem = \call_user_func_array($callback, [$item, $key]);
-
-			if (!isset($modifiedItem))
-			{
-				$modifiedItem = null;
-			}
-
-			$modifiedArray[$key] = $modifiedItem;
-		}
-
-		parent::bind($modifiedArray);
-
-		return (new self);
-	}
-
-	/**
-	 * Filters an array and returns a new array.
-	 *
-	 * @param	func	$callback		The callback function. This function must
-	 * 									return a boolean value. If returns something
-	 * 									else rather than true/false then it takes the
-	 * 									truth value of the returned value. If nothing
-	 * 									returns then it counts this as a falsy value.
-	 *
-	 * @param	boolean	$reserveKeys	By default it's false. If you make it true then
-	 * 									it keep the original keys of the input array, otherwise
-	 * 									it returns the array with 0 based sorted key.
-	 *
-	 * @return	array	Filtered Array
-	 * @since	1.0.0
-	 */
-	public static function filter($callback, $reserveKeys = false)
-	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
-		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
-		}
-
-		parent::check();
-
-		$filteredArray = [];
-
-		foreach (static::$elements as $key => $item)
-		{
-			$condition = \call_user_func_array($callback, [$item, $key]);
-			$condition = !empty($condition) ? true : false;
-
-			if ($condition === true)
-			{
-				if ($reserveKeys)
-				{
-					$filteredArray[$key] = $item;
-				}
-				else
-				{
-					$filteredArray[] = $item;
-				}
-			}
-		}
-
-		parent::bind($filteredArray);
-
-		return (new self);
-	}
-
-	/**
-	 * Reduce function to loop through an array and returns
-	 * a new array based on it's callback.
-	 *
-	 * @param	func	$callback	Callback function which takes (accumulator, currentValue, index)
-	 * 								as it's arguments and returns the accumulator.
-	 * @param	mixed	$initial	Initial value. If this is not defined then the first index of
-	 * 								array will be used as the initial value.
+	 * @param	array|object|string		$elements		The elements are being modified
+	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
 	 *
 	 * @return	self
 	 * @since	1.0.0
 	 */
-	public static function reduce($callback, $initial = null)
+	public function bind($elements, $immutability = true)
 	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
-		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
-		}
 
-		parent::check();
-
-		if (!isset($initial))
+		if ($immutability)
 		{
-			$accumulator = static::$elements[0];
-			$skipFirst = 1;
+			$instance = new $this($elements);
 		}
 		else
 		{
-			$accumulator = $initial;
+			$instance = $this;
 		}
 
-		foreach (static::$elements as $key => $item)
-		{
-			if (isset($skipFirst))
-			{
-				unset($skipFirst);
-				continue;
-			}
+		parent::bind($elements, $immutability);
 
-			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $key]);
-		}
-
-		if (\is_array($accumulator))
-		{
-			parent::bind($accumulator);
-
-			return (new self);
-		}
-
-		return $accumulator;
+		return $instance;
 	}
 
 	/**
-	 * Every is a function which returns a boolean value if every value of an array has passed
-	 * a specific condition,
+	 * Get the length of the array
 	 *
-	 * @param	func	$callback	The callback function which defines the rule. If each and
-	 * 								every element of the array has passed the rule then it returns
-	 * 								true. Otherwise it returns false.
-	 *
-	 * @return	boolean				True if each and every element passes the condition, false otherwise.
+	 * @return	integer		The array length
 	 * @since	1.0.0
 	 */
-	public static function every($callback)
+	public function length()
 	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
-		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
-		}
+		$this->check();
 
-		parent::check();
-
-		$passed = 0;
-		$length = count(static::$elements);
-
-		foreach (static::$elements as $key => $item)
-		{
-			$condition = \call_user_func_array($callback, [$item, $key]);
-			$condition = !empty($condition) ? true : false;
-
-			if ($condition === true)
-			{
-				$passed++;
-			}
-		}
-
-		return $passed === $length;
+		return count($this->get());
 	}
 
 	/**
-	 * Some is a function which returns a boolean value if only one element of an array has passed
-	 * a specific condition,
+	 * Check if the array is an associative array or sequential array.
 	 *
-	 * @param	func	$callback	The callback function which defines the rule. If any element
-	 * 								of the array has passed the rule then it returns
-	 * 								true. If all elements fail the test then returns false.
+	 * @param	array	$array	The array to check
 	 *
-	 * @return	boolean				True if only one element passes the condition, false if all elements fail the test otherwise.
+	 * @return	boolean			True if is an associative array, False otherwise.
 	 * @since	1.0.0
 	 */
-	public static function some($callback)
+	public function isAssociativeArray($array)
 	{
-		/**
-		 * Check if the callback is a valid callable function
-		 */
-		if (!\is_callable($callback))
+		if ([] === $array)
 		{
-			throw new \InvalidArgumentException(sprintf('The first parameter must be a function.'));
+			return false;
 		}
 
-		parent::check();
+		return array_keys($array) !== range(0, count($array) - 1);
+	}
 
-		$passed = false;
+	/**
+	 * Magic method __toString
+	 *
+	 * @return	string	Object echo message
+	 * @since	1.0.0
+	 */
+	public function __toString()
+	{
+		return sprintf('For chaining method like map, filter, reduce, fill you have to call the function `get()` for getting the value.');
+	}
 
-		foreach (static::$elements as $key => $item)
-		{
-			$condition = \call_user_func_array($callback, [$item, $key]);
-			$condition = !empty($condition) ? true : false;
-
-			if ($condition === true)
-			{
-				$passed = true;
-				break;
-			}
-		}
-
-		return $passed;
+	/**
+	 * Magic method __debugInfo
+	 *
+	 * @return	string	Object echo message
+	 * @since	1.0.0
+	 */
+	public function __debugInfo()
+	{
+		return [
+			'message' => sprintf('For chaining method like map, filter, reduce, fill you have to call the function `get()` for getting the value.'),
+			'data' => $this->get()
+		];
 	}
 }

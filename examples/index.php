@@ -10,24 +10,21 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$arr = [1, 2, 3, 4, 5, 6];
+$arr = [1, 2, 3, 4, 3, 4, 3, 4, 4];
+$arr2 = [
+	[1, 2],
+	[3, 4],
+	[5, 6, 7]
+];
 
-$res = JsArray::bind($arr)->every(
-	function ($item) {
-		return $item < 6;
-	}
-);
+$array = new JsArray($arr);
+$array2 = $array->bind($arr2);
 
-$some = JsArray::some(
-	function ($item) {
-		return $item < 6;
-	}
-);
+$val = $array->push(10, 11, 22, 33);
 
 echo '<xmp>';
-var_dump($res);
-echo '</xmp>';
-echo '<xmp>';
-var_dump($some);
+print_r($array);
 echo '</xmp>';
 die();
+
+
