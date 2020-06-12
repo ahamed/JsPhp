@@ -42,12 +42,12 @@ class JsBase implements JsPhpCoreInterface
 	 * Bind the elements which are being modified
 	 *
 	 * @param	array|object|string		$elements		The elements are being modified
-	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
+	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $immutability = true)
+	public function bind($elements, $makeMutable = true)
 	{
 		if (!isset($elements))
 		{
@@ -57,7 +57,14 @@ class JsBase implements JsPhpCoreInterface
 			throw new \UnexpectedValueException(\sprintf('You have to pass a non empty %s as a parameter', $type));
 		}
 
-		if (!$immutability)
+		if (!(\is_array($elements)
+			|| \is_object($elements)
+			|| \is_string($elements)))
+		{
+			throw new \UnexpectedValueException(\sprintf('Invalid data provided. You just allowed to use %s', $type));
+		}
+
+		if ($makeMutable)
 		{
 			$this->elements = $elements;
 		}
@@ -71,7 +78,7 @@ class JsBase implements JsPhpCoreInterface
 	 */
 	public function reset()
 	{
-		$this->elements = [];
+		$this->elements = null;
 	}
 
 	/**

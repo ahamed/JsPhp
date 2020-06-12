@@ -69,9 +69,9 @@ trait ArrayIteratorTrait
 			$modifiedArray[$key] = $modifiedItem;
 		}
 
-		$this->bind($modifiedArray, false);
+		$newInstance = new $this($modifiedArray);
 
-		return $this;
+		return $newInstance;
 	}
 
 	/**
@@ -101,9 +101,8 @@ trait ArrayIteratorTrait
 		foreach ($elements as $key => $item)
 		{
 			$condition = \call_user_func_array($callback, [$item, $key]);
-			$condition = !empty($condition);
 
-			if ($condition === true)
+			if (!empty($condition))
 			{
 				if ($reserveKeys)
 				{
@@ -116,9 +115,9 @@ trait ArrayIteratorTrait
 			}
 		}
 
-		$this->bind($filteredArray, false);
+		$newInstance = new $this($filteredArray);
 
-		return $this;
+		return $newInstance;
 	}
 
 	/**
@@ -161,11 +160,15 @@ trait ArrayIteratorTrait
 			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $key]);
 		}
 
+		/**
+		 * If the accumulator is an array then creates a new array
+		 * and returns it.
+		 */
 		if (\is_array($accumulator))
 		{
-			$this->bind($accumulator, false);
+			$newInstance = new $this($accumulator);
 
-			return $this;
+			return $newInstance;
 		}
 
 		return $accumulator;

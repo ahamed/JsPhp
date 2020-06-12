@@ -36,7 +36,7 @@ trait ArrayBasicsTrait
 
 		$elements = $this->get();
 		array_push($elements, $element, ...$args);
-		$this->bind($elements, false);
+		$this->bind($elements);
 
 		return $this->length();
 	}
@@ -62,7 +62,7 @@ trait ArrayBasicsTrait
 
 		$removedValue = array_pop($elements);
 
-		$this->bind($elements, false);
+		$this->bind($elements);
 
 		return $removedValue;
 	}

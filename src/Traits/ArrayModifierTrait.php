@@ -66,7 +66,7 @@ trait ArrayModifierTrait
 			++$inc;
 		}
 
-		$this->bind($filledArray, false);
+		$this->bind($filledArray);
 
 		return $this;
 	}
@@ -105,7 +105,7 @@ trait ArrayModifierTrait
 			}
 		}
 
-		$this->bind($reversedArray, false);
+		$this->bind($reversedArray);
 
 		return $this;
 	}

@@ -35,9 +35,8 @@ trait ArraySearchingTrait
 		foreach ($elements as $key => $item)
 		{
 			$condition = \call_user_func_array($callback, [$item, $key]);
-			$condition = !empty($condition);
 
-			if ($condition)
+			if (!empty($condition))
 			{
 				$findValue = $item;
 				break;
@@ -143,7 +142,6 @@ trait ArraySearchingTrait
 		for ($i = $length - 1; $i >= 0; $i--)
 		{
 			$condition = \call_user_func_array($callback, [$elements[$i], $keys[$i]]);
-			$condition = !empty($condition);
 
 			if (!empty($condition))
 			{

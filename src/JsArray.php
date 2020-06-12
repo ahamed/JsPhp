@@ -38,7 +38,7 @@ class JsArray extends JsBase
 	 *
 	 * @since	1.0.0
 	 */
-	public function __construct($elements)
+	public function __construct($elements = [])
 	{
 		parent::__construct($elements);
 	}
@@ -47,24 +47,23 @@ class JsArray extends JsBase
 	 * Bind the elements which are being modified
 	 *
 	 * @param	array|object|string		$elements		The elements are being modified
-	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
+	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
 	 * @return	self
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $immutability = true)
+	public function bind($elements, $makeMutable = true)
 	{
+		parent::bind($elements, $makeMutable);
 
-		if ($immutability)
-		{
-			$instance = new $this($elements);
-		}
-		else
+		if ($makeMutable)
 		{
 			$instance = $this;
 		}
-
-		parent::bind($elements, $immutability);
+		else
+		{
+			$instance = new $this($elements);
+		}
 
 		return $instance;
 	}

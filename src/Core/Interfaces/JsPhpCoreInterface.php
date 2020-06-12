@@ -19,12 +19,12 @@ interface JsPhpCoreInterface
 	 * i.e. the array|object|string for being modification
 	 *
 	 * @param   array|object|string     $elements    	The element in which the methods will be applied.
-	 * @param	boolean					$immutability	If true then bind will create a new copy of the elements, otherwise overwrite it.
+	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
 	 * @return  void
 	 * @since   1.0.0
 	 */
-	public function bind($elements, $immutability = true);
+	public function bind($elements, $makeMutable = true);
 
 	/**
 	 * Reset the elements
