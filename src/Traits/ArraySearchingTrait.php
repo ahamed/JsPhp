@@ -249,4 +249,71 @@ trait ArraySearchingTrait
 
 		return false;
 	}
+
+	/**
+	 * Find the indexOf of an item in the array.
+	 *
+	 * @param	mixed	$item		The item to find.
+	 * @param	integer	$fromIndex	From index from where it starts searching.
+	 *
+	 * @return	boolean				Index value of then first occurrence. If not found then returns -1
+	 * @since	1.0.0
+	 */
+	public function indexOf($item, $fromIndex = 0)
+	{
+		$this->check();
+
+		$elements = $this->get();
+		$length = $this->length;
+
+		$findIndex = -1;
+
+		$fromIndex = (int) $fromIndex;
+
+		/**
+		 * If no value in the array then return -1.
+		 */
+		if ($length === 0)
+		{
+			return -1;
+		}
+
+		/**
+		 * If the fromIndex value is greater than or equal to the length
+		 * of the array then return -1. That means there is nothing to search.
+		 */
+		if ($fromIndex >= $length)
+		{
+			return -1;
+		}
+
+		/**
+		 * Find the kth place from where it starts searching.
+		 * If fromIndex is negative then take the maximum value of between
+		 * length + fromIndex and zero.
+		 *
+		 * If it's a positive number then takes the fromIndex directly.
+		 */
+		$k = $fromIndex < 0 ?
+			max($length + $fromIndex, 0) :
+			$fromIndex;
+
+		for ($i = 0; $i < $length; ++$i)
+		{
+			/**
+			 * Check if the index value is greater than or equal to the
+			 * starting index $k and if the element strictly equal to the
+			 * searching item then index found then return the index value.
+			 *
+			 * If nothing found then return -1.
+			 */
+			if ($i >= $k && $elements[$i] === $item)
+			{
+				$findIndex = $i;
+				break;
+			}
+		}
+
+		return $findIndex;
+	}
 }

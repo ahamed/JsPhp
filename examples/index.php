@@ -10,21 +10,12 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$data = new JsArray([[1, 3, 4], [5, 6]]);
-
-$val = $data->find(
-	function ($item) {
-		return $item->find(
-			function ($inner) {
-				return $inner === 6;
-			}
-		);
-	}
-);
+$data = new JsArray([1, 3, 4, 5, 6, 3, 4, 5, 3, 2, 4]);
+$index = $data->indexOf(3, -12);
 
 echo '<xmp>';
 print_r($data);
-print_r($val);
+print_r($index);
 echo '</xmp>';
 die();
 
