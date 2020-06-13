@@ -35,10 +35,16 @@ trait ArrayBasicsTrait
 		}
 
 		$elements = $this->get();
+
+		/**
+		 * Push the element(s) into the elements and finally mutate the array
+		 * with updated array.
+		 */
 		array_push($elements, $element, ...$args);
 		$this->bind($elements);
 
-		return $this->length();
+		// Returns the length of the newly created array.
+		return $this->length;
 	}
 
 	/**
@@ -53,17 +59,23 @@ trait ArrayBasicsTrait
 		$this->check();
 
 		$elements = $this->get();
-		$length = $this->length();
+		$length = $this->length;
 
+		/**
+		 * We cannot perform a pop operation on a empty array
+		 */
 		if ($length === 0)
 		{
 			return null;
 		}
 
+		// Popes the last element of the array.
 		$removedValue = array_pop($elements);
 
+		// Mutates the existing array with the array after popped.
 		$this->bind($elements);
 
+		// Returns the popped value.
 		return $removedValue;
 	}
 }

@@ -32,15 +32,38 @@ class JsArray extends JsBase
 	use ArrayIteratorTrait;
 
 	/**
+	 * Length of the array. This value will be calculated at every time a new
+	 * instance is created or bind
+	 *
+	 * @var		integer		$length		The length of the array
+	 * @since	1.0.0
+	 */
+	public $length = 0;
+
+	/**
 	 * Constructor function
 	 *
 	 * @param	array	$elements	The array of elements
 	 *
 	 * @since	1.0.0
 	 */
-	public function __construct($elements = [])
+	public function __construct(array $elements = [])
 	{
+		$this->length = count($elements);
+
 		parent::__construct($elements);
+	}
+
+	/**
+	 * Destructing method.
+	 * This is used here to collect all the remaining garbage cycles.
+	 *
+	 * @since	1.0.0
+	 */
+	public function __destruct()
+	{
+		// Forces collection of any existing garbage cycles
+		gc_collect_cycles();
 	}
 
 	/**
@@ -52,12 +75,19 @@ class JsArray extends JsBase
 	 * @return	self
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $makeMutable = true)
+	public function bind($elements, $makeMutable = true) : self
 	{
 		parent::bind($elements, $makeMutable);
 
+		/**
+		 * If makeMutable is enabled then it update the data of the
+		 * current object and mutate the previous values.
+		 */
 		if ($makeMutable)
 		{
+			// Update the length of the array
+			$this->length = count($elements);
+
 			$instance = $this;
 		}
 		else
@@ -69,12 +99,13 @@ class JsArray extends JsBase
 	}
 
 	/**
-	 * Get the length of the array
+	 * Get the length of the array.
+	 * This is an alias of the `length` property
 	 *
 	 * @return	integer		The array length
 	 * @since	1.0.0
 	 */
-	public function length()
+	public function length() : int
 	{
 		$this->check();
 
@@ -89,14 +120,47 @@ class JsArray extends JsBase
 	 * @return	boolean			True if is an associative array, False otherwise.
 	 * @since	1.0.0
 	 */
-	public function isAssociativeArray($array)
+	public static function isAssociativeArray($array) : bool
 	{
+		/**
+		 * If the array is an instance of this class then retrieve the original array
+		 */
+		if ($array instanceof self)
+		{
+			$array = $array->get();
+		}
+
+		/**
+		 * If an empty array then it's not an associative array
+		 */
 		if ([] === $array)
 		{
 			return false;
 		}
 
+		// Check if the keys of the array are numeric range from [0 - n-1] then its not an associative array.
 		return array_keys($array) !== range(0, count($array) - 1);
+	}
+
+	/**
+	 * Check if the item is an array or not
+	 *
+	 * @param	array|JsArray	$array	PHP array or instance of JsArray
+	 *
+	 * @return	boolean			True if it's an array, false otherwise.
+	 * @since	1.0.0
+	 */
+	public static function isArray($array) : bool
+	{
+		/**
+		 * If the array is an instance of this class then retrieve the original array
+		 */
+		if ($array instanceof self)
+		{
+			$array = $array->get();
+		}
+
+		return is_array($array);
 	}
 
 	/**

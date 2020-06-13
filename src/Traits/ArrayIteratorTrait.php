@@ -7,6 +7,8 @@
  */
 namespace Ahamed\JsPhp\Traits;
 
+use Ahamed\JsPhp\JsArray;
+
 /**
  * Trait function for array conditionals
  *
@@ -59,17 +61,50 @@ trait ArrayIteratorTrait
 
 		foreach ($elements as $key => $item)
 		{
+			/**
+			 * If item is an array then make the item an instance of JsArray
+			 */
+			if (\is_array($item))
+			{
+				$item = $this->bind($item, false);
+			}
+
 			$modifiedItem = \call_user_func_array($callback, [$item, $key]);
 
+			/**
+			 * Retrieve the original array instead of the JsArray instance.
+			 */
+			if ($modifiedItem instanceof JsArray)
+			{
+				$modifiedItem = $modifiedItem->get();
+			}
+
+			/**
+			 * If nothing returns from the callback function then
+			 * set the value as null
+			 */
 			if (!isset($modifiedItem))
 			{
 				$modifiedItem = null;
 			}
 
+			/**
+			 * This method keeps the original keys
+			 */
 			$modifiedArray[$key] = $modifiedItem;
+
+			/**
+			 * Unset the modifiedItem so that if it's an instance of
+			 * JsArray then it releases the memory.
+			 */
+			unset($modifiedItem);
 		}
 
-		$newInstance = new $this($modifiedArray);
+		/**
+		 * Create the newly created modifiedArray as an instance of
+		 * JsArray for chaining support.
+		 */
+		$newInstance = $this->bind($modifiedArray, false);
 
 		return $newInstance;
 	}
@@ -95,15 +130,41 @@ trait ArrayIteratorTrait
 		$this->isCallable($callback);
 		$this->check();
 
-		$filteredArray = [];
 		$elements = $this->get();
+
+		$filteredArray = [];
 
 		foreach ($elements as $key => $item)
 		{
+			/**
+			 * If item is an array then make the item an instance of JsArray
+			 */
+			if (\is_array($item))
+			{
+				$item = $this->bind($item, false);
+			}
+
 			$condition = \call_user_func_array($callback, [$item, $key]);
 
+			/**
+			 * If the callback returns a truth value then keep the item
+			 */
 			if (!empty($condition))
 			{
+				/**
+				 * If the item is an instance of JsArray then retrieve the
+				 * original array elements.
+				 */
+				if ($item instanceof JsArray)
+				{
+					$item = $item->get();
+				}
+
+				/**
+				 * Check the user option, If user wants to keep the
+				 * original keys then keep it. By default it skip
+				 * the keys and returns a sequential array.
+				 */
 				if ($reserveKeys)
 				{
 					$filteredArray[$key] = $item;
@@ -115,7 +176,10 @@ trait ArrayIteratorTrait
 			}
 		}
 
-		$newInstance = new $this($filteredArray);
+		/**
+		 * Make an instance of JsArray for chaining support.
+		 */
+		$newInstance = $this->bind($filteredArray, false);
 
 		return $newInstance;
 	}
@@ -137,12 +201,22 @@ trait ArrayIteratorTrait
 		$this->isCallable($callback);
 		$this->check();
 
+		// Get the array
 		$elements = $this->get();
 
+		$skipFirst = false;
+
+		/**
+		 * Check if the initial param is provided then starts the
+		 * accumulator with the initiator.
+		 * Otherwise the first value of the elements array will be
+		 * the initial value of the accumulator and user gets the
+		 * current value item from the second value of the array.
+		 */
 		if (!isset($initial))
 		{
 			$accumulator = $elements[0];
-			$skipFirst = 1;
+			$skipFirst = true;
 		}
 		else
 		{
@@ -151,22 +225,66 @@ trait ArrayIteratorTrait
 
 		foreach ($elements as $key => $item)
 		{
-			if (isset($skipFirst))
+			/**
+			 * If the initial param is provided then skip the first item to execute.
+			 */
+			if ($skipFirst)
 			{
-				unset($skipFirst);
+				$skipFirst = false;
 				continue;
 			}
 
+			/**
+			 * If the item is an array then makes it as an instance of JsArray.
+			 */
+			if (\is_array($item))
+			{
+				$item = $this->bind($item, false);
+			}
+
+			/**
+			 * If the accumulator is an array them makes it as an instance of JsArray.
+			 */
+			if (\is_array($accumulator))
+			{
+				$accumulator = $this->bind($accumulator, false);
+			}
+
 			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $key]);
+
+			/**
+			 * If the updated accumulator is returned as an instance of JsArray
+			 * then check the elements of the accumulator and if any of them
+			 * is an instance of JsArray then retrieve the original
+			 * array data and unset the JsArray instance/object as there is no
+			 * need of this anymore and this also lead the program to collect
+			 * the existing garbages.
+			 */
+			if ($accumulator instanceof JsArray)
+			{
+				$accumulator = $accumulator->map(
+					function ($acc) {
+						if ($acc instanceof JsArray)
+						{
+							$data = $acc->get();
+							unset($acc);
+
+							return $data;
+						}
+
+						return $acc;
+					}
+				);
+			}
 		}
 
 		/**
-		 * If the accumulator is an array then creates a new array
-		 * and returns it.
+		 * If the accumulator is an array then makes it as an instance of JsArray
+		 * as we can continue chaining.
 		 */
 		if (\is_array($accumulator))
 		{
-			$newInstance = new $this($accumulator);
+			$newInstance = $this->bind($accumulator, false);
 
 			return $newInstance;
 		}

@@ -10,12 +10,12 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$data = new JsArray;
-$data->push(10, 20, 30);
-$data->push(40);
-$data->push(50);
+$data = new JsArray([1, 3, 4, 5, 6]);
+
+$data->fill(0, -2, -2);
 
 echo '<xmp>';
 print_r($data);
 echo '</xmp>';
 die();
+

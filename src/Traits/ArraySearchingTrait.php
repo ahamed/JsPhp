@@ -154,4 +154,30 @@ trait ArraySearchingTrait
 
 		return $findLastIndex;
 	}
+
+	/**
+	 * Test if a value includes on an array.
+	 * Note: It checks loose equality while searching.
+	 *
+	 * @param	mixed	$item	The testing item
+	 *
+	 * @return	boolean	true if found, false otherwise.
+	 */
+	public function includes($item)
+	{
+		$this->check();
+
+		$elements = $this->get();
+		$length = $this->length();
+
+		for ($i = 0; $i < $length; ++$i)
+		{
+			if ($elements[$i] == $item)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

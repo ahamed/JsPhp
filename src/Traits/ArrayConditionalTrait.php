@@ -33,19 +33,22 @@ trait ArrayConditionalTrait
 		$elements = $this->get();
 
 		$passed = 0;
-		$length = $this->length();
 
 		foreach ($elements as $key => $item)
 		{
 			$condition = \call_user_func_array($callback, [$item, $key]);
 
+			/**
+			 * If it returns a truthful value then increment the passed variable.
+			 */
 			if (!empty($condition))
 			{
 				$passed++;
 			}
 		}
 
-		return $passed === $length;
+		// Returns true if it passes for all the items, false otherwise.
+		return $passed === $this->length;
 	}
 
 	/**
@@ -72,6 +75,10 @@ trait ArrayConditionalTrait
 		{
 			$condition = \call_user_func_array($callback, [$item, $key]);
 
+			/**
+			 * If the callback returns a truth value then
+			 * the whole function passes the test. so return true.
+			 */
 			if (!empty($condition))
 			{
 				$passed = true;
