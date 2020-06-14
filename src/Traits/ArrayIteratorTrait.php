@@ -33,9 +33,13 @@ trait ArrayIteratorTrait
 
 		$elements = $this->get();
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
-			\call_user_func_array($callback, [$item, $key]);
+			\call_user_func_array($callback, [$item, $index, $key]);
+
+			++$index;
 		}
 	}
 
@@ -59,6 +63,8 @@ trait ArrayIteratorTrait
 
 		$modifiedArray = [];
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
 			/**
@@ -69,7 +75,9 @@ trait ArrayIteratorTrait
 				$item = $this->bind($item, false);
 			}
 
-			$modifiedItem = \call_user_func_array($callback, [$item, $key]);
+			$modifiedItem = \call_user_func_array($callback, [$item, $index, $key]);
+
+			++$index;
 
 			/**
 			 * Retrieve the original array instead of the JsArray instance.
@@ -133,6 +141,7 @@ trait ArrayIteratorTrait
 		$elements = $this->get();
 
 		$filteredArray = [];
+		$index = 0;
 
 		foreach ($elements as $key => $item)
 		{
@@ -144,7 +153,9 @@ trait ArrayIteratorTrait
 				$item = $this->bind($item, false);
 			}
 
-			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = \call_user_func_array($callback, [$item, $index, $key]);
+
+			++$index;
 
 			/**
 			 * If the callback returns a truth value then keep the item
@@ -223,6 +234,8 @@ trait ArrayIteratorTrait
 			$accumulator = $initial;
 		}
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
 			/**
@@ -250,7 +263,9 @@ trait ArrayIteratorTrait
 				$accumulator = $this->bind($accumulator, false);
 			}
 
-			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $key]);
+			$accumulator = \call_user_func_array($callback, [$accumulator, $item, $index, $key]);
+
+			++$index;
 
 			/**
 			 * If the updated accumulator is returned as an instance of JsArray

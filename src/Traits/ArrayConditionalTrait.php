@@ -34,9 +34,11 @@ trait ArrayConditionalTrait
 
 		$passed = 0;
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
-			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = \call_user_func_array($callback, [$item, $index, $key]);
 
 			/**
 			 * If it returns a truthful value then increment the passed variable.
@@ -45,6 +47,8 @@ trait ArrayConditionalTrait
 			{
 				$passed++;
 			}
+
+			++$index;
 		}
 
 		// Returns true if it passes for all the items, false otherwise.
@@ -71,9 +75,11 @@ trait ArrayConditionalTrait
 
 		$passed = false;
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
-			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = \call_user_func_array($callback, [$item, $index, $key]);
 
 			/**
 			 * If the callback returns a truth value then
@@ -84,6 +90,8 @@ trait ArrayConditionalTrait
 				$passed = true;
 				break;
 			}
+
+			++$index;
 		}
 
 		return $passed;

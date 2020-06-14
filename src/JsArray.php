@@ -113,6 +113,34 @@ class JsArray extends JsBase
 	}
 
 	/**
+	 * Get the keys of an array
+	 *
+	 * @return	array	The keys array
+	 * @since	1.0.0
+	 */
+	public function keys()
+	{
+		$this->check();
+		$elements = $this->get();
+
+		return array_keys($elements);
+	}
+
+	/**
+	 * Get the values of an array
+	 *
+	 * @return	array	The keys array
+	 * @since	1.0.0
+	 */
+	public function values()
+	{
+		$this->check();
+		$elements = $this->get();
+
+		return array_values($elements);
+	}
+
+	/**
 	 * Check if the array is an associative array or sequential array.
 	 *
 	 * @param	array	$array	The array to check
@@ -120,7 +148,7 @@ class JsArray extends JsBase
 	 * @return	boolean			True if is an associative array, False otherwise.
 	 * @since	1.0.0
 	 */
-	public static function isAssociativeArray($array) : bool
+	public static function isAssociativeArray(array $array) : bool
 	{
 		/**
 		 * If the array is an instance of this class then retrieve the original array
@@ -138,8 +166,26 @@ class JsArray extends JsBase
 			return false;
 		}
 
-		// Check if the keys of the array are numeric range from [0 - n-1] then its not an associative array.
-		return array_keys($array) !== range(0, count($array) - 1);
+		/**
+		 * If the the array has all integer numbered index then it's
+		 * not an associative array
+		 */
+		$integerKeys = 0;
+
+		foreach (array_keys($array) as $key)
+		{
+			if ($key === (int) $key)
+			{
+				++$integerKeys;
+			}
+		}
+
+		if ($integerKeys === count(array_keys($array)))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

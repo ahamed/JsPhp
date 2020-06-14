@@ -34,6 +34,8 @@ trait ArraySearchingTrait
 		$elements = $this->get();
 		$findValue = null;
 
+		$index = 0;
+
 		foreach ($elements as $key => $item)
 		{
 			/**
@@ -44,7 +46,9 @@ trait ArraySearchingTrait
 				$item = $this->bind($item, false);
 			}
 
-			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = \call_user_func_array($callback, [$item, $index, $key]);
+
+			++$index;
 
 			/**
 			 * If user condition returns true then the item is found
@@ -99,7 +103,7 @@ trait ArraySearchingTrait
 				$item = $this->bind($elements[$i], false);
 			}
 
-			$condition = \call_user_func_array($callback, [$item, $keys[$i]]);
+			$condition = \call_user_func_array($callback, [$item, $i, $keys[$i]]);
 
 			/**
 			 * If user condition returns truth value that means it finds the
@@ -143,6 +147,7 @@ trait ArraySearchingTrait
 
 		$index = 0;
 		$findIndex = -1;
+		$arrayIndex = 0;
 
 		foreach ($elements as $key => $item)
 		{
@@ -154,7 +159,9 @@ trait ArraySearchingTrait
 				$item = $this->bind($item, false);
 			}
 
-			$condition = \call_user_func_array($callback, [$item, $key]);
+			$condition = \call_user_func_array($callback, [$item, $arrayIndex, $key]);
+
+			++$arrayIndex;
 
 			/**
 			 * If user condition matches then find the item and return the index.
@@ -202,7 +209,7 @@ trait ArraySearchingTrait
 				$item = $this->bind($item, false);
 			}
 
-			$condition = \call_user_func_array($callback, [$item, $keys[$i]]);
+			$condition = \call_user_func_array($callback, [$item, $i, $keys[$i]]);
 
 			if (!empty($condition))
 			{
@@ -256,7 +263,7 @@ trait ArraySearchingTrait
 	 * @param	mixed	$item		The item to find.
 	 * @param	integer	$fromIndex	From index from where it starts searching.
 	 *
-	 * @return	boolean				Index value of then first occurrence. If not found then returns -1
+	 * @return	boolean				Index value of first occurrence. If not found then returns -1
 	 * @since	1.0.0
 	 */
 	public function indexOf($item, $fromIndex = 0)
@@ -312,6 +319,77 @@ trait ArraySearchingTrait
 				$findIndex = $i;
 				break;
 			}
+		}
+
+		return $findIndex;
+	}
+
+	/**
+	 * Find the lastIndexOf of an item in the array.
+	 *
+	 * @param	mixed	$item		The item to find.
+	 * @param	integer	$fromIndex	From index from where it starts searching.
+	 *
+	 * @return	boolean				Index value of last occurrence. If not found then returns -1
+	 * @since	1.0.0
+	 */
+	public function lastIndexOf($item, $fromIndex = 0)
+	{
+		$this->check();
+
+		$elements = $this->get();
+		$length = $this->length;
+
+		$findIndex = -1;
+
+		$fromIndex = (int) $fromIndex;
+
+		/**
+		 * If no value in the array then return -1.
+		 */
+		if ($length === 0)
+		{
+			return -1;
+		}
+
+		/**
+		 * If the fromIndex value is greater than or equal to the length
+		 * of the array then return -1. That means there is nothing to search.
+		 */
+		if ($fromIndex >= $length)
+		{
+			return -1;
+		}
+
+		/**
+		 * Find the kth place from where it starts searching.
+		 * If fromIndex is negative then take the maximum value of between
+		 * length + fromIndex and zero.
+		 *
+		 * If it's a positive number then takes the fromIndex directly.
+		 */
+		$k = $fromIndex < 0 ?
+			max($length + $fromIndex, 0) :
+			$fromIndex;
+
+		$index = 0;
+
+		for ($i = $length - 1; $i >= 0; --$i)
+		{
+			/**
+			 * Check if the index value is greater than or equal to the
+			 * starting index $k and if the element strictly equal to the
+			 * searching item then index found then return the index value.
+			 *
+			 * If nothing found then return -1.
+			 */
+			if ($i >= $k && $elements[$i] === $item)
+			{
+				$findIndex = $index;
+				break;
+			}
+
+			++$index;
 		}
 
 		return $findIndex;

@@ -10,12 +10,18 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$data = new JsArray([1, 3, 4, 5, 6, 3, 4, 5, 3, 2, 4]);
-$index = $data->indexOf(3, -12);
+$data = new JsArray([1, 2, 3]);
+
+// $assoc = new JsArray(['m1' => 'Jan', 'm2' => 'Feb', 'm3' => 'Mar']);
+// $assoc->pop();
+
+$val = $data->unshift(0, -1, -2);
+// $val = $data->unshift(-1);
+// $val = $data->unshift(-2);
 
 echo '<xmp>';
 print_r($data);
-print_r($index);
+print_r($val);
 echo '</xmp>';
 die();
 
