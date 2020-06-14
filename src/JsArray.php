@@ -148,7 +148,7 @@ class JsArray extends JsBase
 	 * @return	boolean			True if is an associative array, False otherwise.
 	 * @since	1.0.0
 	 */
-	public static function isAssociativeArray(array $array) : bool
+	public static function isAssociativeArray($array) : bool
 	{
 		/**
 		 * If the array is an instance of this class then retrieve the original array
