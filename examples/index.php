@@ -10,7 +10,11 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
+$array = new JsArray(['one' => 1, 'two' => 2, 'three' => 3, 'four' => ['file' => 'file.php']]);
+
+
 echo '<xmp>';
-print_r(array_keys(['month' => 2, 'day' => 4, 'apple', 'orange', 'year' => 2020]));
+print_r($array);
 echo '</xmp>';
 die();
+

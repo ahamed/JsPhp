@@ -5,18 +5,64 @@ use PHPUnit\Framework\TestCase;
 
 class JsArrayTest extends TestCase
 {
-	protected function setUp() : void
-	{
-		$this->plainArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
-		$this->plainAssoc = ['firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john@example.com', 'age' => 24];
-		$this->plainHybrid = ['day' => 2, 'month' => 5, 'mango', 'apple', 'year' => 2020];
-		$this->plainUnordered = ['3' => 'three', '2' => 'two', '5' => 'five', '4' => 'four', '1' => 'one'];
+	/** --------------Data Providers-------------------- */
 
-		$this->array = new JsArray(['Jan', 'Feb', 'Mar', 'Apr', 'May']);
-		$this->assocArray = new JsArray(['firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john@example.com', 'age' => 24]);
-		$this->hybridArray = new JsArray(['day' => 2, 'month' => 5, 'mango', 'apple', 'year' => 2020]);
-		$this->unorderedIntegerIndexedArray = new JsArray(['3' => 'three', '2' => 'two', '5' => 'five', '4' => 'four', '1' => 'one']);
+	public function lengthProvider()
+	{
+		return [
+			[[1, 2, 3, 4, 5], 5],
+			[['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], 6],
+			[[], 0],
+			[['one' => 1, 'two' => 2, 'three' => 3], 3]
+		];
 	}
+
+	public function arrayKeysProvider()
+	{
+		return [
+			[[1, 2, 3, 4, 5], [0, 1, 2, 3, 4]],
+			[['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], [0, 1, 2, 3, 4, 5]],
+			[[], []],
+			[['one' => 1, 'two' => 2, 'three' => 3], ['one', 'two', 'three']],
+			[['one' => 1, 'two' => 2, 'three' => 3, 4, 5, 'six' => 6, 'seven' => 7], ['one', 'two', 'three', 0, 1, 'six', 'seven']],
+		];
+	}
+
+	public function arrayValuesProvider()
+	{
+		return [
+			[[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]],
+			[['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']],
+			[[], []],
+			[['one' => 1, 'two' => 2, 'three' => 3], [1, 2, 3]],
+			[['one' => 1, 'two' => 2, 'three' => 3, 4, 5, 'six' => 6, 'seven' => 7], [1, 2, 3, 4, 5, 6, 7]],
+		];
+	}
+
+	public function assocArrayProvider()
+	{
+		return [
+			[[1, 2, 3, 4, 5], false],
+			[['Jan', 'Feb', 'Mar', 'Apr'], false],
+			[[], false],
+			[['one' => 1, 'two' => 2, 'three' => 3], true],
+			[['one' => 1, 'two' => 2, 'three' => 3, 4, 5, 'six' => 6, 'seven' => 7], true],
+			[['1' => 'Earth', '4' => 'Jupiter', '2' => 'Mars', '3' => 'Sun'], false],
+			[['days' => [1, 2, 3], 'months' => ['Jan', 'Feb', 'Mar'], 'year' => [2020, 2019, 2018]], true]
+		];
+	}
+
+	public function setOffsetProvider()
+	{
+		return [
+			[[], null, 5],
+			[[1, 2, 3], 3, 10],
+			[['name' => 'John Doe', 'email' => 'jon@doe.com'], 'age', 24],
+			[['Jan', 'Feb', 'Mar'], null, 'Apr']
+		];
+	}
+
+	/** --------------------Test Functions from here-------------------- */
 
 	public function testBindIsAnInstanceOfJsArray()
 	{
@@ -33,54 +79,102 @@ class JsArrayTest extends TestCase
 		$this->assertNotSame($array, $array->bind([1, 2, 3, 4, 5], false));
 	}
 
-	public function testLengthMethodReturnsTheLengthOfTheArray()
+	/**
+	 * @dataProvider	lengthProvider()
+	 */
+	public function testLengthProperty($data, $result)
+	{
+		$array = new JsArray($data);
+		$this->assertEquals($result, $array->length);
+	}
+
+	/**
+	 * @dataProvider	lengthProvider()
+	 */
+	public function testLengthMethod($data, $result)
+	{
+		$array = new JsArray($data);
+		$this->assertEquals($result, $array->length());
+	}
+
+	/**
+	 * @dataProvider	arrayKeysProvider()
+	 */
+	public function testArrayKeys($data, $result)
+	{
+		$array = new JsArray($data);
+		$this->assertEquals($result, $array->keys());
+	}
+
+	/**
+	 * @dataProvider	arrayValuesProvider()()
+	 */
+	public function testArrayValues($data, $result)
+	{
+		$array = new JsArray($data);
+		$this->assertEquals($result, $array->values());
+	}
+
+	/**
+	 * @dataProvider	assocArrayProvider()
+	 */
+	public function testIsAssociativeArray($data, $result)
+	{
+		$array = new JsArray($data);
+
+		if ($result)
+		{
+			$this->assertTrue(JsArray::isAssociativeArray($data));
+			$this->assertTrue(JsArray::isAssociativeArray($array));
+		}
+		else
+		{
+			$this->assertFalse(JsArray::isAssociativeArray($data));
+			$this->assertFalse(JsArray::isAssociativeArray($array));
+		}
+	}
+
+	/**
+	 * @dataProvider	assocArrayProvider()
+	 */
+	public function testIsArray($data)
+	{
+		$array = new JsArray($data);
+		$this->assertTrue(JsArray::isArray($data));
+		$this->assertTrue(JsArray::isArray($array));
+	}
+
+	public function testArrayIsIteratable()
 	{
 		$array = new JsArray([1, 2, 3, 4, 5]);
 
-		$this->assertEquals(5, $array->length());
+		$this->assertInstanceOf(\Traversable::class, $array);
 	}
 
-	public function testLengthPropertyReturnsTheLengthOfTheArray()
+	public function testOffsetExistsReturnsBoolean()
 	{
-		$array = new JsArray([1, 2, 3, 4, 5]);
-		$this->assertEquals(5, $array->length);
+		$array = new JsArray(['one' => 1, 'two' => 2, 'three' => 3]);
+
+		$this->assertIsBool(isset($array['one']));
+		$this->assertIsBool(isset($array['four']));
 	}
-
-	public function testKeysMethodReturnsTheKeysOfTheArray()
+	/**
+	 * @dataProvider	setOffsetProvider()
+	 */
+	public function testOffsetSet($data, $key, $value)
 	{
-		$this->assertEquals([0, 1, 2, 3, 4], $this->array->keys());
-		$this->assertEquals(['firstName', 'lastName', 'email', 'age'], $this->assocArray->keys());
-		$this->assertEquals(['day', 'month', 0, 1, 'year'], $this->hybridArray->keys());
-	}
+		$array = new JsArray($data);
 
-	public function testValuesMethodReturnsTheValuesOftheArray()
-	{
-		$this->assertEquals(['Jan', 'Feb', 'Mar', 'Apr', 'May'], $this->array->values());
-		$this->assertEquals(['John', 'Doe', 'john@example.com', 24], $this->assocArray->values());
-		$this->assertEquals([2, 5, 'mango', 'apple', 2020], $this->hybridArray->values());
-	}
+		if (\is_null($key))
+		{
+			$array[] = $value;
+			$key = $array->length - 1;
+		}
+		else
+		{
+			$array[$key] = $value;
+		}
 
-	public function testStaticMethodIsAssocicateArrayReturnsTrueOnAssociateArrayAndFalseOnSequentialArray()
-	{
-		$this->assertFalse(JsArray::isAssociativeArray($this->array));
-		$this->assertTrue(JsArray::isAssociativeArray($this->assocArray));
-		$this->assertTrue(JsArray::isAssociativeArray($this->hybridArray));
-		$this->assertFalse(JsArray::isAssociativeArray($this->unorderedIntegerIndexedArray));
-
-		$this->assertFalse(JsArray::isAssociativeArray($this->plainArray));
-		$this->assertTrue(JsArray::isAssociativeArray($this->plainAssoc));
-		$this->assertTrue(JsArray::isAssociativeArray($this->plainHybrid));
-		$this->assertFalse(JsArray::isAssociativeArray($this->plainUnordered));
-	}
-
-	public function testStaticMethodIsArrayReturnsTrueOnIsArrayFalseOtherwise()
-	{
-		$this->assertFalse(JsArray::isArray(5));
-		$this->assertFalse(JsArray::isArray('string'));
-		$this->assertTrue(JsArray::isArray($this->assocArray));
-		$this->assertTrue(JsArray::isArray($this->hybridArray));
-
-		$this->assertTrue(JsArray::isArray($this->plainAssoc));
-		$this->assertTrue(JsArray::isArray($this->plainHybrid));
+		$this->assertEquals($array[$key], $value);
 	}
 }
