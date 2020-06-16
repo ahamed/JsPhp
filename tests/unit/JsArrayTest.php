@@ -177,4 +177,31 @@ class JsArrayTest extends TestCase
 
 		$this->assertEquals($array[$key], $value);
 	}
+
+	public function testOffsetGet()
+	{
+		$array = new JsArray(['first_name' => 'Jon', 'last_name' => 'Snow', 'email' => 'jon@winterfell.com', 'age' => 34]);
+
+		$this->assertEquals($array['first_name'], 'Jon');
+		$this->assertEquals($array['email'], 'jon@winterfell.com');
+	}
+
+	public function testOffsetGetUndefinedIndex()
+	{
+		$array = new JsArray(['first_name' => 'Jon', 'last_name' => 'Snow', 'email' => 'jon@winterfell.com', 'age' => 34]);
+
+		$this->expectNotice();
+		$this->expectNoticeMessage('Undefined index: five');
+		$value = $array['five'];
+	}
+
+	/**
+	 * @dataProvider	lengthProvider()
+	 */
+	public function testCountInstance($data, $result)
+	{
+		$array = new JsArray($data);
+
+		$this->assertEquals(count($array), $result);
+	}
 }

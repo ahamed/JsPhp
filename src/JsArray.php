@@ -282,7 +282,14 @@ class JsArray extends JsBase implements
 	{
 		$elements = $this->get();
 
-		return isset($elements[$key]) ? $elements[$key] : null;
+		if (isset($elements[$key]))
+		{
+			return $elements[$key];
+		}
+
+		\trigger_error(\sprintf('Undefined index: %s', $key), \E_USER_NOTICE);
+
+		return null;
 	}
 
 	/**
@@ -299,7 +306,7 @@ class JsArray extends JsBase implements
 	{
 		$elements = $this->get();
 
-		if ($this->offsetExists($key))
+		if (isset($elements[$key]))
 		{
 			unset($elements[$key]);
 

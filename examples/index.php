@@ -10,11 +10,15 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$array = new JsArray(['one' => 1, 'two' => 2, 'three' => 3, 'four' => ['file' => 'file.php']]);
+$data = ['one' => 1, 'two' => 2, 'three' => 3, 'four' => 4, 'five' => 5, 'six' => 6];
+$array = new JsArray($data);
 
+$array2 = new JsArray([1, 2, 3]);
+
+$spliced = $array2->splice();
 
 echo '<xmp>';
-print_r($array);
+print_r($spliced);
+print_r($array2);
 echo '</xmp>';
 die();
-
