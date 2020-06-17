@@ -10,6 +10,9 @@
 			"email": "sajeeb07ahamed@gmail.com"
 		}
 	],
+	"scripts": {
+		"test": "./vendor/bin/phpunit --configuration=./phpunit.xml"
+	},
 	"prefer-stable": true,
 	"minimum-stability": "dev",
 	"require": {
