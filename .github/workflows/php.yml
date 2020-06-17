@@ -1,37 +1,42 @@
 name: PHP Composer
 
 on:
-  push:
-    branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
+    pull_request:
+    push:
+        branches:
+            - master
+            - dev
 
 jobs:
-  build:
+    build:
+        strategy:
+            matrix:
+                operating-system: [ubuntu-latest, windows-latest, macos-latest]
+                php-versions: ['7.2']
 
-    runs-on: ubuntu-latest
+        runs-on: ${{ matrix.operating-system }}
 
-    steps:
-    - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-      
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-node-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    - name: Run test suite
-      run: composer run-script test
+            - name: Get composer cache directory
+              id: composer-cache
+              run:
+                  echo "::set-output name=dir::$(composer config
+                  cache-files-dir)"
+            - name: Cache composer dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  # Use composer.json for key, if composer.lock is not committed.
+                  # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  key:
+                      ${{ runner.os }}-composer-${{
+                      hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+            - name: Install dependencies
+              run:
+                  composer install --no-progress --no-suggest --prefer-dist
+                  --optimize-autoloader
+            - name: Test with phpunit
+              run: composer run-script test
