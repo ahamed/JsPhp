@@ -39,6 +39,7 @@ trait ArrayConditionalTrait
 		foreach ($elements as $key => $item)
 		{
 			$condition = \call_user_func_array($callback, [$item, $index, $key]);
+			++$index;
 
 			/**
 			 * If it returns a truthful value then increment the passed variable.
@@ -47,8 +48,6 @@ trait ArrayConditionalTrait
 			{
 				$passed++;
 			}
-
-			++$index;
 		}
 
 		// Returns true if it passes for all the items, false otherwise.
