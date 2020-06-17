@@ -26,8 +26,7 @@ jobs:
                       ${{ runner.os }}-node-
 
             - name: Install
-              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer install --prefer-dist --no-progress --no-suggest
 
-            - name: Test
+            - name: Unit Testing
               run: composer run-script test
