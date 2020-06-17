@@ -28,7 +28,7 @@ trait ArrayBasicsTrait
 
 		if (!isset($items) || count($items) <= 0)
 		{
-			throw new \UnexpectedValueException(sprintf('You must have to pass at least one value to push'));
+			throw new \InvalidArgumentException(sprintf('You must have to pass at least one value to push'));
 		}
 
 		$elements = $this->get();
@@ -113,8 +113,10 @@ trait ArrayBasicsTrait
 		{
 			$removedValue = $elements[0];
 			unset($elements[0]);
-			$elements = array_values($elements);
 		}
+
+		// Rebase the array keys.
+		$elements = array_merge($elements);
 
 		// Mutates the existing array with the array after popped.
 		$this->bind($elements);
@@ -145,45 +147,46 @@ trait ArrayBasicsTrait
 		$itemsLength = count($items);
 		$keys = $this->keys();
 
-		$assoc = self::isAssociativeArray($elements);
-
 		$unshiftArray = [];
 
 		/**
 		 * Push the items in front of the array first.
 		 * This will keep the keys if it's an associative array
-		 * otherwise its rebase the indics.
+		 * otherwise its rebase the indices.
 		 */
 		for ($k = 0; $k < $itemsLength; ++$k)
 		{
-			if ($assoc)
-			{
-				$itemIndex = $length + $k;
-				$unshiftArray[$itemIndex] = $items[$k];
-			}
-			else
-			{
-				$unshiftArray[] = $items[$k];
-			}
+			$unshiftArray[] = $items[$k];
 		}
 
 		/**
 		 * After pushing the items into the unshiftArray adding the
 		 * existing array elements after them.
 		 *
-		 * It also keep its indices if it's an associative array,
-		 * otherwise it rebase its indices.
+		 * All numerical array keys will be modified to start counting from zero while literal keys won't be changed.
+		 *
+		 * That means if key of the original array is numerical then the value of the
+		 * key is updated after counting this from the beginning. For an example if we
+		 * unshift 3 values at the front of the array and the first encounter of the
+		 * numerical key is 1 then it's updated to 3.
+		 *
+		 * The literal keys won't be changes.
 		 */
+		$numericKey = $itemsLength;
+
 		for ($i = 0; $i < $length; ++$i)
 		{
-			if ($assoc)
+			if (\is_numeric($keys[$i]))
 			{
-				$unshiftArray[$keys[$i]] = $elements[$keys[$i]];
+				$key = $numericKey;
+				++$numericKey;
 			}
 			else
 			{
-				$unshiftArray[] = $elements[$i];
+				$key = $keys[$i];
 			}
+
+			$unshiftArray[$key] = $elements[$keys[$i]];
 		}
 
 		$instance = $this->bind($unshiftArray);
@@ -205,6 +208,12 @@ trait ArrayBasicsTrait
 
 		$elements = $this->get();
 		$length = $this->length;
+
+		/**
+		 * Get the values of the array. We are not handling the keys of the array.
+		 * For joining purpose we just need the values.
+		 */
+		$elements = array_values($elements);
 
 		$joinedString = '';
 
@@ -377,7 +386,7 @@ trait ArrayBasicsTrait
 	 * @return	self					Deleted items array but the self instance for chaining.
 	 * @since	1.0.0
 	 */
-	public function splice($start = 0, $deleteCount = 0, ...$items) : self
+	public function splice($start = null, $deleteCount = null, ...$items) : self
 	{
 		$this->check();
 
@@ -385,8 +394,27 @@ trait ArrayBasicsTrait
 		$length = $this->length;
 		$keys = $this->keys();
 
+		/**
+		 * If no any parameter are provided then return empty array
+		 */
+		if (\is_null($start) && \is_null($deleteCount) && empty($items))
+		{
+			return $this->bind([], false);
+		}
+
 		$start = (int) $start;
-		$deleteCount = (int) $deleteCount;
+
+		/**
+		 * If delete count is not provided or null provided and if there is items
+		 * to push then deleteCount is zero (0) otherwise deleteCount is the
+		 * minimum of $length - $start and $length.
+		 *
+		 * If deleteCount is provided then takes the integer value of the deleteCount
+		 */
+		$deleteCount = \is_null($deleteCount) ?
+			(empty($items) ? min($length - $start, $length) : 0) :
+			(int) $deleteCount;
+
 		$assoc = self::isAssociativeArray($elements);
 
 		/**
@@ -431,82 +459,97 @@ trait ArrayBasicsTrait
 		}
 
 		/**
+		 * Rebase the updated array indices.
+		 */
+		$elements = array_merge($elements);
+
+		/**
 		 * Re-calculate the properties of the array after deletion.
 		 */
 		$newLength = count($elements);
 		$newKeys = array_keys($elements);
-		$isAssoc = self::isAssociativeArray($elements);
 		$itemsLength = count($items);
 
 		/**
-		 * If it's a sequential array then rebase the array indics.
+		 * If no item to add into the split position then mutate the original array
+		 * with the after deletion array and return the new deleted Array.
 		 */
-		if (!$isAssoc)
+		if ($itemsLength <= 0)
 		{
-			$elements = array_values($elements);
+			$this->bind($elements);
+
+			return $this->bind($deletedArray, false);
 		}
 
 		/**
-		 * If items given to push
+		 * If Items are given for attach then we split the array into two parts
+		 * called leftArray and rightArray at deleteStart position.
+		 *
+		 * If splice indicates to delete from index zero and insert value at there
+		 * then in the leftArray nothing would be there and the rightArray contains
+		 * the whole array.
+		 *
+		 * If the splice indicates to delete and insert from and into the length of
+		 * the array then the rightArray contains nothing and the rest of the array
+		 * belongs to the left array.
+		 *
+		 * Otherwise we generate two parts of the array by using the rule
+		 * leftPart: [0, max($ds - 1, 0)] and rightPart: [$ds, max($l - 1, 0)].
+		 * Where $ds is the index position of the deleteStart and $l is the length of th array.
+		 *
+		 * After that, generates the two array leftArray and rightArray by using the
+		 * ranges leftPart and rightParts respectively.
 		 */
-		if ($itemsLength > 0)
+		$leftArray = [];
+		$rightArray = [];
+
+		if ($deleteStart === 0)
 		{
-			for ($i = 0; $i < $newLength; ++$i)
+			$rightArray = $elements;
+		}
+		elseif ($deleteStart >= $newLength)
+		{
+			$leftArray = $elements;
+		}
+		else
+		{
+			if ($newLength > 0)
 			{
 				/**
-				 * If deleteStart index starts then push the items into this
-				 * position.
+				 * Calculating the array chunk ranges.
 				 */
-				if ($i === $deleteStart)
+				$leftPart = [0, max($deleteStart - 1, 0)];
+				$rightPart = [$deleteStart, max($newLength - 1, 0)];
+
+				/**
+				 * Generating the leftArray from the range leftPart
+				 */
+				if ($leftPart[0] <= $leftPart[1])
 				{
-					for ($k = 0; $k < $itemsLength; ++$k)
+					for ($x = $leftPart[0]; $x <= $leftPart[1]; ++$x)
 					{
-						if ($isAssoc)
-						{
-							$itemInsertionKey = $k;
-
-							if (array_key_exists($k, $elements))
-							{
-								$itemInsertionKey = $newLength + $k;
-							}
-
-							$finalArray[$itemInsertionKey] = $items[$k];
-						}
-						else
-						{
-							$finalArray[] = $items[$k];
-						}
-					}
-
-					/**
-					 * Also insert the updated array's value after pushing the items.
-					 */
-					if ($isAssoc)
-					{
-						$finalArray[$newKeys[$i]] = $elements[$newKeys[$i]];
-					}
-					else
-					{
-						$finalArray[] = $elements[$i];
+						$leftArray[$newKeys[$x]] = $elements[$newKeys[$x]];
 					}
 				}
-				else
+
+				/**
+				 * Generating the rightArray from the range rightPart
+				 */
+				if ($rightPart[0] <= $rightPart[1])
 				{
-					if ($isAssoc)
+					for ($x = $rightPart[0]; $x <= $rightPart[1]; ++$x)
 					{
-						$finalArray[$newKeys[$i]] = $elements[$newKeys[$i]];
-					}
-					else
-					{
-						$finalArray[] = $elements[$i];
+						$rightArray[$newKeys[$x]] = $elements[$newKeys[$x]];
 					}
 				}
 			}
 		}
-		else
-		{
-			$finalArray = $elements;
-		}
+
+		/**
+		 * Finally merge the items along with two chunks. The items array
+		 * acts like the middle point of the left and right arrays.
+		 */
+		$finalArray = array_merge($leftArray, $items, $rightArray);
 
 		/**
 		 * Mutate the array by updated array.
