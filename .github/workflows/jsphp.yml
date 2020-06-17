@@ -11,8 +11,8 @@ jobs:
     build:
         strategy:
             matrix:
-                operating-system: [ubuntu-latest, windows-latest, macos-latest]
-                php-versions: ['7.2']
+                operating-system: [ubuntu-latest]
+                php-versions: ['5.6', '7.1', '7.2', '7.3', '7.4']
 
         runs-on: ${{ matrix.operating-system }}
 
@@ -28,8 +28,6 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
-                  # Use composer.json for key, if composer.lock is not committed.
-                  # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   key:
                       ${{ runner.os }}-composer-${{
                       hashFiles('**/composer.lock') }}
