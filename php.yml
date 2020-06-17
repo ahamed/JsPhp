@@ -1,22 +1,42 @@
-name: JsPhp, A small JavaScript into PHP
+name: PHP Composer
 
 on:
     pull_request:
     push:
         branches:
-            - dev
             - master
+            - dev
 
 jobs:
-    test:
-        name: Running Unit Test
-        runs-on: ubuntu-latest
+    build:
+        strategy:
+            matrix:
+                operating-system: [ubuntu-latest, windows-latest, macos-latest]
+                php-versions: ['7.2']
+
+        runs-on: ${{ matrix.operating-system }}
 
         steps:
             - uses: actions/checkout@v2
 
-            - name: Install
-              run: composer install --prefer-dist --no-progress --no-suggest
-
-            - name: Unit Testing
+            - name: Get composer cache directory
+              id: composer-cache
+              run:
+                  echo "::set-output name=dir::$(composer config
+                  cache-files-dir)"
+            - name: Cache composer dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  # Use composer.json for key, if composer.lock is not committed.
+                  # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  key:
+                      ${{ runner.os }}-composer-${{
+                      hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+            - name: Install dependencies
+              run:
+                  composer install --no-progress --no-suggest --prefer-dist
+                  --optimize-autoloader
+            - name: Test with phpunit
               run: composer run-script test

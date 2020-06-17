@@ -4,6 +4,5 @@
 .DS_Store
 
 .env
-composer.lock
 
 /vendor
