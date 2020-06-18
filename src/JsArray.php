@@ -17,7 +17,6 @@ use Ahamed\JsPhp\Traits\ArraySearchingTrait;
 /**
  * JsArray an abstract class gives the array methods
  *
- * @since   1.0.0
  */
 class JsArray extends JsBase implements
 	\IteratorAggregate,
@@ -154,7 +153,7 @@ class JsArray extends JsBase implements
 		/**
 		 * If an empty array then it's not an associative array
 		 */
-		if ([] === $array)
+		if ($array === [])
 		{
 			return false;
 		}
@@ -418,7 +417,7 @@ class JsArray extends JsBase implements
 	/**
 	 * Magic method __debugInfo
 	 *
-	 * @return	string	Object echo message
+	 * @return 	array	Object echo message
 	 * @since	1.0.0
 	 */
 	public function __debugInfo()

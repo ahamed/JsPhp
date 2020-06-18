@@ -54,6 +54,7 @@
 	<!-- Include some additional sniffs from the PEAR standard -->
 	<rule ref="PEAR.Classes.ClassDeclaration" />
 	<rule ref="PEAR.Commenting.InlineComment" />
+
 	<rule ref="PEAR.ControlStructures.MultiLineCondition">
 		<properties>
 			<property name="indent" value="4"/>
@@ -131,6 +132,7 @@
 		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineAfter"/>
 		<exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
 	</rule>
+    <rule ref="Squiz.Commenting.ClassComment" />
 	<rule ref="Squiz.Commenting.DocCommentAlignment" />
 	<rule ref="Squiz.Commenting.VariableComment">
 		<exclude name="Squiz.Commenting.VariableComment.TagNotAllowed" />
