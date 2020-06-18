@@ -5,8 +5,8 @@
     <arg name="tab-width" value="4"/>
 	<arg name="encoding" value="utf-8"/>
 
-    <exclude-pattern type="relative">vendor/*</exclude-pattern>
-    <exclude-pattern type="relative">tests/*</exclude-pattern>
+    <exclude-pattern type="relative">vendor</exclude-pattern>
+    <exclude-pattern type="relative">tests</exclude-pattern>
 
     <rule ref="Generic.ControlStructures.InlineControlStructure" />
 	<rule ref="Generic.Files.EndFileNewline" />
