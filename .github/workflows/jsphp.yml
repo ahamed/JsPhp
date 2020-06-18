@@ -38,3 +38,6 @@ jobs:
                   --optimize-autoloader
             - name: Test with phpunit
               run: composer run-script test
+
+            - name: phpcs
+              run: composer run-script phpcs
