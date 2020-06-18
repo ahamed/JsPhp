@@ -14,7 +14,6 @@ use Ahamed\JsPhp\Traits\ArrayIteratorTrait;
 use Ahamed\JsPhp\Traits\ArrayModifierTrait;
 use Ahamed\JsPhp\Traits\ArraySearchingTrait;
 
-
 /**
  * JsArray an abstract class gives the array methods
  *
@@ -48,7 +47,7 @@ class JsArray extends JsBase implements
 	/**
 	 * Constructor function
 	 *
-	 * @param	array	$elements	The array of elements
+	 * @param 	array	$elements	The array of elements
 	 *
 	 * @since	1.0.0
 	 */

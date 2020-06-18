@@ -11,7 +11,8 @@
 		}
 	],
 	"scripts": {
-		"test": "./vendor/bin/phpunit --configuration=./phpunit.xml"
+		"test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
+		"phpcs": "./vendor/bin/phpcs --extensions=php -p ."
 	},
 	"prefer-stable": true,
 	"minimum-stability": "dev",
@@ -24,6 +25,7 @@
 		}
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^9.2"
+		"phpunit/phpunit": "^9.2",
+		"squizlabs/php_codesniffer": "*"
 	}
 }
