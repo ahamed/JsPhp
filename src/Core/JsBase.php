@@ -13,7 +13,6 @@ use Ahamed\JsPhp\Core\Interfaces\JsPhpCoreInterface;
  * JavaScript base functionalities
  * This is a common class which extends all the helpers
  *
- * @since	1.0.0
  */
 class JsBase implements JsPhpCoreInterface
 {
