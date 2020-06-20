@@ -10,17 +10,14 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$data = new JsArray([1, 2, 3, 4, 5]);
+$data = [1, 2, 3, 4, 5, 6];
 
-$isEvery = $data->every(
-	function ($item) {
-		return $item <= 5;
-	}
-);
+$array = new JsArray($data);
+
+$array->fill(0, -3, -4);
 
 echo '<xmp>';
-var_dump($isEvery);
+print_r($array);
 echo '</xmp>';
 die();
-
 

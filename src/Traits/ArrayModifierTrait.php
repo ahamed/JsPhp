@@ -39,7 +39,7 @@ trait ArrayModifierTrait
 		/**
 		 * Make the start value a 32 bit integer value by 0 bit right shifting.
 		 */
-		$relativeStart = $start >> 0;
+		$relativeStart = (int) $start;
 
 		/**
 		 * If then relativeStart is a negative number then add this with the length of the
@@ -60,7 +60,7 @@ trait ArrayModifierTrait
 		 * If end limit is not given then take the length as the ene value,
 		 * otherwise take the end value and make it 32 bit number by right shifting 0 bit.
 		 */
-		$relativeEnd = is_null($end) ? $length : $end >> 0;
+		$relativeEnd = is_null($end) ? $length : (int) $end;
 
 		/**
 		 * As described before the upper limit could not less than 0 or greater than the length of the array.
@@ -80,7 +80,7 @@ trait ArrayModifierTrait
 			 * then fill the array index by the fill value otherwise keep the
 			 * original value.
 			 */
-			if ($inc >= $k && $inc <= $finalValue)
+			if ($inc >= $k && $inc < $finalValue)
 			{
 				$filledArray[$key] = $value;
 			}

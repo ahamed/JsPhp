@@ -37,6 +37,11 @@ trait ArrayIteratorTrait
 
 		foreach ($elements as $key => $item)
 		{
+			if (\is_array($item))
+			{
+				$item = $this->bind($item, false);
+			}
+
 			\call_user_func_array($callback, [$item, $index, $key]);
 
 			++$index;
