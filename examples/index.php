@@ -11,11 +11,9 @@ require_once __DIR__ . '/../bootstrap.php';
 use Ahamed\JsPhp\JsArray;
 
 $data = [1, 2, 3, 4, 5, 6];
-
 $array = new JsArray($data);
 
-$array->fill(0, -3, -4);
-
+$array->length = 1;
 echo '<xmp>';
 print_r($array);
 echo '</xmp>';

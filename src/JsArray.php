@@ -41,7 +41,7 @@ class JsArray extends JsBase implements
 	 * @var		integer		$length		The length of the array
 	 * @since	1.0.0
 	 */
-	public $length = 0;
+	private $length = 0;
 
 	/**
 	 * Constructor function
@@ -404,6 +404,69 @@ class JsArray extends JsBase implements
 	}
 
 	/**
+	 * Getter function for JsArray class
+	 *
+	 * @param	string	$name	The property name.
+	 *
+	 * @return	mixed	The property value
+	 * @since	1.0.0
+	 */
+	public function __get($name)
+	{
+		switch ($name)
+		{
+			case 'length':
+				return $this->length;
+			break;
+			default:
+				throw new \Exception('You are not allowed to get the property');
+		}
+	}
+
+	/**
+	 * Setter function for the class JsArray.
+	 *
+	 * @param	string	$name	The property name
+	 * @param	mixed	$value	The new value to assign into the property
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function __set($name, $value)
+	{
+		switch ($name)
+		{
+			case 'length':
+				if (!\is_numeric($value))
+				{
+					throw new \UnexpectedValueException(sprintf('You cannot assign any non numeric value as length!'));
+				}
+
+				$len = (int) $value;
+
+				if ($len < 0)
+				{
+					throw new \InvalidArgumentException(sprintf('Length cannot take a negative value.'));
+				}
+				elseif ($len === 0)
+				{
+					$this->bind([]);
+				}
+				else
+				{
+					$len = min($len, $this->length);
+					$newArray = $this->slice(0, $len);
+					$this->bind($newArray->get());
+				}
+
+			break;
+
+			default:
+				throw new \InvalidArgumentException(sprintf('This property is not accepted to set'));
+		}
+	}
+
+	/**
 	 * Magic method __toString
 	 *
 	 * @return	string	Object echo message
@@ -421,7 +484,7 @@ class JsArray extends JsBase implements
 	 * @since	1.0.0
 	 */
 	public function __debugInfo()
-	{
+	{	
 		return $this->get();
 	}
 }
