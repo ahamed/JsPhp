@@ -484,7 +484,7 @@ class JsArray extends JsBase implements
 	 * @since	1.0.0
 	 */
 	public function __debugInfo()
-	{	
+	{
 		return $this->get();
 	}
 }
