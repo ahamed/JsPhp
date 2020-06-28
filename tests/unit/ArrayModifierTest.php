@@ -18,6 +18,17 @@ class ArrayModifierTest extends TestCase
         ];
     }
 
+    public function reverseDataProvider()
+    {
+        return [
+            [[1, 2, 3, 4], [4, 3, 2, 1]],
+            [['a', 'b', 'c'], ['c', 'b', 'a']],
+            [[], []],
+            [['one' => 1, 'two' => 2, 'three' => 3], ['three' => 3, 'two' => 2, 'one' => 1]],
+            [['one' => 1, 'two', 'three' => 3, 4, 5], [5, 4, 'three' => 3, 'two', 'one' => 1]]
+        ];
+    }
+
     /**
      * @dataProvider    fillDataProvider()
      */
@@ -26,5 +37,15 @@ class ArrayModifierTest extends TestCase
         $array = new JsArray($data);
         $array->fill($value, ...$range);
         $this->assertEquals((new JsArray($result)), $array);
+    }
+
+    /**
+     * @dataProvider    reverseDataProvider()
+     */
+    public function testReverse($data, $result)
+    {
+        $array = new JsArray($data);
+        
+        $this->assertEquals((new JsArray($result)), $array->reverse());
     }
 }

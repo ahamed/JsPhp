@@ -439,7 +439,7 @@ class JsArray extends JsBase implements
 			case 'length':
 				if (!\is_numeric($value))
 				{
-					throw new \UnexpectedValueException(sprintf('You cannot assign any non numeric value as length!'));
+					throw new \InvalidArgumentException(sprintf('You cannot assign any non numeric value as length!'));
 				}
 
 				$len = (int) $value;

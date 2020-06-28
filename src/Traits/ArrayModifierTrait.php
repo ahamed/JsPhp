@@ -121,17 +121,22 @@ trait ArrayModifierTrait
 		 * keys don't matter.
 		 */
 		$isAssoc = self::isAssociativeArray($elements);
-
-		if ($isAssoc)
-		{
-			$keys = array_keys($elements);
-		}
+		$keys = array_keys($elements);
 
 		for ($i = $length - 1; $i >= 0; --$i)
 		{
 			if ($isAssoc)
 			{
-				$reversedArray[$keys[$i]] = $elements[$i];
+				$key = $keys[$i];
+
+				if (\is_numeric($key))
+				{
+					$reversedArray[] = $elements[$keys[$i]];
+				}
+				else
+				{
+					$reversedArray[$keys[$i]] = $elements[$keys[$i]];
+				}
 			}
 			else
 			{
