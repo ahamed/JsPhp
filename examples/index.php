@@ -10,12 +10,23 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Ahamed\JsPhp\JsArray;
 
-$data = ['one' => 1, 'two', 'three' => 3, 4, 5];
+$data = [
+	'four' => 4,
+	'two' => 2,
+	'three' => 3,
+	'four' => 4,
+	'five' => 5,
+	'one' => 1,
+	'six' => 6
+];
+
 $array = new JsArray($data);
+
+$array->sort();
 
 echo '<xmp>';
 print_r($array);
-print_r($array->reverse()->reverse());
 echo '</xmp>';
 die();
+
 

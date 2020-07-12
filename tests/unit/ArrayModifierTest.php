@@ -29,6 +29,17 @@ class ArrayModifierTest extends TestCase
         ];
     }
 
+    public function flatDataProvider()
+    {
+        return [
+            [[1, 2, 3, 4], [1, 2, 3, 4]],
+            [[[1, 2, [3, 4]]], [1, 2, 3, 4]],
+            [[[1, 2], [3, [4, [5, [6, [7]]]]]], [1, 2, 3, 4, 5, 6, 7]],
+            [[[1, 2], [3, 4], [5, 6]], [1, 2, 3, 4, 5, 6]],
+            [['one' => 1, 'two' => 2, ['three' => 3]], 'error']
+        ];
+    }
+
     /**
      * @dataProvider    fillDataProvider()
      */
@@ -47,5 +58,25 @@ class ArrayModifierTest extends TestCase
         $array = new JsArray($data);
         
         $this->assertEquals((new JsArray($result)), $array->reverse());
+    }
+
+    /**
+     * @dataProvider    flatDataProvider()
+     */
+    public function testFlatArray($data, $result)
+    {
+        $array = new JsArray($data);
+
+        if (\is_array($result))
+        {
+            $this->assertEquals((new JsArray($result)), $array->flat());
+        }
+        elseif (\is_string($result) && $result === 'error')
+        {
+            $this->expectException(\UnexpectedValueException::class);
+			$this->expectExceptionMessage('Flatten could not be applied to an associative array. Please use it in sequential array.');
+			$this->assertEquals($result, $array->flat());
+        }
+
     }
 }

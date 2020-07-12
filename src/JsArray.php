@@ -13,6 +13,7 @@ use Ahamed\JsPhp\Traits\ArrayConditionalTrait;
 use Ahamed\JsPhp\Traits\ArrayIteratorTrait;
 use Ahamed\JsPhp\Traits\ArrayModifierTrait;
 use Ahamed\JsPhp\Traits\ArraySearchingTrait;
+use Ahamed\JsPhp\Traits\ArraySortingTrait;
 
 /**
  * JsArray an abstract class gives the array methods
@@ -33,6 +34,7 @@ class JsArray extends JsBase implements
 	use ArraySearchingTrait;
 	use ArrayConditionalTrait;
 	use ArrayIteratorTrait;
+	use ArraySortingTrait;
 
 	/**
 	 * Length of the array. This value will be calculated at every time a new
