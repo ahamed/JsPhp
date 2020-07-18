@@ -5,14 +5,16 @@
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
-namespace Ahamed\JsPhp\Traits;
+namespace Ahamed\JsPhp\Traits\Arrays;
+
+use Ahamed\JsPhp\JsArray;
 
 /**
  * Trait function for array conditionals
  *
  * @since   1.0.0
  */
-trait ArrayBasicsTrait
+trait BasicsTrait
 {
 	/**
 	 * Array push method
@@ -105,7 +107,7 @@ trait ArrayBasicsTrait
 		 */
 		if (self::isAssociativeArray($elements))
 		{
-			$keys = $this->keys();
+			$keys = $this->keys()->get();
 			$removedValue = $elements[$keys[0]];
 			unset($elements[$keys[0]]);
 		}
@@ -145,7 +147,7 @@ trait ArrayBasicsTrait
 		$elements = $this->get();
 		$length = $this->length;
 		$itemsLength = count($items);
-		$keys = $this->keys();
+		$keys = $this->keys()->get();
 
 		$unshiftArray = [];
 
@@ -163,12 +165,13 @@ trait ArrayBasicsTrait
 		 * After pushing the items into the unshiftArray adding the
 		 * existing array elements after them.
 		 *
-		 * All numerical array keys will be modified to start counting from zero while literal keys won't be changed.
+		 * All numerical array keys will be modified to start counting from zero
+		 * while literal keys won't be changed.
 		 *
-		 * That means if key of the original array is numerical then the value of the
-		 * key is updated after counting this from the beginning. For an example if we
-		 * unshift 3 values at the front of the array and the first encounter of the
-		 * numerical key is 1 then it's updated to 3.
+		 * That means if key of the original array is numerical then the value
+		 * of the key is updated after counting this from the beginning.
+		 * For an example, if we unshift 3 values at the front of the array and
+		 * the first encounter of the numerical key is 1 then it's updated to 3.
 		 *
 		 * The literal keys won't be changes.
 		 */
@@ -351,9 +354,9 @@ trait ArrayBasicsTrait
 		if (self::isAssociativeArray($elements))
 		{
 			$preserveKeys = true;
-			$keys = $this->keys();
 		}
 
+		$keys = $this->keys()->get();
 		$slicedArray = [];
 
 		/**
@@ -368,7 +371,7 @@ trait ArrayBasicsTrait
 			}
 			else
 			{
-				$slicedArray[] = $elements[$i];
+				$slicedArray[] = $elements[$keys[$i]];
 			}
 		}
 
@@ -392,7 +395,7 @@ trait ArrayBasicsTrait
 
 		$elements = $this->get();
 		$length = $this->length;
-		$keys = $this->keys();
+		$keys = $this->keys()->get();
 
 		/**
 		 * If no any parameter are provided then return empty array
@@ -558,5 +561,58 @@ trait ArrayBasicsTrait
 
 		// Create and JsArray instance and return the deleted items array
 		return $this->bind($deletedArray, false);
+	}
+
+	/**
+	 * Concat arrays or values with the reference array and returns
+	 * a new array. This is not mutate the original array rather
+	 * returns a new array.
+	 *
+	 * @param	mixed		...$values		Scaler value(s) or array(s)
+	 *
+	 * @return	JsArray		Concatenated array.
+	 * @since	1.0.0
+	 */
+	public function concat(...$values)
+	{
+		$this->check();
+		$elements = $this->get();
+
+		/**
+		 * If nothing provided to concatenate then return the
+		 * current array values but with a new instance.
+		 */
+		if (empty($values))
+		{
+			return $this->bind($elements, false);
+		}
+
+		// Initially merge the elements and put them into the concatenated array.
+		$concatenated = array_merge([], $elements);
+
+		/**
+		 * Iterate through the values parameter if the given parameter is
+		 * an instance of JsArray then get the plain array elements and
+		 * merge with concatenated array.
+		 * If value is a plain array then concat it with the concatenate array.
+		 * If value is a scaler value then push this.
+		 */
+		foreach ($values as $value)
+		{
+			if ($value instanceof JsArray)
+			{
+				$concatenated = array_merge($concatenated, $value->get());
+			}
+			elseif (\is_array($value))
+			{
+				$concatenated = array_merge($concatenated, $value);
+			}
+			else
+			{
+				array_push($concatenated, $value);
+			}
+		}
+
+		return $this->bind($concatenated, false);
 	}
 }

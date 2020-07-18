@@ -5,14 +5,14 @@
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
-namespace Ahamed\JsPhp\Traits;
+namespace Ahamed\JsPhp\Traits\Arrays;
 
 /**
  * Trait function for array conditionals
  *
  * @since   1.0.0
  */
-trait ArrayConditionalTrait
+trait ConditionalTrait
 {
 	/**
 	 * Every is a function which returns a boolean value if every value of an array has passed

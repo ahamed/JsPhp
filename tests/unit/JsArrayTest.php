@@ -103,7 +103,7 @@ class JsArrayTest extends TestCase
 	public function testArrayKeys($data, $result)
 	{
 		$array = new JsArray($data);
-		$this->assertEquals($result, $array->keys());
+		$this->assertEquals($result, $array->keys()->get());
 	}
 
 	/**

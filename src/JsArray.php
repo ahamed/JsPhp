@@ -8,12 +8,12 @@
 namespace Ahamed\JsPhp;
 
 use Ahamed\JsPhp\Core\JsBase;
-use Ahamed\JsPhp\Traits\ArrayBasicsTrait;
-use Ahamed\JsPhp\Traits\ArrayConditionalTrait;
-use Ahamed\JsPhp\Traits\ArrayIteratorTrait;
-use Ahamed\JsPhp\Traits\ArrayModifierTrait;
-use Ahamed\JsPhp\Traits\ArraySearchingTrait;
-use Ahamed\JsPhp\Traits\ArraySortingTrait;
+use Ahamed\JsPhp\Traits\Arrays\BasicsTrait;
+use Ahamed\JsPhp\Traits\Arrays\ConditionalTrait;
+use Ahamed\JsPhp\Traits\Arrays\IteratorTrait;
+use Ahamed\JsPhp\Traits\Arrays\ModifierTrait;
+use Ahamed\JsPhp\Traits\Arrays\SearchingTrait;
+use Ahamed\JsPhp\Traits\Arrays\SortingTrait;
 
 /**
  * JsArray an abstract class gives the array methods
@@ -29,12 +29,12 @@ class JsArray extends JsBase implements
 	/**
 	 * Import Array traits
 	 */
-	use ArrayBasicsTrait;
-	use ArrayModifierTrait;
-	use ArraySearchingTrait;
-	use ArrayConditionalTrait;
-	use ArrayIteratorTrait;
-	use ArraySortingTrait;
+	use BasicsTrait;
+	use ModifierTrait;
+	use SearchingTrait;
+	use ConditionalTrait;
+	use IteratorTrait;
+	use SortingTrait;
 
 	/**
 	 * Length of the array. This value will be calculated at every time a new
@@ -117,13 +117,13 @@ class JsArray extends JsBase implements
 		$this->check();
 		$elements = $this->get();
 
-		return array_keys($elements);
+		return $this->bind(array_keys($elements), false);
 	}
 
 	/**
 	 * Get the values of an array
 	 *
-	 * @return	array	The keys array
+	 * @return	array	The values array
 	 * @since	1.0.0
 	 */
 	public function values()

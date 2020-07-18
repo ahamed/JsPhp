@@ -110,8 +110,8 @@ class Utilities
 			}
 			else
 			{
-				$itemLeft = $leftArray[$leftIndex];
-				$itemRight = $rightArray[$rightIndex];
+				$itemLeft = $leftArray[$itemLeftKey];
+				$itemRight = $rightArray[$itemRightKey];
 			}
 
 			/**
@@ -184,7 +184,14 @@ class Utilities
 				 */
 				if ($isAssoc)
 				{
-					$sorted[$leftKeys[$leftIndex]] = $itemLeft;
+					if (\is_numeric($itemLeftKey))
+					{
+						$sorted[] = $itemLeft;
+					}
+					else
+					{
+						$sorted[$itemLeftKey] = $itemLeft;
+					}
 				}
 				else
 				{
@@ -209,7 +216,14 @@ class Utilities
 				 */
 				if ($isAssoc)
 				{
-					$sorted[$rightKeys[$rightIndex]] = $itemRight;
+					if (\is_numeric($itemRightKey))
+					{
+						$sorted[] = $itemRight;
+					}
+					else
+					{
+						$sorted[$itemRightKey] = $itemRight;
+					}
 				}
 				else
 				{
@@ -221,14 +235,12 @@ class Utilities
 		}
 
 		/**
-		 * This would be replaced with concat function of JsArray
+		 * Concat the remaining values of the left Array and right Array
+		 * after merging two arrays.
 		 */
-		$merged = array_merge(
-			$sorted->get(),
-			$leftArray->slice($leftIndex)->get(),
-			$rightArray->slice($rightIndex)->get()
+		return $sorted->concat(
+			$leftArray->slice($leftIndex),
+			$rightArray->slice($rightIndex)
 		);
-
-		return $sorted->bind($merged);
 	}
 }

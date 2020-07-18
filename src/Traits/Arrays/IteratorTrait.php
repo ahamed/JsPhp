@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
-namespace Ahamed\JsPhp\Traits;
+namespace Ahamed\JsPhp\Traits\Arrays;
 
 use Ahamed\JsPhp\JsArray;
 
@@ -14,7 +14,7 @@ use Ahamed\JsPhp\JsArray;
  *
  * @since   1.0.0
  */
-trait ArrayIteratorTrait
+trait IteratorTrait
 {
 
 	/**

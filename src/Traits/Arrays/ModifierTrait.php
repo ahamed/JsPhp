@@ -5,14 +5,14 @@
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
-namespace Ahamed\JsPhp\Traits;
+namespace Ahamed\JsPhp\Traits\Arrays;
 
 /**
  * Trait function for array modifiers
  *
  * @since   1.0.0
  */
-trait ArrayModifierTrait
+trait ModifierTrait
 {
 	/**
 	 * Fill an array by a given value within a range or full array.

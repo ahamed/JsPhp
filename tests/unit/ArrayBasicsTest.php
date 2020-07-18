@@ -266,6 +266,18 @@ class ArrayBasicsTest extends TestCase
 		];
 	}
 
+	public function concatDataProvider()
+	{
+		return [
+			[[1, 2, 3, 4], [5, 6, 7], [8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+			[1, 2, 3, [1, 2, 3]],
+			[[1, 2, 3, [4, 5]], [6, 7], [1, 2, 3, [4, 5], 6, 7]],
+			[['one' => 1, 'two' => 2], ['three' => 3, 'four' => 4], ['one' => 1, 'two' => 2, 'three' => 3, 'four' => 4]],
+			[['one' => 1, 'two' => 2], ['two' => 2, 'three' => 3, 'four' => 4], ['one' => 1, 'two' => 2, 'three' => 3, 'four' => 4]],
+			[['one' => 1, 2, 'three' => 3], [4, 5, 'six' => 6], ['one' => 1, '0' => 2, 'three' => 3, '1' => 4, '2' => 5, 'six' => 6]]
+		];
+	}
+
 	/** ------------- Test Functions ------------- */
 
 	/**
@@ -364,5 +376,18 @@ class ArrayBasicsTest extends TestCase
 			$this->assertEquals((new JsArray($result)), $array->splice(...$props));
 			$this->assertEquals((new JsArray($remaining)), $array);
 		}
+	}
+
+	/**
+	 * @dataProvider 	concatDataProvider()
+	 */
+	public function testJsArrayConcat(...$data)
+	{
+		$dataArray = new JsArray($data);
+		$array = new JsArray([]);
+		$result = new JsArray($data[count($data) - 1]);
+		$array = $array->concat(...$dataArray->slice(count($data) - 1)->get());
+		
+		$this->assertEquals($result, $array);
 	}
 }
