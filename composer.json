@@ -3,7 +3,7 @@
 	"description": "A php library for implementing Array, Object, String methods in JavaScript way.",
 	"type": "library",
 	"license": "MIT",
-	"version": "1.0.0",
+	"version": "0.1",
 	"authors": [
 		{
 			"name": "Sajeeb Ahamed",
