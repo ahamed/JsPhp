@@ -5,33 +5,38 @@
 
 ![Packagist Version](https://img.shields.io/packagist/v/ahamed/JsPhp?labelColor=black) ![Packagist Downloads](https://img.shields.io/packagist/dm/ahamed/JsPhp?color=f18d1b&label=Packagist%20Downloads&labelColor=black) ![Packagist Stars](https://img.shields.io/packagist/stars/ahamed/JsPhp?labelColor=black)
 
-Table of Contents
+Table Of Contents
 =================
-
-         * [Why this library?](#why-this-library)
-         * [Installation](#installation)
-         * [Usage](#usage)
-      * [Array Methods](#array-methods)
-         * [# concat](#-concat)
-            * [Example](#example)
-            * [Syntax](#syntax)
-            * [Parameters](#parameters)
-            * [Return Value](#return-value)
-         * [# every](#-every)
-            * [Example](#example-1)
-            * [Syntax](#syntax-1)
-            * [Parameters](#parameters-1)
-            * [Return Value](#return-value-1)
-         * [# forEach](#-foreach)
-            * [Example](#example-2)
-            * [Syntax](#syntax-2)
-            * [Parameters](#parameters-2)
-            * [Return Value](#return-value-2)
-         * [# map](#-map)
-            * [Example](#example-3)
-            * [Syntax](#syntax-3)
-            * [Parameters](#parameters-3)
-            * [Return Value](#return-value-3)
+<details>
+    <summary>
+        Show Table of Contents
+    </summary>
+ 
+* [Why this library?](#why-this-library)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Array Methods](#array-methods)
+* [# concat](#-concat)
+    * [Example](#example)
+    * [Syntax](#syntax)
+    * [Parameters](#parameters)
+    * [Return Value](#return-value)
+* [# every](#-every)
+    * [Example](#example-1)
+    * [Syntax](#syntax-1)
+    * [Parameters](#parameters-1)
+    * [Return Value](#return-value-1)
+* [# forEach](#-foreach)
+    * [Example](#example-2)
+    * [Syntax](#syntax-2)
+    * [Parameters](#parameters-2)
+    * [Return Value](#return-value-2)
+* [# map](#-map)
+    * [Example](#example-3)
+    * [Syntax](#syntax-3)
+    * [Parameters](#parameters-3)
+    * [Return Value](#return-value-3)
+</details>
 
 ### Why this library?
 While using ***php*** *Array/Object/String* methods it feels troublesome because of their unstructured patterns.
