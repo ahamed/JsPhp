@@ -72,6 +72,46 @@ $newArray = $array->concat([$value1 [, $value2 [, ...[, $valueN]]]]);
 #### Return Value
 A new `JsArray` instance.
 
+### # every
+The `every()` method tests whether all items in the array pass the test implemented by the user function. It returns a boolean value.
+
+#### Example
+```php
+$array = new JsArray([1, 3, 5, 7]);
+$isAllItemsOdd = $array->every(
+    function ($item) {
+        return $item % 2 === 1;
+    }
+);
+
+var_dump($isAllItemsOdd);
+// Expected output: bool(true)
+
+// Using Arrow Function
+$isAllItemsEven = $array->every(fn($item) => $item % 2 === 0);
+var_dump($isAllItemsEven);
+// Expected output: bool(false)
+```
+
+#### Syntax
+```php
+$isPassed  = $array->every($callback($item [, $index [, $key]]));
+```
+
+#### Parameters
+- ***`$callback`***
+    A function to test for each item. This function takes three arguments. One required and two optional.
+    + ***`$item`***
+        The current item to test on.
+    + ***`$index`*** *(optional)*
+        A zero based index of the current item.
+    + ***`$key`*** *(optional)*
+        The key of the current item of the array being processed.
+
+#### Return Value
+**Boolean**. `True` if all the items pass the user defined test and `False` otherwise.
+
+
 ### # forEach
 The `forEach()` method executes a callable function for each item of the array.
 
@@ -98,6 +138,7 @@ $array->forEach($callback($item [, $index [, $key]]));
 
 #### Parameters
 - ***`$callback`***
+    This is a `callable` function which is executed on every element of the `$array`. The function takes between one and three arguments.
 
     + ***`$item`***
         The current item being processed in the array.
@@ -149,3 +190,4 @@ $newArray = $array->map($callback($item [, $index [, $key]]));
 
 #### Return Value
 A new `JsArray` instance after each item being processed by the callback function.
+
