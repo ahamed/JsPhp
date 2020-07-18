@@ -1,9 +1,4 @@
 >*JsPhp* a piece of JavaScript inside *php*.<br>
->&mdash;<cite>[Sajeeb Ahamed][1].</cite>
-
-<br>
-
-[1]: https://stackoverflow.com/users/4610740/sajeeb-ahamed
 
 
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/ahamed/JsPhp?labelColor=black&color=4ec428) ![GitHub](https://img.shields.io/github/license/ahamed/JsPhp?labelColor=black&color=4fc529) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/ahamed/JsPhp/PHP%20Composer/master?labelColor=black) ![GitHub issues](https://img.shields.io/github/issues/ahamed/JsPhp?color=c50a16&labelColor=black) ![GitHub closed issues](https://img.shields.io/github/issues-closed/ahamed/JsPhp?labelColor=black) ![GitHub pull requests](https://img.shields.io/github/issues-pr/ahamed/JsPhp?color=c50a16&labelColor=black) ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/ahamed/JsPhp?labelColor=black) ![GitHub language count](https://img.shields.io/github/languages/count/ahamed/JsPhp?labelColor=black) ![GitHub top language](https://img.shields.io/github/languages/top/ahamed/JsPhp?labelColor=black) ![GitHub repo size](https://img.shields.io/github/repo-size/ahamed/JsPhp?labelColor=black) ![GitHub All Releases](https://img.shields.io/github/downloads/ahamed/JsPhp/total?labelColor=black) ![GitHub contributors](https://img.shields.io/github/contributors/ahamed/JsPhp?labelColor=black) ![GitHub last commit](https://img.shields.io/github/last-commit/ahamed/JsPhp?labelColor=black) ![GitHub Release Date](https://img.shields.io/github/release-date/ahamed/JsPhp?labelColor=black) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ahamed/JsPhp?include_prereleases&labelColor=black) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ahamed/JsPhp?labelColor=black)
@@ -42,3 +37,115 @@ $square = $array->map(
 
 print_r($square);
 ```
+
+## Array Methods
+Here we cover most of the useful array methods. We now learn them one by one.
+
+>Before performing any array operations you have to pass the array to the `JsArray` constructor i.e. you have to create an `JsArray` instance with the native *php* array for performing array operations, like-
+
+```php
+$array = new JsArray([1, 2, 3, 4]);
+```
+
+### # concat
+The `concat()` method is used to merge two or more arrays. This is not change the original array but returns a new array after merging.
+
+#### Example
+```php
+$array1 = new JsArray([1, 2, 3]);
+$array2 = new JsArray([4, 5, 6]);
+$newArray = $array1->concat($array2);
+
+print_r($newArray);
+// Expected output: JsArray [1, 2, 3, 4, 5, 6]
+```
+
+#### Syntax
+```php
+$newArray = $array->concat([$value1 [, $value2 [, ...[, $valueN]]]]);
+```
+
+#### Parameters
+- ***`$valueN`***
+    Arrays and/or scalar values to concatenate into a new array. If all *`$valueN`* parameters are omitted then `concat` returns the copy of the original array.
+
+#### Return Value
+A new `JsArray` instance.
+
+### # forEach
+The `forEach()` method executes a callable function for each item of the array.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4]);
+$array->forEach(
+    function ($item, $index) {
+        echo $index . " => " . $item . "\n";
+    }
+);
+
+// Expected output:
+// 0 => 1
+// 1 => 2
+// 2 => 3
+// 3 => 4
+```
+
+#### Syntax
+```php
+$array->forEach($callback($item [, $index [, $key]]));
+```
+
+#### Parameters
+- ***`$callback`***
+
+    + ***`$item`***
+        The current item being processed in the array.
+    + ***`$index`*** (optional)
+        A zero based index of the current item being processed in the array.
+    + ***`$key`*** (optional)
+        The key of the current item being processed in the array. This is useful for associative arrays.
+
+#### Return Value
+`NULL`
+
+---
+### # map
+The `map()` method **creates a new array** populated by the user callback function on every element of the calling array. It keeps the original array untouched.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$binaryArray = $array->map(
+    function ($item, $index) {
+        return $item % 2;
+    }
+);
+
+print_r($binaryArray);
+// Expected output: JsArray [1, 0, 1, 0, 1]
+
+// PHP >= 7.4 you can use arrow function.
+$binaryArray = $array->map(fn($item, $index) => $item % 2);
+// Output remains same.
+```
+
+#### Syntax
+```php
+$newArray = $array->map($callback($item [, $index [, $key]]));
+```
+#### Parameters
+- ***`$callback`***
+    This is a `callable` function which is executed on every element of the `$array` and the return value of the function is added to the `$newArray`.
+
+    The `$callback` function takes one required and two optional arguments.
+
+    + ***`$item`***
+        The current item being processed in the array.
+    + ***`$index`*** *(optional)*
+        A zero based index of the current item being processed in the array.
+    + ***`$key`*** *(optional)*
+        The key of the current item being processed in the array. This is useful for associative arrays.
+
+#### Return Value
+A new `JsArray` instance after each item being processed by the callback function.
