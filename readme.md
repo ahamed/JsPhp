@@ -1,4 +1,4 @@
-![BannerLeftAlign](https://user-images.githubusercontent.com/5783354/87880945-9b7de880-ca17-11ea-8da8-f4cd0dbf2151.png)
+![BannerWithImageAndText](https://user-images.githubusercontent.com/5783354/87884417-03402d80-ca30-11ea-8fdc-5df12ca0e0aa.png)
 <br>
 
 
