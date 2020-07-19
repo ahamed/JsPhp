@@ -12,10 +12,10 @@ Table Of Contents
     <summary>
         Show Table of Contents
     </summary>
- 
+
 * [Why this library?](#why-this-library)
-    * [Installation](#installation)
-    * [Usage](#usage)
+* [Installation](#installation)
+* [Usage](#usage)
 * [Array Methods](#array-methods)
     * [# concat](#-concat)
         * [Example](#example)
@@ -27,32 +27,37 @@ Table Of Contents
         * [Syntax](#syntax-1)
         * [Parameters](#parameters-1)
         * [Return Value](#return-value-1)
-    * [# forEach](#-foreach)
+    * [# fill](#-fill)
         * [Example](#example-2)
         * [Syntax](#syntax-2)
         * [Parameters](#parameters-2)
         * [Return Value](#return-value-2)
-    * [# map](#-map)
+    * [# forEach](#-foreach)
         * [Example](#example-3)
         * [Syntax](#syntax-3)
         * [Parameters](#parameters-3)
         * [Return Value](#return-value-3)
+    * [# map](#-map)
+        * [Example](#example-4)
+        * [Syntax](#syntax-4)
+        * [Parameters](#parameters-4)
+        * [Return Value](#return-value-4)
 </details>
 
-### Why this library?
+## Why this library?
 While using ***php*** *Array/Object/String* methods it feels troublesome because of their unstructured patterns.
 
 For an example, say you are using the `array_map` and the `array_filter` methods of *php*. At the time of using, you may notice that for the `array_map` method, the `$callback` comes first then the `$array` but for the `array_filter` method, the `$array` comes first then the `$callback`. And this mis-structure exists everywhere.
 
 Then I've discovered that the **JavaScript** uses a good pattern for these cases and I am also a big fan of JavaScript. Thats why, I've decided to build this library. I can say that the JavaScript lovers can get the pure feelings of JavaScript by using this and the JavaScript non-lovers also get advantage of good structure of *array/object/string* manipulations.
 
-### Installation
+## Installation
 Installation is very simple. Open your terminal at the project root directory and run-
 ```console
 composer require ahamed/jsphp
 ```
 
-### Usage
+## Usage
 After successful installation, include the library into your project.
 
 ```php
@@ -146,7 +151,7 @@ $isPassed  = $array->every($callback($item [, $index [, $key]]));
 **Boolean**. `True` if all the items pass the user defined test and `False` otherwise.
 
 ### # fill
-The `fill()` method changes all elemenents by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
+The `fill()` method changes all elements by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
 - If the `$start` is negative then it's treated as `$array->length + $start` but the summation never be negative. If negative then it takes `0` as `$start` value.
 - If the `$end` is negative then it's treated as `$array->length + $end` but the summation never be negative. If negative then it takes `0` as `$end` value.
 
