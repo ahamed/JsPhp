@@ -14,29 +14,29 @@ Table Of Contents
     </summary>
  
 * [Why this library?](#why-this-library)
-* [Installation](#installation)
-* [Usage](#usage)
+    * [Installation](#installation)
+    * [Usage](#usage)
 * [Array Methods](#array-methods)
-* [# concat](#-concat)
-    * [Example](#example)
-    * [Syntax](#syntax)
-    * [Parameters](#parameters)
-    * [Return Value](#return-value)
-* [# every](#-every)
-    * [Example](#example-1)
-    * [Syntax](#syntax-1)
-    * [Parameters](#parameters-1)
-    * [Return Value](#return-value-1)
-* [# forEach](#-foreach)
-    * [Example](#example-2)
-    * [Syntax](#syntax-2)
-    * [Parameters](#parameters-2)
-    * [Return Value](#return-value-2)
-* [# map](#-map)
-    * [Example](#example-3)
-    * [Syntax](#syntax-3)
-    * [Parameters](#parameters-3)
-    * [Return Value](#return-value-3)
+    * [# concat](#-concat)
+        * [Example](#example)
+        * [Syntax](#syntax)
+        * [Parameters](#parameters)
+        * [Return Value](#return-value)
+    * [# every](#-every)
+        * [Example](#example-1)
+        * [Syntax](#syntax-1)
+        * [Parameters](#parameters-1)
+        * [Return Value](#return-value-1)
+    * [# forEach](#-foreach)
+        * [Example](#example-2)
+        * [Syntax](#syntax-2)
+        * [Parameters](#parameters-2)
+        * [Return Value](#return-value-2)
+    * [# map](#-map)
+        * [Example](#example-3)
+        * [Syntax](#syntax-3)
+        * [Parameters](#parameters-3)
+        * [Return Value](#return-value-3)
 </details>
 
 ### Why this library?
@@ -145,6 +145,43 @@ $isPassed  = $array->every($callback($item [, $index [, $key]]));
 #### Return Value
 **Boolean**. `True` if all the items pass the user defined test and `False` otherwise.
 
+### # fill
+The `fill()` method changes all elemenents by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
+- If the `$start` is negative then it's treated as `$array->length + $start` but the summation never be negative. If negative then it takes `0` as `$start` value.
+- If the `$end` is negative then it's treated as `$array->length + $end` but the summation never be negative. If negative then it takes `0` as `$end` value.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+
+$array->fill(0);
+print_r($array);
+// Expected output: JsArray [0, 0, 0, 0, 0]
+
+$array->fill(2, 2, 4);
+print_r($array);
+// Expected output: JsArray [0, 0, 2, 2, 0]
+
+$array->fill(3, -2);
+print_r($array);
+// Expected output: JsArray [0, 0, 2, 3, 3];
+```
+
+#### Syntax
+```php
+$array->fill($value [, $start [, $end]]);
+```
+
+#### Parameters
+- ***`$value`***
+    Value to fill the array with. (Note all elements in the array will be this exact value.)
+- ***`$start`*** *(optional)*
+    Start index, default 0.
+- ***`$end`*** *(optional)*
+    End index, default `$array->length`
+
+#### Return Value
+Modified `JsArray` instance filled with `$value`.
 
 ### # forEach
 The `forEach()` method executes a callable function for each item of the array.
