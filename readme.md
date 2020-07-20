@@ -1,70 +1,42 @@
 ![BannerWithImageAndText](https://user-images.githubusercontent.com/5783354/87884417-03402d80-ca30-11ea-8fdc-5df12ca0e0aa.png)
 <br>
 
+
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/ahamed/JsPhp?labelColor=black&color=4ec428) ![GitHub](https://img.shields.io/github/license/ahamed/JsPhp?labelColor=black&color=4fc529) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/ahamed/JsPhp/PHP%20Composer/master?labelColor=black) ![GitHub issues](https://img.shields.io/github/issues/ahamed/JsPhp?color=c50a16&labelColor=black) ![GitHub closed issues](https://img.shields.io/github/issues-closed/ahamed/JsPhp?labelColor=black) ![GitHub pull requests](https://img.shields.io/github/issues-pr/ahamed/JsPhp?color=c50a16&labelColor=black) ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/ahamed/JsPhp?labelColor=black) ![GitHub language count](https://img.shields.io/github/languages/count/ahamed/JsPhp?labelColor=black) ![GitHub top language](https://img.shields.io/github/languages/top/ahamed/JsPhp?labelColor=black) ![GitHub repo size](https://img.shields.io/github/repo-size/ahamed/JsPhp?labelColor=black) ![GitHub All Releases](https://img.shields.io/github/downloads/ahamed/JsPhp/total?labelColor=black) ![GitHub contributors](https://img.shields.io/github/contributors/ahamed/JsPhp?labelColor=black) ![GitHub last commit](https://img.shields.io/github/last-commit/ahamed/JsPhp?labelColor=black) ![GitHub Release Date](https://img.shields.io/github/release-date/ahamed/JsPhp?labelColor=black) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ahamed/JsPhp?include_prereleases&labelColor=black) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/ahamed/JsPhp?labelColor=black)
 
 ![Packagist Version](https://img.shields.io/packagist/v/ahamed/JsPhp?labelColor=black) ![Packagist Downloads](https://img.shields.io/packagist/dm/ahamed/JsPhp?color=f18d1b&label=Packagist%20Downloads&labelColor=black) ![Packagist Stars](https://img.shields.io/packagist/stars/ahamed/JsPhp?labelColor=black)
 
+Table Of Contents
 =================
 <details>
     <summary>
         Show Table of Contents
     </summary>
-
+ 
 * [Why this library?](#why-this-library)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Array Methods](#array-methods)
-    * [# concat](#-concat)
-        * [Example](#example)
-        * [Syntax](#syntax)
-        * [Parameters](#parameters)
-        * [Return Value](#return-value)
-    * [# every](#-every)
-        * [Example](#example-1)
-        * [Syntax](#syntax-1)
-        * [Parameters](#parameters-1)
-        * [Return Value](#return-value-1)
-    * [# fill](#-fill)
-        * [Example](#example-2)
-        * [Syntax](#syntax-2)
-        * [Parameters](#parameters-2)
-        * [Return Value](#return-value-2)
-    * [# filter](#-filter)
-        * [Example](#example-3)
-        * [Syntax](#syntax-3)
-        * [Parameters](#parameters-3)
-        * [Return Value](#return-value-3)
-    * [# find](#-find)
-        * [Example](#example-4)
-        * [Syntax](#syntax-4)
-        * [Parameters](#parameters-4)
-        * [Return Value](#return-value-4)
-    * [# findIndex](#-findindex)
-        * [Example](#example-5)
-        * [Syntax](#syntax-5)
-        * [Parameters](#parameters-5)
-        * [Return Value](#return-value-5)
-    * [# findLastIndex](#-findlastindex)
-        * [Example](#example-6)
-        * [Syntax](#syntax-6)
-        * [Parameters](#parameters-6)
-        * [Return Value](#return-value-6)
-    * [# flat](#-flat)
-        * [Example](#example-7)
-        * [Syntax](#syntax-7)
-        * [Parameters](#parameters-7)
-        * [Return Value](#return-value-7)
-    * [# forEach](#-foreach)
-        * [Example](#example-8)
-        * [Syntax](#syntax-8)
-        * [Parameters](#parameters-8)
-        * [Return Value](#return-value-8)
-    * [# map](#-map)
-        * [Example](#example-9)
-        * [Syntax](#syntax-9)
-        * [Parameters](#parameters-9)
-        * [Return Value](#return-value-9)
+* [# concat](#-concat)
+    * [Example](#example)
+    * [Syntax](#syntax)
+    * [Parameters](#parameters)
+    * [Return Value](#return-value)
+* [# every](#-every)
+    * [Example](#example-1)
+    * [Syntax](#syntax-1)
+    * [Parameters](#parameters-1)
+    * [Return Value](#return-value-1)
+* [# forEach](#-foreach)
+    * [Example](#example-2)
+    * [Syntax](#syntax-2)
+    * [Parameters](#parameters-2)
+    * [Return Value](#return-value-2)
+* [# map](#-map)
+    * [Example](#example-3)
+    * [Syntax](#syntax-3)
+    * [Parameters](#parameters-3)
+    * [Return Value](#return-value-3)
 </details>
 
 ### Why this library?
@@ -133,6 +105,7 @@ $newArray = $array->concat([$value1 [, $value2 [, ...[, $valueN]]]]);
 
 #### Return Value
 A new `JsArray` instance.
+___
 
 ### # every
 The `every()` method tests whether all items in the array pass the test implemented by the user function. It returns a boolean value.
@@ -173,6 +146,8 @@ $isPassed  = $array->every($callback($item [, $index [, $key]]));
 #### Return Value
 **Boolean**. `True` if all the items pass the user defined test and `False` otherwise.
 
+___
+
 ### # fill
 The `fill()` method changes all elemenents by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
 - If the `$start` is negative then it's treated as `$array->length + $start` but the summation never be negative. If negative then it takes `0` as `$start` value.
@@ -210,6 +185,8 @@ $array->fill($value [, $start [, $end]]);
 
 #### Return Value
 Modified `JsArray` instance filled with `$value`.
+
+___ 
 
 ### # filter
 The `filter()` method **creates a new array** with all elements that pass the user provided function. If you apply the filter method to an associative array then it automatically preserves the `keys` of the array. If the array is a hybride array i.e. it contains both numeric keys and string keys then it preserves the string keys but the numeric keys will be rebased from zero.
@@ -265,6 +242,8 @@ $filteredArray = $array->filter($callback($item [, $index [, $key]]));
 #### Return Value
 `JsArray` instance with filtered elements.
 
+___
+
 ### # find
 The `find()` method returns the value of the first element in the provided array that satisfied the user provided callback function. If it fails to find any value then it returns `NULL`
 
@@ -297,11 +276,13 @@ $findValue = $array->find($callback($item [, $index [, $key]]));
         The current Element of the array.
     + ***`$index`*** *(optional)*
         The zero based index of the current element of the array.
-    + ***`$key`** *(optional)*
+    + ***`$key`*** *(optional)*
         The key of the current element of the array.
 
 #### Return Value
 The value of the first element that is found by satisfying the user defined callback function. If no value found then `NULL` returns.
+
+___
 
 ### # findIndex
 The `findIndex()` method returns the index of the first element in the provided array that satisfied the user provided callback function. If it fails to find any value then it returns `-1`
@@ -335,11 +316,13 @@ $findIndex = $array->findIndex($callback($item [, $index [, $key]]));
         The current Element of the array.
     + ***`$index`*** *(optional)*
         The zero based index of the current element of the array.
-    + ***`$key`** *(optional)*
+    + ***`$key`*** *(optional)*
         The key of the current element of the array.
 
 #### Return Value
 The **index** of the first element that is found by satisfying the user defined callback function. If no value found then `-1` returns.
+
+___
 
 ### # findLastIndex
 The `findLastIndex()` method returns the index of the last element in the provided array that satisfied the user provided callback function. If it fails to find any value then it returns `-1`
@@ -373,11 +356,12 @@ $findIndex = $array->findLastIndex($callback($item [, $index [, $key]]));
         The current Element of the array.
     + ***`$index`*** *(optional)*
         The zero based index of the current element of the array.
-    + ***`$key`** *(optional)*
+    + ***`$key`*** *(optional)*
         The key of the current element of the array.
 
 #### Return Value
 The **index** of the last element that is found by satisfying the user defined callback function. If no value found then `-1` returns.
+___
 
 ### # flat
 The `flat()` method creates a new array with all sub-array elements recursively concatenated into it. It converts multi-dimentional array into one-dimentional array.
@@ -400,6 +384,8 @@ No parameter for this method
 
 #### Return Value
 `JsArray` instance with flatten one-dimentional array.
+
+___
 
 ### # forEach
 The `forEach()` method executes a callable function for each item of the array.
@@ -437,8 +423,126 @@ $array->forEach($callback($item [, $index [, $key]]));
 
 #### Return Value
 `NULL`
+___
 
----
+### # includes
+The `includes()` method determines whether an array includes a certain value among its entries, returning `true` or `false` as appropriate. This checks a loose equitiy for finding the value and for string it's case sensetive.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5, 6]);
+$hasValue = $array->includes(3);
+print_r($hasValue);
+// Expected output: true
+
+$hasNonExistingValue = $array->includes(2, 2);
+print_r($hasNonExistingValue);
+// Expected output: false
+```
+
+#### Syntax
+```php
+$hasValue = $array->includes($item [, $fromIndex]);
+```
+
+#### Parameters
+- ***`$item`***
+    The item to find.
+- ***`$fromIndex`*** *(optional)*
+    From which position finding starts. If this is omitted then searching begins from the index 0. If the `$fromIndex` is negative then its calculated like `$length + $fromIndex`. The `$fromIndex` value always lays within the range `[0, $length]`.
+
+#### Return Value
+`Boolean`, `True` if the value included on the array, `False` otherwise.
+___
+
+### # indexOf
+The `indexOf()` method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5, 6]);
+$position = $array->indexOf(4);
+print_r($position);
+// Exptected output: 3
+
+$notFoundingPosition = $array->indexOf(2, 3);
+print_r($notFoundingPosition);
+// Expected output: -1
+```
+
+#### Syntax
+```php
+$position = $array->indexOf($item [, $fromIndex]);
+```
+
+#### Parameters
+- ***`$item`***
+    The item to find.
+- ***`$fromIndex`*** *(optional)*
+    From which position finding starts. If this is omitted then searching begins from the index 0. If the `$fromIndex` is negative then its calculated like `$length + $fromIndex`. The `$fromIndex` value always lays within the range `[0, $length]`.
+
+#### Return Value
+`Integer`, The index of the searcing item. The index is zero based and if the item is not found then returns `-1`.
+___
+
+### # join
+The `join()` method creates and returns a new string by concatenating all of the elements in an array, separated by commas or a specified separator string. If the array has only one item, then that item will be returned without using the separator.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5, 6]);
+$str = $array->join();
+print_r($str);
+// Expected output: "1,2,3,4,5,6"
+
+$str = $array->join(' + ');
+print_r($str);
+// Expected output: "1 + 2 + 3 + 4 + 5 + 6"
+```
+
+#### Syntax
+```php
+$str = $data->join([$separator]);
+```
+
+#### Parameters
+- ***`$separator`*** *(optional)*
+    Specifies a string to separate each pair of adjacent elements of the array. If omitted, the array elements are separated with a comma (","). If separator is an empty string, all elements are joined without any characters in between them.
+
+#### Return Value
+`String`, the string after joining the array elements with the help of `$separator`.
+
+___
+
+### # keys
+The `keys()` method creates a new array with the keys of the array.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$keys = $array->keys();
+print_r($keys);
+// Expected output: JsArray [0, 1, 2, 3, 4]
+
+$assocArray = new JsArray(['one' => 1, 'two' => 2, 'three' => 3]);
+$keys = $assocArray->keys();
+print_r($keys);
+// Expected output: JsArray ['one', 'two', 'three']
+```
+
+#### Syntax
+```php
+$keys = $array->keys();
+```
+
+#### Parameters
+No parameter for this method.
+
+#### Return Value
+`JsArray` instance with the keys of the provided array. It allows chaining.
+
+___
+
 ### # map
 The `map()` method **creates a new array** populated by the user callback function on every element of the calling array. It keeps the original array untouched.
 

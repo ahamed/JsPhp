@@ -176,18 +176,31 @@ trait SearchingTrait
 	 * Test if a value includes on an array.
 	 * Note: It checks loose equality while searching.
 	 *
-	 * @param	mixed	$item	The testing item
+	 * @param	mixed	$item		The testing item
+	 * @param	int		$fromIndex	From which index the search starts.
 	 *
 	 * @return	boolean	true if found, false otherwise.
 	 */
-	public function includes($item)
+	public function includes($item, $fromIndex = 0)
 	{
 		$this->check();
 
 		$elements = $this->get();
 		$length = $this->length;
 
-		for ($i = 0; $i < $length; ++$i)
+		/**
+		 * Sanitize the search starting position. If the provided fromIndex
+		 * is a negative number then take the maximum between the 0 and $length + $fromIndex
+		 * so that it never being a negative index number.
+		 * For positive numbers the from index never be greater than the $length
+		 *
+		 */
+		$fromIndex = (int) $fromIndex;
+		$start = $fromIndex < 0 ?
+			max(0, $length + $fromIndex) :
+			min($length, $fromIndex);
+
+		for ($i = $start; $i < $length; ++$i)
 		{
 			/**
 			 * It matches the array elements with loose equality with the searched item.
