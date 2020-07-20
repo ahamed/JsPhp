@@ -131,19 +131,16 @@ trait IteratorTrait
 	 * 									truth value of the returned value. If nothing
 	 * 									returns then it counts this as a falsy value.
 	 *
-	 * @param	boolean	$reserveKeys	By default it's false. If you make it true then
-	 * 									it keep the original keys of the input array, otherwise
-	 * 									it returns the array with 0 based sorted key.
-	 *
 	 * @return	array	Filtered Array
 	 * @since	1.0.0
 	 */
-	public function filter($callback, $reserveKeys = false)
+	public function filter($callback)
 	{
 		$this->isCallable($callback);
 		$this->check();
 
 		$elements = $this->get();
+		$isAssoc = self::isAssociativeArray($elements);
 
 		$filteredArray = [];
 		$index = 0;
@@ -177,13 +174,20 @@ trait IteratorTrait
 				}
 
 				/**
-				 * Check the user option, If user wants to keep the
-				 * original keys then keep it. By default it skip
-				 * the keys and returns a sequential array.
+				 * If the array is an associative array then preserve the keys
+				 * If any numeric key exists on the associative array then
+				 * rearrange the numeric indics from zero.
 				 */
-				if ($reserveKeys)
+				if ($isAssoc)
 				{
-					$filteredArray[$key] = $item;
+					if (\is_numeric($key))
+					{
+						$filteredArray[] = $item;
+					}
+					else
+					{
+						$filteredArray[$key] = $item;
+					}
 				}
 				else
 				{

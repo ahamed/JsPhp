@@ -73,62 +73,6 @@ trait SearchingTrait
 	}
 
 	/**
-	 * Find the last element if it satisfies the callback's rule.
-	 *
-	 * @param	func	$callback	Callback function which contains two arguments ($item, $index)
-	 * 								and returns a boolean value. If the return value is true then
-	 * 								it understands that the searching item is found and returns it.
-	 *
-	 * @return	mixed				Return the last value if found. null otherwise.
-	 * @since	1.0.0
-	 */
-	public function findLast($callback)
-	{
-		$this->check();
-		$this->isCallable($callback);
-
-		$elements = $this->get();
-		$length = $this->length;
-
-		$findValue = null;
-
-		$keys = array_keys($elements);
-
-		for ($i = $length - 1; $i >= 0; --$i)
-		{
-			$item = $elements[$i];
-
-			if (\is_array($elements[$i]))
-			{
-				$item = $this->bind($elements[$i], false);
-			}
-
-			$condition = \call_user_func_array($callback, [$item, $i, $keys[$i]]);
-
-			/**
-			 * If user condition returns truth value that means it finds the
-			 * value, breaks the loop and return the found value.
-			 */
-			if (!empty($condition))
-			{
-				$findValue = $elements[$i];
-				break;
-			}
-		}
-
-		/**
-		 * Check if the found value is an instance of JsArray.
-		 * If then make it an regular array.
-		 */
-		if ($findValue instanceof JsArray)
-		{
-			$findValue = $findValue->get();
-		}
-
-		return $findValue;
-	}
-
-	/**
 	 * Find element index if it satisfies the callback's rule.
 	 *
 	 * @param	func	$callback	Callback function which contains two arguments ($item, $index)
