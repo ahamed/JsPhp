@@ -608,3 +608,37 @@ No parameter for this method.
 
 #### Return Value
 The removed element from the array.
+
+___
+
+### # push
+The `push()` method adds a new element at the end of an array. This method changes the original array.
+
+```php
+$array = new JsArray([1, 2, 3, 4]);
+$length = $array->push(5);
+print_r($length);
+// Expected output: 5
+
+print_r($array);
+// Expected output: JsArray [1, 2, 3, 4, 5]
+
+$newLength = $array->push(5, 6, 8);
+print_r($newLength);
+// Expected output: 8
+
+print_r($array);
+// Expected output: JsArray [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+#### Syntax
+```php
+$length = $array->push([$item1 [, ...[, $itemN]]);
+```
+
+#### Parameters
+-***`$itemN`***
+    The item(s) to add to the end of the array.
+
+#### Return Value
+`Integer`, The length of the array after pushing the items.
