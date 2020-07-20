@@ -14,7 +14,8 @@ class ArrayBasicsTest extends TestCase
 			[[1, 2 ,3], [4], 4],
 			[['Jan', 'Feb', 'Mar'], ['Apr', 'May'], 5],
 			[['one' => 1, 'two' => 2, 'three' => 3], [4, 5, 6], 6],
-			[['a', 'b', 'c', 'd'], [], 0]
+			[['a', 'b', 'c', 'd'], [], 4],
+			[[1, 2, 3], [], 3]
 		];
 	}
 
@@ -293,9 +294,7 @@ class ArrayBasicsTest extends TestCase
 		}
 		else
 		{
-			$this->expectException(\InvalidArgumentException::class);
-			$this->expectExceptionMessage('You must have to pass at least one value to push');
-			$this->assertEquals($result, $array->push(...$push));
+			$this->assertEquals($result, $array->push());
 		}
 	}
 

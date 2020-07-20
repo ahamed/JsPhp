@@ -27,13 +27,14 @@ trait BasicsTrait
 	public function push(...$items) : int
 	{
 		$this->check();
-
-		if (!isset($items) || count($items) <= 0)
-		{
-			throw new \InvalidArgumentException(sprintf('You must have to pass at least one value to push'));
-		}
-
 		$elements = $this->get();
+
+		if (empty($items))
+		{
+			$this->bind($elements);
+
+			return $this->length;
+		}
 
 		/**
 		 * Push the element(s) into the elements and finally mutate the array
