@@ -642,3 +642,45 @@ $length = $array->push([$item1 [, ...[, $itemN]]);
 
 #### Return Value
 `Integer`, The length of the array after pushing the items.
+
+___ 
+
+### # reduce
+The `reduce()` method executes a reducer function (that you provide) on each element of the array, resulting in single output value.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$sum = $array->reduce(
+    function($acc, $curr) {
+        return $acc + $curr;   
+    },
+    0
+);
+print_r($sum);
+// Expected output: 15
+
+// Using php >= 7.4 arrow function
+$sum = $array->reduce(fn($acc, $curr) => $acc + $curr, 0);
+print_r($sum);
+// Expected output: 15
+```
+
+#### Syntax
+```php
+$result = $array->reduce($callback($accumulator, $currentValue [, $index [, $key]])[, $inital]);
+```
+
+#### Parameters
+- ***`$callback`***
+    The user defined callback function which is executed for every element (except for the first if no `$initial` value is given) of the array. It takes two required and two optional arguments.
+    + ***`$accumulator`***
+        The accumulator accumulates callback's return values. It is the accumulated value previously returned in the last invocation of the callback—or `$initial` value, if it was supplied (see below).
+    + ***`$currentValue`***
+        The current element being processed in the array.
+    + ***`$index`*** *(optional)*
+        The index of the current element being processed in the array. Starts from index 0 if an `$initial` value is provided. Otherwise, it starts from index 1.
+    + ***`$key`*** *(optional)*
+        The key of the current element being processed in the array. Starts from index 0 key if an `$initial` value is provided. Otherwise, it starts from index 1 key.
+- ***`$initial`*** *(optional)*
+    A value to use as the first argument to the first call of the callback. If no `$initial` value is supplied, the first element in the array will be used as the initial accumulator value and skipped as `$currentValue`.

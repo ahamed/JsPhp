@@ -9,5 +9,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
-$array = new JsArray(['two' => 2, 3, 4, 'five' => 5, 6]);
-print_r($array);
+$array = new JsArray([1, 2, 3, 4, 5]);
+// $sum = $array->reduce(fn($acc, $curr) => $acc * $curr);
+$sum = 0;
+print_r('ok');
+
