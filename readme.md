@@ -582,3 +582,29 @@ $newArray = $array->map($callback($item [, $index [, $key]]));
 
 #### Return Value
 A new `JsArray` instance after each item being processed by the callback function.
+___
+
+### # pop
+The `pop()` method removes the last element from an array and returns this element. This method changes the original array.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$removed = $array->pop();
+print_r($removed);
+// Expected output: 5
+
+print_r($array);
+// Expected output: JsArray [1, 2, 3, 4]
+```
+
+#### Syntax
+```php
+$removed = $array->pop();
+```
+
+#### Parameters
+No parameter for this method.
+
+#### Return Value
+The removed element from the array.
