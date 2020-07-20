@@ -17,26 +17,91 @@ Table Of Contents
 * [Installation](#installation)
 * [Usage](#usage)
 * [Array Methods](#array-methods)
-* [# concat](#-concat)
-    * [Example](#example)
-    * [Syntax](#syntax)
-    * [Parameters](#parameters)
-    * [Return Value](#return-value)
-* [# every](#-every)
-    * [Example](#example-1)
-    * [Syntax](#syntax-1)
-    * [Parameters](#parameters-1)
-    * [Return Value](#return-value-1)
-* [# forEach](#-foreach)
-    * [Example](#example-2)
-    * [Syntax](#syntax-2)
-    * [Parameters](#parameters-2)
-    * [Return Value](#return-value-2)
-* [# map](#-map)
-    * [Example](#example-3)
-    * [Syntax](#syntax-3)
-    * [Parameters](#parameters-3)
-    * [Return Value](#return-value-3)
+    * [# concat](#-concat)
+        * [Example](#example)
+        * [Syntax](#syntax)
+        * [Parameters](#parameters)
+        * [Return Value](#return-value)
+    * [# every](#-every)
+        * [Example](#example-1)
+        * [Syntax](#syntax-1)
+        * [Parameters](#parameters-1)
+        * [Return Value](#return-value-1)
+    * [# fill](#-fill)
+        * [Example](#example-2)
+        * [Syntax](#syntax-2)
+        * [Parameters](#parameters-2)
+        * [Return Value](#return-value-2)
+    * [# filter](#-filter)
+        * [Example](#example-3)
+        * [Syntax](#syntax-3)
+        * [Parameters](#parameters-3)
+        * [Return Value](#return-value-3)
+    * [# find](#-find)
+        * [Example](#example-4)
+        * [Syntax](#syntax-4)
+        * [Parameters](#parameters-4)
+        * [Return Value](#return-value-4)
+    * [# findIndex](#-findindex)
+        * [Example](#example-5)
+        * [Syntax](#syntax-5)
+        * [Parameters](#parameters-5)
+        * [Return Value](#return-value-5)
+    * [# findLastIndex](#-findlastindex)
+        * [Example](#example-6)
+        * [Syntax](#syntax-6)
+        * [Parameters](#parameters-6)
+        * [Return Value](#return-value-6)
+    * [# flat](#-flat)
+        * [Example](#example-7)
+        * [Syntax](#syntax-7)
+        * [Parameters](#parameters-7)
+        * [Return Value](#return-value-7)
+    * [# forEach](#-foreach)
+        * [Example](#example-8)
+        * [Syntax](#syntax-8)
+        * [Parameters](#parameters-8)
+        * [Return Value](#return-value-8)
+    * [# includes](#-includes)
+        * [Example](#example-9)
+        * [Syntax](#syntax-9)
+        * [Parameters](#parameters-9)
+        * [Return Value](#return-value-9)
+    * [# indexOf](#-indexof)
+        * [Example](#example-10)
+        * [Syntax](#syntax-10)
+        * [Parameters](#parameters-10)
+        * [Return Value](#return-value-10)
+    * [# join](#-join)
+        * [Example](#example-11)
+        * [Syntax](#syntax-11)
+        * [Parameters](#parameters-11)
+        * [Return Value](#return-value-11)
+    * [# keys](#-keys)
+        * [Example](#example-12)
+        * [Syntax](#syntax-12)
+        * [Parameters](#parameters-12)
+        * [Return Value](#return-value-12)
+    * [# map](#-map)
+        * [Example](#example-13)
+        * [Syntax](#syntax-13)
+        * [Parameters](#parameters-13)
+        * [Return Value](#return-value-13)
+    * [# pop](#-pop)
+        * [Example](#example-14)
+        * [Syntax](#syntax-14)
+        * [Parameters](#parameters-14)
+        * [Return Value](#return-value-14)
+    * [# push](#-push)
+        * [Example](#example-15)
+        * [Syntax](#syntax-15)
+        * [Parameters](#parameters-15)
+        * [Return Value](#return-value-15)
+    * [# reduce](#-reduce)
+        * [Example](#example-15)
+        * [Syntax](#syntax-16)
+        * [Parameters](#parameters-16)
+        * [Return Value](#return-value-16)
 </details>
 
 ### Why this library?
@@ -463,7 +528,7 @@ The `indexOf()` method returns the first index at which a given element can be f
 $array = new JsArray([1, 2, 3, 4, 5, 6]);
 $position = $array->indexOf(4);
 print_r($position);
-// Exptected output: 3
+// Expected output: 3
 
 $notFoundingPosition = $array->indexOf(2, 3);
 print_r($notFoundingPosition);
@@ -482,7 +547,7 @@ $position = $array->indexOf($item [, $fromIndex]);
     From which position finding starts. If this is omitted then searching begins from the index 0. If the `$fromIndex` is negative then its calculated like `$length + $fromIndex`. The `$fromIndex` value always lays within the range `[0, $length]`.
 
 #### Return Value
-`Integer`, The index of the searcing item. The index is zero based and if the item is not found then returns `-1`.
+`Integer`, The index of the searching item. The index is zero based and if the item is not found then returns `-1`.
 ___
 
 ### # join
@@ -614,6 +679,7 @@ ___
 ### # push
 The `push()` method adds a new element at the end of an array. This method changes the original array.
 
+#### Example
 ```php
 $array = new JsArray([1, 2, 3, 4]);
 $length = $array->push(5);
@@ -684,3 +750,6 @@ $result = $array->reduce($callback($accumulator, $currentValue [, $index [, $key
         The key of the current element being processed in the array. Starts from index 0 key if an `$initial` value is provided. Otherwise, it starts from index 1 key.
 - ***`$initial`*** *(optional)*
     A value to use as the first argument to the first call of the callback. If no `$initial` value is supplied, the first element in the array will be used as the initial accumulator value and skipped as `$currentValue`.
+
+#### Return Value
+The single value that results from the reduction. If the returned value is an array then the array converted into an instance of `JsArray` for chaining.
