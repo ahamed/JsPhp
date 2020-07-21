@@ -10,7 +10,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
 $array = new JsArray([1, 2, 3, 4, 5]);
-// $sum = $array->reduce(fn($acc, $curr) => $acc * $curr);
-$sum = 0;
-print_r('ok');
+$slice = $array->slice(10);
+print_r($slice);
 

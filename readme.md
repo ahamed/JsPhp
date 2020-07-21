@@ -12,96 +12,117 @@ Table Of Contents
     <summary>
         Show Table of Contents
     </summary>
- 
+
 * [Why this library?](#why-this-library)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Array Methods](#array-methods)
-    * [# concat](#-concat)
-        * [Example](#example)
-        * [Syntax](#syntax)
-        * [Parameters](#parameters)
-        * [Return Value](#return-value)
-    * [# every](#-every)
-        * [Example](#example-1)
-        * [Syntax](#syntax-1)
-        * [Parameters](#parameters-1)
-        * [Return Value](#return-value-1)
-    * [# fill](#-fill)
-        * [Example](#example-2)
-        * [Syntax](#syntax-2)
-        * [Parameters](#parameters-2)
-        * [Return Value](#return-value-2)
-    * [# filter](#-filter)
-        * [Example](#example-3)
-        * [Syntax](#syntax-3)
-        * [Parameters](#parameters-3)
-        * [Return Value](#return-value-3)
-    * [# find](#-find)
-        * [Example](#example-4)
-        * [Syntax](#syntax-4)
-        * [Parameters](#parameters-4)
-        * [Return Value](#return-value-4)
-    * [# findIndex](#-findindex)
-        * [Example](#example-5)
-        * [Syntax](#syntax-5)
-        * [Parameters](#parameters-5)
-        * [Return Value](#return-value-5)
-    * [# findLastIndex](#-findlastindex)
-        * [Example](#example-6)
-        * [Syntax](#syntax-6)
-        * [Parameters](#parameters-6)
-        * [Return Value](#return-value-6)
-    * [# flat](#-flat)
-        * [Example](#example-7)
-        * [Syntax](#syntax-7)
-        * [Parameters](#parameters-7)
-        * [Return Value](#return-value-7)
-    * [# forEach](#-foreach)
-        * [Example](#example-8)
-        * [Syntax](#syntax-8)
-        * [Parameters](#parameters-8)
-        * [Return Value](#return-value-8)
-    * [# includes](#-includes)
-        * [Example](#example-9)
-        * [Syntax](#syntax-9)
-        * [Parameters](#parameters-9)
-        * [Return Value](#return-value-9)
-    * [# indexOf](#-indexof)
-        * [Example](#example-10)
-        * [Syntax](#syntax-10)
-        * [Parameters](#parameters-10)
-        * [Return Value](#return-value-10)
-    * [# join](#-join)
-        * [Example](#example-11)
-        * [Syntax](#syntax-11)
-        * [Parameters](#parameters-11)
-        * [Return Value](#return-value-11)
-    * [# keys](#-keys)
-        * [Example](#example-12)
-        * [Syntax](#syntax-12)
-        * [Parameters](#parameters-12)
-        * [Return Value](#return-value-12)
-    * [# map](#-map)
-        * [Example](#example-13)
-        * [Syntax](#syntax-13)
-        * [Parameters](#parameters-13)
-        * [Return Value](#return-value-13)
-    * [# pop](#-pop)
-        * [Example](#example-14)
-        * [Syntax](#syntax-14)
-        * [Parameters](#parameters-14)
-        * [Return Value](#return-value-14)
-    * [# push](#-push)
-        * [Example](#example-15)
-        * [Syntax](#syntax-15)
-        * [Parameters](#parameters-15)
-        * [Return Value](#return-value-15)
-    * [# reduce](#-reduce)
-        * [Example](#example-15)
-        * [Syntax](#syntax-16)
-        * [Parameters](#parameters-16)
-        * [Return Value](#return-value-16)
+* [Documentation](#documentation)
+    * [Array Methods](#array-methods)
+        * [# concat](#-concat)
+            * [Example](#example)
+            * [Syntax](#syntax)
+            * [Parameters](#parameters)
+            * [Return Value](#return-value)
+        * [# every](#-every)
+            * [Example](#example-1)
+            * [Syntax](#syntax-1)
+            * [Parameters](#parameters-1)
+            * [Return Value](#return-value-1)
+        * [# fill](#-fill)
+            * [Example](#example-2)
+            * [Syntax](#syntax-2)
+            * [Parameters](#parameters-2)
+            * [Return Value](#return-value-2)
+        * [# filter](#-filter)
+            * [Example](#example-3)
+            * [Syntax](#syntax-3)
+            * [Parameters](#parameters-3)
+            * [Return Value](#return-value-3)
+        * [# find](#-find)
+            * [Example](#example-4)
+            * [Syntax](#syntax-4)
+            * [Parameters](#parameters-4)
+            * [Return Value](#return-value-4)
+        * [# findIndex](#-findindex)
+            * [Example](#example-5)
+            * [Syntax](#syntax-5)
+            * [Parameters](#parameters-5)
+            * [Return Value](#return-value-5)
+        * [# findLastIndex](#-findlastindex)
+            * [Example](#example-6)
+            * [Syntax](#syntax-6)
+            * [Parameters](#parameters-6)
+            * [Return Value](#return-value-6)
+        * [# flat](#-flat)
+            * [Example](#example-7)
+            * [Syntax](#syntax-7)
+            * [Parameters](#parameters-7)
+            * [Return Value](#return-value-7)
+        * [# forEach](#-foreach)
+            * [Example](#example-8)
+            * [Syntax](#syntax-8)
+            * [Parameters](#parameters-8)
+            * [Return Value](#return-value-8)
+        * [# includes](#-includes)
+            * [Example](#example-9)
+            * [Syntax](#syntax-9)
+            * [Parameters](#parameters-9)
+            * [Return Value](#return-value-9)
+        * [# indexOf](#-indexof)
+            * [Example](#example-10)
+            * [Syntax](#syntax-10)
+            * [Parameters](#parameters-10)
+            * [Return Value](#return-value-10)
+        * [# join](#-join)
+            * [Example](#example-11)
+            * [Syntax](#syntax-11)
+            * [Parameters](#parameters-11)
+            * [Return Value](#return-value-11)
+        * [# keys](#-keys)
+            * [Example](#example-12)
+            * [Syntax](#syntax-12)
+            * [Parameters](#parameters-12)
+            * [Return Value](#return-value-12)
+        * [# map](#-map)
+            * [Example](#example-13)
+            * [Syntax](#syntax-13)
+            * [Parameters](#parameters-13)
+            * [Return Value](#return-value-13)
+        * [# pop](#-pop)
+            * [Example](#example-14)
+            * [Syntax](#syntax-14)
+            * [Parameters](#parameters-14)
+            * [Return Value](#return-value-14)
+        * [# push](#-push)
+            * [Example](#example-15)
+            * [Syntax](#syntax-15)
+            * [Parameters](#parameters-15)
+            * [Return Value](#return-value-15)
+        * [# reduce](#-reduce)
+            * [Example](#example-16)
+            * [Syntax](#syntax-16)
+            * [Parameters](#parameters-16)
+            * [Return Value](#return-value-16)
+        * [# reverse](#-reverse)
+            * [Example](#example-17)
+            * [Syntax](#syntax-17)
+            * [Parameters](#parameters-17)
+            * [Return Value](#return-value-17)
+        * [# shift](#-shift)
+            * [Example](#example-18)
+            * [Syntax](#syntax-18)
+            * [Parameters](#parameters-18)
+            * [Return Value](#return-value-18)
+        * [# slice](#-slice)
+            * [Example](#example-19)
+            * [Syntax](#syntax-19)
+            * [Parameters](#parameters-19)
+            * [Return Value](#return-value-19)
+        * [# some](#-some)
+            * [Example](#example-20)
+            * [Syntax](#syntax-20)
+            * [Parameters](#parameters-20)
+            * [Return Value](#return-value-20)
 </details>
 
 ### Why this library?
@@ -136,15 +157,14 @@ $square = $array->map(
 
 print_r($square);
 ```
+# Documentation
+> For writing this documentation I've followed the [MDN](https://developer.mozilla.org/en-US/) a lot. Thanks to **MDN**, this site helps me to learn a lot of JS.
 
 ## Array Methods
-Here we cover most of the useful array methods. We now learn them one by one.
+Here I cover most of the useful array methods. We now learn them one by one. These methods are documented in alphabetical order.
 
->Before performing any array operations you have to pass the array to the `JsArray` constructor i.e. you have to create an `JsArray` instance with the native *php* array for performing array operations, like-
+>Before performing any array operations you have to pass the array to the `JsArray` constructor i.e. you have to create an `JsArray` instance with the native *php* array for performing array operations, like- `$array = new JsArray([1, 2, 3, 4]);`
 
-```php
-$array = new JsArray([1, 2, 3, 4]);
-```
 
 ### # concat
 The `concat()` method is used to merge two or more arrays. This is not change the original array but returns a new array after merging.
@@ -165,15 +185,15 @@ $newArray = $array->concat([$value1 [, $value2 [, ...[, $valueN]]]]);
 ```
 
 #### Parameters
-- ***`$valueN`***
+- ***`$valueN`*** *(optional)*
     Arrays and/or scalar values to concatenate into a new array. If all *`$valueN`* parameters are omitted then `concat` returns the copy of the original array.
 
 #### Return Value
-A new `JsArray` instance.
+A new `JsArray` instance with concatenated elements.
 ___
 
 ### # every
-The `every()` method tests whether all items in the array pass the test implemented by the user function. It returns a boolean value.
+The `every()` method tests whether all items in the array pass the test implemented by the user callback function.
 
 #### Example
 ```php
@@ -187,8 +207,9 @@ $isAllItemsOdd = $array->every(
 var_dump($isAllItemsOdd);
 // Expected output: bool(true)
 
-// Using Arrow Function
+// Using php >= 7.4 Arrow Function
 $isAllItemsEven = $array->every(fn($item) => $item % 2 === 0);
+
 var_dump($isAllItemsEven);
 // Expected output: bool(false)
 ```
@@ -214,7 +235,7 @@ $isPassed  = $array->every($callback($item [, $index [, $key]]));
 ___
 
 ### # fill
-The `fill()` method changes all elemenents by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
+The `fill()` method changes all elements by a static value within a range `[$start, $end)`. The `$start` is zero based index number and the `end` is also zero based index number but the `$end` index does not change. I.e. the `$end` is exclusive.
 - If the `$start` is negative then it's treated as `$array->length + $start` but the summation never be negative. If negative then it takes `0` as `$start` value.
 - If the `$end` is negative then it's treated as `$array->length + $end` but the summation never be negative. If negative then it takes `0` as `$end` value.
 
@@ -254,7 +275,7 @@ Modified `JsArray` instance filled with `$value`.
 ___ 
 
 ### # filter
-The `filter()` method **creates a new array** with all elements that pass the user provided function. If you apply the filter method to an associative array then it automatically preserves the `keys` of the array. If the array is a hybride array i.e. it contains both numeric keys and string keys then it preserves the string keys but the numeric keys will be rebased from zero.
+The `filter()` method **creates a new array** with all elements that pass the user provided function. If you apply the filter method to an associative array then it automatically preserves the `keys` of the array. If the array is a hybrid array i.e. it contains both numeric keys and string keys then it preserves the string keys but the numeric keys will be rebased from zero.
 
 #### Example
 ```php
@@ -277,7 +298,7 @@ $filtered = $array->filter(
 print_r($filtered);
 // Expected output: JsArray ['three' => 3, 'four' => 4]
 
-// Hybrid array exmample
+// Hybrid array example
 $array = new JsArray(['one' => 1, 'two' => 2, 3, 4, 'five' => 5, 6]);
 $filtered = $array->filter(
 	function ($item) {
@@ -429,7 +450,7 @@ The **index** of the last element that is found by satisfying the user defined c
 ___
 
 ### # flat
-The `flat()` method creates a new array with all sub-array elements recursively concatenated into it. It converts multi-dimentional array into one-dimentional array.
+The `flat()` method creates a new array with all sub-array elements recursively concatenated into it. It converts multi-dimensional array into one-dimensional array.
 
 #### Example
 ```php
@@ -448,7 +469,7 @@ $flatArray = $array->flat();
 No parameter for this method
 
 #### Return Value
-`JsArray` instance with flatten one-dimentional array.
+`JsArray` instance with flatten one-dimensional array.
 
 ___
 
@@ -491,7 +512,7 @@ $array->forEach($callback($item [, $index [, $key]]));
 ___
 
 ### # includes
-The `includes()` method determines whether an array includes a certain value among its entries, returning `true` or `false` as appropriate. This checks a loose equitiy for finding the value and for string it's case sensetive.
+The `includes()` method determines whether an array includes a certain value among its entries, returning `true` or `false` as appropriate. This checks a loose equity for finding the value and for string it's case sensitive.
 
 #### Example
 ```php
@@ -734,7 +755,7 @@ print_r($sum);
 
 #### Syntax
 ```php
-$result = $array->reduce($callback($accumulator, $currentValue [, $index [, $key]])[, $inital]);
+$result = $array->reduce($callback($accumulator, $currentValue [, $index [, $key]])[, $initial]);
 ```
 
 #### Parameters
@@ -753,3 +774,138 @@ $result = $array->reduce($callback($accumulator, $currentValue [, $index [, $key
 
 #### Return Value
 The single value that results from the reduction. If the returned value is an array then the array converted into an instance of `JsArray` for chaining.
+__
+
+### # reverse
+The `reverse()` method reverses an array [in place](https://en.wikipedia.org/wiki/In-place_algorithm). The first array element becomes the last, and the last array element becomes the first.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$array->reverse();
+
+print_r($array);
+// Expected output: JsArray [5, 4, 3, 2, 1]
+```
+
+#### Syntax
+```php
+$array->reverse();
+```
+
+#### Parameters
+No parameter for this method.
+
+#### Return Value
+The reversed array. The array is also an instance of `JsArray` for chaining.
+
+___
+
+### # shift
+The `shift()` method removes the first element from an array and returns that removed element. This method changes the original array.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$removed = $array->shift();
+
+print_r($removed);
+// Expected output: 1
+
+print_r($array);
+// Expected output: JsArray [2, 3, 4, 5]
+```
+
+#### Syntax
+```php
+$removed = $array->shift();
+```
+
+#### Parameters
+No parameter for this method.
+
+#### Return Value
+The removed element from the array; `NULL` if the array is empty.
+
+___
+
+### # slice
+The `slice()` method returns a copy of a portion of an array into a new array selected from the range `[$start to $end)` (`$end` not included) where `$start` and `$end` represent the index of items in that array. The original array will not be modified.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 3, 4, 5]);
+$sliced = $array->slice(1, 4);
+
+print_r($sliced);
+// Expected output: JsArray [2, 3, 4]
+
+$sliced = $array->slice(-3);
+print_r($sliced);
+// Expected output: JsArray [3, 4, 5]
+```
+
+#### Syntax
+```php
+$sliced = $array->slice([$start [, $end]]);
+```
+
+#### Parameters
+- ***`$start`*** *(optional)*
+    Zero-based index at which to start extraction.
+    A negative index can be used, indicating an offset from the end of the sequence. `slice(-2)` extracts the last two elements in the sequence.
+
+    If `$start` is `NULL` or empty, slice starts from the index 0.
+
+    If `$start` is greater than the index range of the sequence, an empty array is returned.
+- ***`$end`*** *(optional)*
+    Zero-based index before which to end extraction. slice extracts up to but not including end. For example, `slice(1, 4)` extracts the second element through the fourth element (elements indexed 1, 2, and 3).
+
+    A negative index can be used, indicating an offset from the end of the sequence. `slice(2,-1)` extracts the third element through the second-to-last element in the sequence.
+
+    If `$end` is omitted, slice extracts through the end of the sequence `($array->length)`.
+
+    If `$end` is greater than the length of the sequence, slice extracts through to the end of the sequence `($array->length)`.
+
+#### Return Value
+A new `JsArray` instance containing the extracted elements.
+
+___
+
+### # some
+The `some()` method tests whether at least one element in the array passes the test implemented by the user provided callback function. It returns a Boolean value.
+
+#### Example
+```php
+$array = new JsArray(['one' => 1, 'two' => 2, 'three' => 3, 'four' => 4]);
+$passed = $array->some(
+    function ($item, $index, $key) {
+        return strlen($key) > 4;
+    }
+);
+var_dump($passed);
+// Expected output: bool(true)
+
+// Using php >= 7.4 arrow function
+$notPassed = $array->some(fn($item, $index, $key) => strlen($key) < 3);
+var_dump($notPassed);
+// Expected output: bool(false)
+```
+
+#### Syntax
+```php
+$passed = $array->some($callback($item [, $index [, $key]]));
+```
+
+#### Parameters
+- ***`$callback`***
+    A function to test for each element, taking three arguments:
+    + ***`$item`***
+        The current element being processed in the array.
+    + ***`$index`*** *(optional)*
+        The index of the current element being processed in the array.
+    + ***`$key`*** *(optional)*
+        The key of the current element being processed in the array.
+
+#### Return Value
+`true` if the `$callback` function returns a truthy value for at least one element in the array. Otherwise, `false`.

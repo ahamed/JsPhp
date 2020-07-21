@@ -92,6 +92,7 @@ trait BasicsTrait
 
 		$elements = $this->get();
 		$length = $this->length;
+		$isAssoc = self::isAssociativeArray($elements);
 
 		/**
 		 * We cannot perform a pop operation on a empty array
@@ -106,7 +107,7 @@ trait BasicsTrait
 		 * and unset the value of the first key of the array.
 		 * And finally update the array by updated array and return the removed element.
 		 */
-		if (self::isAssociativeArray($elements))
+		if ($isAssoc)
 		{
 			$keys = $this->keys()->get();
 			$removedValue = $elements[$keys[0]];
