@@ -142,6 +142,9 @@ For example, you are using the `array_map` and the `array_filter` methods of *ph
 
 Then I've discovered that the **JavaScript** uses a good pattern for these cases and I am also a big fan of JavaScript. That's why I've decided to build this library. I can say that the JavaScript lovers can get the pure feelings of JavaScript by using this and the JavaScript non-lovers also get the advantage of the good structure of **array** manipulations.
 
+### Future Journey
+Currently I've covered only the `array` methods. In near future I will add the `object` and `string` methods.
+
 ### Installation
 `composer` is needed for installing the package. If you have composer installed then run the command.
 
