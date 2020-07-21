@@ -123,6 +123,16 @@ Table Of Contents
             * [Syntax](#syntax-20)
             * [Parameters](#parameters-20)
             * [Return Value](#return-value-20)
+         * [# sort](#-sort)
+            * [Example](#example-21)
+            * [Syntax](#syntax-21)
+            * [Parameters](#parameters-21)
+            * [Return Value](#return-value-21)
+         * [# splice](#-splice)
+            * [Example](#example-22)
+            * [Syntax](#syntax-22)
+            * [Parameters](#parameters-22)
+            * [Return Value](#return-value-22)
 </details>
 
 ### Why this library?
@@ -910,3 +920,90 @@ $passed = $array->some($callback($item [, $index [, $key]]));
 
 #### Return Value
 `true` if the `$callback` function returns a truthy value for at least one element in the array. Otherwise, `false`.
+
+___
+
+### # sort
+The `sort()` method sorts the elements of an array in place and returns the sorted array. The default sort order is ascending. Currently, the sort has been done by using `merge` sort implementation.
+
+
+#### Example
+```php
+$array = new JsArray([2, 4, 2, 1, 6, 7, 9]);
+$array->sort();
+print_r($array);
+// Expected output: JsArray [1, 2, 2, 4, 6, 7, 9]
+
+// Sort descending order
+$array = new JsArray([2, 4, 2, 1, 6, 7, 9]);
+$array->sort(
+    function ($a, $b) {
+        return $b - $a;
+    }
+);
+print_r($array);
+// Expected output: JsArray [9, 7, 6, 4, 2, 2, 1]
+```
+
+#### Syntax
+```php
+$array->sort([$callback($firstEl, $secondEl)]);
+```
+
+#### Parameters
+- ***`$callback`***
+    Specifies a function that defines the sort order. If it is omitted then the elements are sorted in ascending order.
+
+    + ***`$firstEl`***
+        The first element for comparison.
+    + ***`$secondEl`***
+        The second element for comparison.
+
+#### Return Value
+The original `JsArray` instance with sorted data. This method changes the original array.
+
+___
+
+### # splice
+The `splice()` method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+
+#### Example
+```php
+$array = new JsArray(['mango', 'orange', 'banana']);
+$deletedItems = $array->splice(1, 1);
+print_r($deletedItems);
+// Expected output: JsArray ['orange']
+
+print_r($array);
+// Expected output: JsArray ['mango', 'banana']
+
+// Insert new item without deleting
+$delete = $array->splice(0, 0, 'lemon', 'apple');
+print_r($array);
+// Expected output: JsArray ['lemon', 'apple', 'mango', 'banana']
+
+print_r($delete);
+// Expected output: JsArray []
+```
+
+#### Syntax
+```php
+$deletedItems = $array->splice([$start [, $deleteCount [, $item1 [, ...[, $itemN]]]]]);
+```
+
+#### Parameters
+-***`$start`*** *(optional)*
+    The index at which to start changing the array.
+    If greater than the length of the array, start will be set to the length of the array. In this case, no element will be deleted but the method will behave as an adding function, adding as many element as item[n*] provided.
+    If negative, it will begin that many elements from the end of the array. (In this case, the origin -1, meaning -n is the index of the nth last element, and is therefore equivalent to the index of `$array->length - n`.)
+    If `$array->length + $start` is less than 0, it will begin from index 0.
+
+-***`$deleteCount`*** *(optional)*
+    An integer indicating the number of elements in the array to remove from `$start`.
+    If `$deleteCount` is omitted, or if its value is equal to or larger than `$array->length - $start` (that is, if it is equal to or greater than the number of elements left in the array, starting at start), then all the elements from start to the end of the array will be deleted.
+
+-***`$itemN`*** *(optional)*
+    The elements to add to the array, beginning from `$start`. If you do not specify any elements, `splice()` will only remove elements from the array.
+
+#### Return Value
+An instance of `JsArray` with the deleted items.

@@ -9,7 +9,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
-$array = new JsArray([1, 2, 3, 4, 5]);
-$slice = $array->slice(10);
-print_r($slice);
+$array = new JsArray(['mango', 'banana']);
+$delete = $array->splice(0, 0, 'lemon', 'apple');
 
+print_r($delete);
