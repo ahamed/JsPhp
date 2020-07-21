@@ -126,14 +126,15 @@ Table Of Contents
 </details>
 
 ### Why this library?
-While using ***php*** *Array/Object/String* methods it feels troublesome because of their unstructured patterns.
+While using ***php*** **Array** methods it feels troublesome because of their unstructured patterns.
 
-For an example, say you are using the `array_map` and the `array_filter` methods of *php*. At the time of using, you may notice that for the `array_map` method, the `$callback` comes first then the `$array` but for the `array_filter` method, the `$array` comes first then the `$callback`. And this mis-structure exists everywhere.
+For example, you are using the `array_map` and the `array_filter` methods of *php*. At the time of using, you may notice that for the `array_map` method, the `$callback` comes as the first parameter of the method, then the `$array` but for the `array_filter` method, the `$array` comes first then the `$callback`. And this mixed structure exists everywhere.
 
-Then I've discovered that the **JavaScript** uses a good pattern for these cases and I am also a big fan of JavaScript. Thats why, I've decided to build this library. I can say that the JavaScript lovers can get the pure feelings of JavaScript by using this and the JavaScript non-lovers also get advantage of good structure of *array/object/string* manipulations.
+Then I've discovered that the **JavaScript** uses a good pattern for these cases and I am also a big fan of JavaScript. That's why I've decided to build this library. I can say that the JavaScript lovers can get the pure feelings of JavaScript by using this and the JavaScript non-lovers also get the advantage of the good structure of **array** manipulations.
 
 ### Installation
-Installation is very simple. Open your terminal at the project root directory and run-
+`composer` is needed for installing the package. If you have composer installed then run the command.
+
 ```console
 composer require ahamed/jsphp
 ```
