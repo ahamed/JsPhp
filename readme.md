@@ -177,7 +177,7 @@ print_r($square);
 ## Array Methods
 Here I cover most of the useful array methods. We now learn them one by one. These methods are documented in alphabetical order.
 
-Most of the methods will return an instance of `JsArray` for enabling the chaining. But you can access the array elements by their keys and/or indics. For example you've declared an array like-
+You can declare a `JsArray` simply-
 ```php
 $array = new JsArray([
     'name' => 'John Doe',
@@ -186,10 +186,14 @@ $array = new JsArray([
     'gender' => 'male'
 ]);
 ```
-Here the `$array` is an instance of `JsArray` but you can access the elements like native array.
+Note that the `$array` here is not a native *php* array, rather it's an instance of `JsArray`. But don't worry, you can perform array operations like-
+
 ```php
-print_r($array['name']); // "John Doe"
-print_r($array['email']); // "john@example.com"
+$name = $array['name'];
+$email = $array['email'];
+
+print_r($name); // "John Doe"
+print_r($email); // "john@example.com"
 ```
 
 You can change or set new value in the `$array` like native.
