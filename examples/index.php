@@ -9,7 +9,17 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
-$array = new JsArray(['mango', 'banana']);
-$delete = $array->splice(0, 0, 'lemon', 'apple');
+$array = new JsArray([
+	'name' => 'John Doe',
+	'email' => 'john@example.com',
+	'age' => 24,
+	'gender' => 'male'
+]);
 
-print_r($delete);
+$array['name'] = 'Alice Bob';
+$array['phone'] = "123445";
+
+foreach ($array as $key => $value)
+{
+	echo $key . " => " . $value . "\n";
+}
