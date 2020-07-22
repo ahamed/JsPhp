@@ -9,12 +9,14 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
-$array = new JsArray([
-	'name' => 'John Doe',
-	'email' => 'john@example.com',
-	'age' => 24,
-	'gender' => 'male'
-]);
+$array = new JsArray(
+	[
+		'name' => 'John Doe',
+		'email' => 'john@example.com',
+		'age' => 24,
+		'gender' => 'male'
+	]
+);
 
 $array['name'] = 'Alice Bob';
 $array['phone'] = "123445";

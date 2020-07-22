@@ -1061,3 +1061,14 @@ $deletedItems = $array->splice([$start [, $deleteCount [, $item1 [, ...[, $itemN
 
 #### Return Value
 An instance of `JsArray` with the deleted items.
+
+### Testing
+You can run `PHPUnit` testing and `PHP_CodeSniffer`.
+- For running unit test
+    ```console
+    composer run-script test
+    ```
+- For running phpcs test
+    ```console
+    composer run-script phpcs
+    ```
