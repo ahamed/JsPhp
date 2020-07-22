@@ -177,9 +177,6 @@ print_r($square);
 ## Array Methods
 Here I cover most of the useful array methods. We now learn them one by one. These methods are documented in alphabetical order.
 
->Before performing any array operations you have to pass the array to the `JsArray` constructor i.e. you have to create an `JsArray` instance with the native *php* array for performing array operations, like- `$array = new JsArray([1, 2, 3, 4]);`
-
-
 ### # concat
 The `concat()` method is used to merge two or more arrays. This is not change the original array but returns a new array after merging.
 
