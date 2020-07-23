@@ -6,22 +6,31 @@
  * @license MIT https://opensource.org/licenses/MIT
  */
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ahamed\JsPhp\JsArray;
-$array = new JsArray(
+use Ahamed\JsPhp\JsObject;
+
+$array = new JsArray(['name' => 'sajeeb', 'age' => 26]);
+
+$object = new JsObject(
 	[
 		'name' => 'John Doe',
-		'email' => 'john@example.com',
-		'age' => 24,
-		'gender' => 'male'
+		'age' => 24
 	]
 );
 
-$array['name'] = 'Alice Bob';
-$array['phone'] = "123445";
+$object['age'] = 45;
 
-foreach ($array as $key => $value)
-{
-	echo $key . " => " . $value . "\n";
-}
+unset($object->age);
+
+echo '<xmp>';
+print_r(($object));
+var_dump(isset($object['age']));
+echo '</xmp>';
+die();
+

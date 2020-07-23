@@ -26,6 +26,14 @@ class JsBase implements JsPhpCoreInterface
 	protected $elements = null;
 
 	/**
+	 * If any happens at the time of binding elements.
+	 *
+	 * @var		boolean		$bindError		True if any error happens at binding time, false otherwise.
+	 * @since	1.0.0
+	 */
+	protected $bindError = false;
+
+	/**
 	 * Constructor function.
 	 *
 	 * @param	array|object|string		$elements	The input elements.
@@ -48,19 +56,51 @@ class JsBase implements JsPhpCoreInterface
 	 */
 	public function bind($elements, $makeMutable = true)
 	{
+		$calledByClass = \get_called_class();
+		$type = ltrim(explode("\\", $calledByClass)[count(explode("\\", $calledByClass)) - 1], 'Js');
+
 		if (!isset($elements))
 		{
-			$calledByClass = \get_called_class();
-			$type = ltrim(explode("\\", $calledByClass)[count(explode("\\", $calledByClass)) - 1], 'Js');
-
 			throw new \UnexpectedValueException(\sprintf('You have to pass a non empty %s as a parameter', $type));
 		}
 
-		if (!(\is_array($elements)
-			|| \is_object($elements)
-			|| \is_string($elements)))
+		switch (\strtolower($type))
 		{
-			throw new \UnexpectedValueException(\sprintf('Invalid data provided. You just allowed to use %s', $type));
+			case 'array':
+				if (!\is_array($elements))
+				{
+					$this->bindError = true;
+				}
+			break;
+			case 'object':
+				if (\is_object($elements))
+				{
+					if (!($elements instanceof \stdClass))
+					{
+						$this->bindError = true;
+					}
+				}
+				else
+				{
+					$this->bindError = true;
+				}
+			break;
+			case 'string':
+				if (!\is_string($elements))
+				{
+					$this->bindError = true;
+				}
+			break;
+			default:
+				$this->bindError = false;
+			break;
+		}
+
+		if ($this->bindError)
+		{
+			throw new \UnexpectedValueException(
+				\sprintf('Invalid data provided. You just allowed to use %s', $type)
+			);
 		}
 
 		if ($makeMutable)
@@ -120,24 +160,29 @@ class JsBase implements JsPhpCoreInterface
 			throw new \Exception(\sprintf('You have to bind your %s first.', $type));
 		}
 
-		switch ($type)
+		switch (strtolower($type))
 		{
-			case 'Array':
+			case 'array':
 				if (!\is_array($this->elements))
 				{
-					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
+					throw new \TypeError(\sprintf('You must have to bind an %s.', ucfirst($type)));
 				}
 			break;
-			case 'Object':
+			case 'object':
 				if (!\is_object($this->elements))
 				{
-					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
+					throw new \TypeError(\sprintf('You must have to bind an %s.', ucfirst($type)));
+				}
+				elseif (\is_object($this->elements)
+					&& !($this->elements instanceof \stdClass))
+				{
+					throw new \TypeError(\sprintf('You must have to bind an %s.', ucfirst($type)));
 				}
 			break;
-			case 'String':
+			case 'string':
 				if (!\is_string($this->elements))
 				{
-					throw new \TypeError(\sprintf('You must have to bind an %s.', $type));
+					throw new \TypeError(\sprintf('You must have to bind an %s.', ucfirst($type)));
 				}
 			break;
 		}
@@ -147,11 +192,23 @@ class JsBase implements JsPhpCoreInterface
 	 * Get elements. This is not directly called with the class
 	 * but can call with any chaining method.
 	 *
-	 * @return	array|object|string
+	 * @return	array|object|string		The native elements for native operations.
 	 * @since	1.0.0
 	 */
 	public function get()
 	{
 		return $this->elements;
+	}
+
+	/**
+	 * Perform __toString() by using this method.
+	 * This method needs to override at the child classes for working.
+	 *
+	 * @return	string
+	 * @since	1.0.0
+	 */
+	public function toString() : string
+	{
+		return '@override the `toString()` method for getting the actual result';
 	}
 }

@@ -16,7 +16,7 @@ use Ahamed\JsPhp\Traits\Arrays\SearchingTrait;
 use Ahamed\JsPhp\Traits\Arrays\SortingTrait;
 
 /**
- * JsArray an abstract class gives the array methods
+ * JsArray class gives the array methods
  *
  */
 class JsArray extends JsBase implements
@@ -54,6 +54,17 @@ class JsArray extends JsBase implements
 	 */
 	public function __construct(array $elements = [])
 	{
+		/**
+		 * Force user to pass a valid php array as
+		 * the argument of the constructor function.
+		 */
+		if (!\is_array($elements))
+		{
+			throw new \InvalidArgumentException(
+				sprintf('You must have to pass a valid array as the argument of JsArray, "%s" given!', ucfirst(gettype($elements)))
+			);
+		}
+
 		$this->length = count($elements);
 
 		parent::__construct($elements);
@@ -476,7 +487,7 @@ class JsArray extends JsBase implements
 	 */
 	public function __toString()
 	{
-		return sprintf('For chaining method like map, filter, reduce, fill you have to call the function `get()` for getting the value.');
+		return sprintf('Call `get()` if a method is returning a `JsArray` instance for getting the native array elements.');
 	}
 
 	/**

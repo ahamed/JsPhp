@@ -42,4 +42,12 @@ interface JsPhpCoreInterface
 	 */
 	public function get();
 
+	/**
+	 * Perform __toString() using this method.
+	 *
+	 * @return	string
+	 * @since	1.0.0
+	 */
+	public function toString();
+
 }
