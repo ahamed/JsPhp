@@ -15,22 +15,21 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\JsObject;
 
-$array = new JsArray(['name' => 'sajeeb', 'age' => 26]);
-
-$object = new JsObject(
-	[
-		'name' => 'John Doe',
-		'age' => 24
-	]
+$object = new JsObject(['name' => 'Sajeeb', 'age' => 24]);
+$keys = JsObject::keys($object)->map(
+	function ($key) use ($object) {
+		return $object->$key;
+	}
 );
 
-$object['age'] = 45;
-
-unset($object->age);
-
 echo '<xmp>';
-print_r(($object));
-var_dump(isset($object['age']));
+print_r($keys);
 echo '</xmp>';
 die();
+
+
+// echo '<xmp>';
+// print_r($deep);
+// echo '</xmp>';
+// die();
 

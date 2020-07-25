@@ -9,14 +9,16 @@ namespace Ahamed\JsPhp;
 
 use Ahamed\JsPhp\Core\JsBase;
 use Ahamed\JsPhp\JsArray;
+use Ahamed\JsPhp\Traits\Objects\FactoryTrait;
 
 /**
  * JsObject the class implementation for various object methods.
  *
  */
-class JsObject extends JsBase implements
-	\ArrayAccess
+class JsObject extends JsBase implements \ArrayAccess
 {
+	use FactoryTrait;
+
 	/**
 	 * Constructor function for the JsObject class
 	 *
@@ -54,7 +56,11 @@ class JsObject extends JsBase implements
 		 */
 		if (\is_object($elements))
 		{
-			if (!($elements instanceof \stdClass))
+			if ($elements instanceof self)
+			{
+				$elements = $elements->get();
+			}
+			elseif (!($elements instanceof \stdClass))
 			{
 				$elements = $this->parseObject($elements);
 			}
@@ -97,7 +103,11 @@ class JsObject extends JsBase implements
 		 */
 		if (\is_object($elements))
 		{
-			if (!($elements instanceof \stdClass))
+			if ($elements instanceof self)
+			{
+				$elements = $elements->get();
+			}
+			elseif (!($elements instanceof \stdClass))
 			{
 				$elements = $this->parseObject($elements);
 			}
