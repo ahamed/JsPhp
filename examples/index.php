@@ -15,21 +15,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\JsObject;
 
-$object = new JsObject(['name' => 'Sajeeb', 'age' => 24]);
-$keys = JsObject::keys($object)->map(
-	function ($key) use ($object) {
-		return $object->$key;
-	}
-);
-
-echo '<xmp>';
-print_r($keys);
-echo '</xmp>';
-die();
-
-
-// echo '<xmp>';
-// print_r($deep);
-// echo '</xmp>';
-// die();
-
+$object = new JsObject(['day' => 1, 'month' => 6, 'year' => 2020]);
+$values = JsObject::entries($object);

@@ -33,4 +33,47 @@ trait FactoryTrait
 
 		return new JsArray($keys);
 	}
+
+	/**
+	 * Static method for getting the values of an object.
+	 *
+	 * @param	mixed	$object		The object elements for which the values return.
+	 *
+	 * @return	JsArray	An instance of JsArray with the values.
+	 * @since	1.0.0
+	 */
+	public static function values($object)
+	{
+		$instance = new JsObject($object);
+		$elements = $instance->get();
+		$values = array_values(\get_object_vars($elements));
+
+		return new JsArray($values);
+	}
+
+	/**
+	 * Get entries of an object. The entries is the array of [key, value] pair.
+	 *
+	 * @param	array|object|JsObject	$object		The object for which we get the entries.
+	 *
+	 * @return	JsArray		The entries array.
+	 * @since	1.0.0
+	 */
+	public static function entries($object)
+	{
+		$instance = new JsObject($object);
+		$elements = $instance->get();
+
+		$vars = \get_object_vars($elements);
+		$keys = array_keys($vars);
+		$values = array_values($vars);
+		$entries = [];
+
+		for ($i = 0, $length = count($keys); $i < $length; ++$i)
+		{
+			$entries[] = [$keys[$i], $values[$i]];
+		}
+
+		return new JsArray($entries);
+	}
 }
