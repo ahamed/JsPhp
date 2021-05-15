@@ -15,5 +15,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\JsObject;
 
-$object = new JsObject(['day' => 1, 'month' => 6, 'year' => 2020]);
-$values = JsObject::entries($object);
+$array = new JsArray(['I play dota', 'dota  is a good game']);
+$mapped = $array->flatMap(fn($item) => explode(' ', $item))
+	->filter(fn($item) => boolval($item));
+
+echo '<xmp>';
+print_r($mapped);
+echo '</xmp>';
+die();
+

@@ -21,12 +21,12 @@ trait IteratorTrait
 	 * Method to iterate through an array and apply the callback
 	 * function to each element and return the element
 	 *
-	 * @param	func	$callback	The callback function
+	 * @param	callable	$callback	The callback function
 	 *
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function forEach($callback)
+	public function forEach(callable $callback) : void
 	{
 		$this->isCallable($callback);
 		$this->check();
@@ -52,14 +52,14 @@ trait IteratorTrait
 	 * Method to iterate through an array and apply an modification
 	 * to each elements and returns a new array.
 	 *
-	 * @param	func	$callback	The callback function. This function must have a
+	 * @param	callable	$callback	The callback function. This function must have a
 	 * 								return value. If there is no return value then it
 	 * 								returns `null`.
 	 *
-	 * @return	array	Modified array
+	 * @return	JsArray	Modified array
 	 * @since	1.0.0
 	 */
-	public function map($callback)
+	public function map(callable $callback) : JsArray
 	{
 		$this->isCallable($callback);
 		$this->check();
@@ -125,16 +125,16 @@ trait IteratorTrait
 	/**
 	 * Filters an array and returns a new array.
 	 *
-	 * @param	func	$callback		The callback function. This function must
+	 * @param	callable	$callback		The callback function. This function must
 	 * 									return a boolean value. If returns something
 	 * 									else rather than true/false then it takes the
 	 * 									truth value of the returned value. If nothing
 	 * 									returns then it counts this as a falsy value.
 	 *
-	 * @return	array	Filtered Array
+	 * @return	JsArray		Filtered Array
 	 * @since	1.0.0
 	 */
-	public function filter($callback)
+	public function filter(callable $callback) : JsArray
 	{
 		$this->isCallable($callback);
 		$this->check();
@@ -205,10 +205,27 @@ trait IteratorTrait
 	}
 
 	/**
+	 * FlatMap method. This method run a map on an array using user callable and
+	 * flatten the the mapped array (into 1 depth) if nested found.
+	 *
+	 * @param	callable	$callable	The user defined callable.
+	 *
+	 * @return	JsArray		The flat mapped JsArray instance for chaining.
+	 * @since	1.0.0
+	 */
+	public function flatMap(callable $callable) : JsArray
+	{
+		$mapped = $this->map($callable);
+		$flatArrayInstance = $mapped->flat();
+
+		return $flatArrayInstance;
+	}
+
+	/**
 	 * Reduce function to loop through an array and returns
 	 * a new array based on it's callback.
 	 *
-	 * @param	func	$callback	Callback function which takes (accumulator, currentValue, index)
+	 * @param	callable	$callback	Callback function which takes (accumulator, currentValue, index)
 	 * 								as it's arguments and returns the accumulator.
 	 * @param	mixed	$initial	Initial value. If this is not defined then the first index of
 	 * 								array will be used as the initial value.

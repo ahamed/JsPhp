@@ -20,12 +20,12 @@ trait SortingTrait
 	/**
 	 * Method for sorting an array.
 	 *
-	 * @param	func		$callback	Callback function for the sort
+	 * @param	callable		$callback	Callback function for the sort
 	 *
 	 * @return	JsArray		The sorted array.
 	 * @since	1.0.0
 	 */
-	public function sort($callback = null)
+	public function sort(callable $callback = null)
 	{
 		$this->check();
 

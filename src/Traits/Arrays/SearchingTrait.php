@@ -19,14 +19,14 @@ trait SearchingTrait
 	/**
 	 * Find element if it satisfies the callback's rule.
 	 *
-	 * @param	func	$callback	Callback function which contains two arguments ($item, $index)
+	 * @param	callable	$callback	Callback function which contains two arguments ($item, $index)
 	 * 								and returns a boolean value. If the return value is true then
 	 * 								it understands that the searching item is found and returns it.
 	 *
 	 * @return	mixed				Searched value if found. null otherwise.
 	 * @since	1.0.0
 	 */
-	public function find($callback)
+	public function find(callable $callback)
 	{
 		$this->check();
 		$this->isCallable($callback);
@@ -75,7 +75,7 @@ trait SearchingTrait
 	/**
 	 * Find element index if it satisfies the callback's rule.
 	 *
-	 * @param	func	$callback	Callback function which contains two arguments ($item, $index)
+	 * @param	callable	$callback	Callback function which contains two arguments ($item, $index)
 	 * 								and returns a boolean value. If the return value is true then
 	 * 								it understands that the searching item is found and returns it's index value.
 	 *
@@ -125,7 +125,7 @@ trait SearchingTrait
 	/**
 	 * Find the last element index if it satisfies the callback's rule.
 	 *
-	 * @param	func	$callback	Callback function which contains two arguments ($item, $index)
+	 * @param	callable	$callback	Callback function which contains two arguments ($item, $index)
 	 * 								and returns a boolean value. If the return value is true then
 	 * 								it understands that the searching item is found and returns it's index value.
 	 *

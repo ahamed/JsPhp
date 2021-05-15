@@ -45,6 +45,16 @@ class ArrayIteratorTest extends TestCase
 		$this->assertEquals($mapped->get(), [1, 0, 1, 4, 25, 9]);
 	}
 
+	public function testJsArrayFlatMap()
+	{
+		$array = new JsArray([-1, 0, 1, 2, -5, 3]);
+		$flatten = $array->flatMap(function($item) {
+			return [$item * 2];
+		});
+
+		$this->assertEquals([-2, 0, 2, 4, -10, 6], $flatten->get());
+	}
+
 	public function testJsArrayFilter()
 	{
 		$array = new JsArray([1, 2, 3, 4, 5, 6]);

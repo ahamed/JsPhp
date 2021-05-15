@@ -32,11 +32,11 @@ class ArrayModifierTest extends TestCase
     public function flatDataProvider()
     {
         return [
-            [[1, 2, 3, 4], [1, 2, 3, 4]],
-            [[[1, 2, [3, 4]]], [1, 2, 3, 4]],
-            [[[1, 2], [3, [4, [5, [6, [7]]]]]], [1, 2, 3, 4, 5, 6, 7]],
-            [[[1, 2], [3, 4], [5, 6]], [1, 2, 3, 4, 5, 6]],
-            [['one' => 1, 'two' => 2, ['three' => 3]], 'error']
+            [[1, 2, 3, 4], [1, 2, 3, 4], PHP_INT_MAX],
+            [[[1, 2, [3, 4]]], [1, 2, 3, 4], PHP_INT_MAX],
+            [[[1, 2], [3, [4, [5, [6, [7]]]]]], [1, 2, 3, 4, 5, 6, 7], PHP_INT_MAX],
+            [[[1, 2], [3, 4], [5, 6]], [1, 2, 3, 4, 5, 6], PHP_INT_MAX],
+            [['one' => 1, 'two' => 2, ['three' => 3]], 'error', PHP_INT_MAX]
         ];
     }
 
@@ -63,19 +63,19 @@ class ArrayModifierTest extends TestCase
     /**
      * @dataProvider    flatDataProvider()
      */
-    public function testFlatArray($data, $result)
+    public function testFlatArray($data, $result, $depth)
     {
         $array = new JsArray($data);
 
         if (\is_array($result))
         {
-            $this->assertEquals((new JsArray($result)), $array->flat());
+            $this->assertEquals($result, $array->flat($depth)->get());
         }
         elseif (\is_string($result) && $result === 'error')
         {
             $this->expectException(\UnexpectedValueException::class);
 			$this->expectExceptionMessage('Flatten could not be applied to an associative array. Please use it in sequential array.');
-			$this->assertEquals($result, $array->flat());
+			$this->assertEquals($result, $array->flat($depth));
         }
 
     }

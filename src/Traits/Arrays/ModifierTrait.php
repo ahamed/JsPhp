@@ -7,6 +7,9 @@
  */
 namespace Ahamed\JsPhp\Traits\Arrays;
 
+use Ahamed\JsPhp\JsArray;
+use Generator;
+
 /**
  * Trait function for array modifiers
  *
@@ -157,60 +160,62 @@ trait ModifierTrait
 	 * Currently there is no level of flattening the array, it flattens
 	 * using Infinite level and makes a flat array.
 	 *
+	 * @param	int			$depth	The flatten depth.
+	 *
 	 * @return	JsArray		The flatten array as the instanceof JsArray so that user can chain it.
 	 * @since	1.0.0
 	 */
-	public function flat()
+	public function flat(int $depth = 1)
 	{
 		$this->check();
 
 		/**
 		 * Created a stack with the array
 		 */
-		$stack  = $this->get();
+		$elements  = $this->get();
 
 		/**
 		 * Check the array is an associative array or not. If it's an associative
 		 * array then throw an error that Flattening could not be applied on an associative array.
 		 */
-		$isAssoc = self::isAssociativeArray($stack);
+		$isAssoc = self::isAssociativeArray($elements);
 
 		if ($isAssoc)
 		{
 			throw new \UnexpectedValueException(\sprintf('Flatten could not be applied to an associative array. Please use it in sequential array.'));
 		}
 
-		$flattenArray = [];
+		$flattenArray = iterator_to_array($this->flatten($elements, $depth), false);
 
-		/**
-		 * Checking while the stack is not empty then pop the last value
-		 * from the stack, if the popped value is an array then push the
-		 * value into the stack, otherwise push the value into the flattenArray.
-		 */
-		while (count($stack))
+		return $this->bind($flattenArray, false);
+	}
+
+	/**
+	 * Flatten the array elements by using depth and generator.
+	 *
+	 * @param	array	$elements	The elements array.
+	 * @param	int		$depth		The depth value.
+	 *
+	 * @return	Generator			A generator with flatten values.
+	 * @since	1.0.0
+	 */
+	private function flatten(array $elements, int $depth) : Generator
+	{
+		if ($depth === null)
 		{
-			$next = array_pop($stack);
+			$depth = 1;
+		}
 
-			if (\is_array($next))
+		foreach ($elements as $item)
+		{
+			if (is_array($item) && $depth > 0)
 			{
-				$stack = array_merge($stack, $next);
+				yield from $this->flatten($item, $depth - 1);
 			}
 			else
 			{
-				array_push($flattenArray, $next);
+				yield $item;
 			}
 		}
-
-		/**
-		 * Bind the new flattenArray but in immutable state. So it returns
-		 * a new array without touching the original one.
-		 *
-		 * It also reverse the flattenArray because while we've created the
-		 * flatten array then it has created in a reversed order as we use
-		 * stack and it takes values from the last.
-		 */
-		$newInstance = $this->bind($flattenArray, false);
-
-		return $newInstance->reverse();
 	}
 }

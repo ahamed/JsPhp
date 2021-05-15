@@ -245,7 +245,7 @@ trait BasicsTrait
 	 * @return	string				Joined string.
 	 * @since	1.0.0
 	 */
-	public function join($separator = ',') : string
+	public function join(string $separator = ',') : string
 	{
 		$this->check();
 
@@ -348,10 +348,10 @@ trait BasicsTrait
 	 * @param	int		$start		The start value
 	 * @param	int		$end		The end value.
 	 *
-	 * @return	self				The sliced array
+	 * @return	JsArray				The sliced array
 	 * @since	1.0.0
 	 */
-	public function slice($start = 0, $end = null) : self
+	public function slice(int $start = 0, int $end = null) : JsArray
 	{
 		$this->check();
 
@@ -426,10 +426,10 @@ trait BasicsTrait
 	 * @param	int		$deleteCount	How many items to delete after the start index.
 	 * @param	mixed	...$items		A variable number of items parameter to insert after deletion after the start index.
 	 *
-	 * @return	self					Deleted items array but the self instance for chaining.
+	 * @return	JsArray					Deleted items array but the self instance for chaining.
 	 * @since	1.0.0
 	 */
-	public function splice($start = null, $deleteCount = null, ...$items) : self
+	public function splice(int $start = null, int $deleteCount = null, ...$items) : JsArray
 	{
 		$this->check();
 
@@ -613,7 +613,7 @@ trait BasicsTrait
 	 * @return	JsArray		Concatenated array.
 	 * @since	1.0.0
 	 */
-	public function concat(...$values)
+	public function concat(...$values) : JsArray
 	{
 		$this->check();
 		$elements = $this->get();

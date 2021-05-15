@@ -392,7 +392,18 @@ class ArrayBasicsTest extends TestCase
 	{
 		$array = new JsArray($data);
 
-		$this->assertEquals((new JsArray($result)), $array->slice($start, $end));
+		if ($start === null)
+		{
+			$this->assertEquals($result, $array->slice()->get());
+		}
+		elseif ($start !== null && $end === null)
+		{
+			$this->assertEquals($result, $array->slice($start)->get());
+		}
+		elseif ($start !== null && $end !== null)
+		{
+			$this->assertEquals($result, $array->slice($start, $end)->get());
+		}
 	}
 
 	/**
