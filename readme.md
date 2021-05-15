@@ -231,6 +231,35 @@ print_r($elements);
 Now you can perform any native PHP array methods on `$elements` array.
 
 
+### # at
+The `at()` method returns a specific index value of an array. This is similar to the array's square bracket index but the benefit over the square bracket is that
+it can brings negative index value. If you put `-1` as index then it returns the
+last value of the array.
+If the index is not in the range then it throws `OutOfRangeException`.
+
+#### Example
+```php
+$array = new JsArray([1, 2, 4, 5, 6]);
+print_r($array->at(0)); // Output: 1
+print_r($array->at(3)); // Output: 5
+print_r($array->at(-1)); // Output: 6
+print_r($array->at(-4)); // Output: 2
+print_r($array->at(6)); // Output: throws OutOfRangeException
+print_r($array->at(-6)); // Output: throws OutOfRangeException
+```
+
+#### Syntax
+```php
+$value = $array->at($index);
+```
+
+#### Parameters
+- ___`$index`___
+    The index array index value. This index will be an integer value ranged `[0, length - 1]`.
+
+#### Return Value
+The value of the array at the corresponding index position. If index is not within the range `[0, length - 1]` then throws `OutOfRangeException`.
+
 ### # concat
 The `concat()` method is used to merge two or more arrays. This is not change the original array but returns a new array after merging.
 
