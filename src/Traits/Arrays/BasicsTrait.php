@@ -17,6 +17,44 @@ use Ahamed\JsPhp\JsArray;
 trait BasicsTrait
 {
 	/**
+	 * Array at method. This method will return the value of the array in the
+	 * provided at index. The benefit over the square bracket index is that it
+	 * can return you a value of negative index.
+	 * This method is only works on sequential array. For associative array it
+	 * returns null.
+	 *
+	 * @param	integer	$index	The at index.
+	 *
+	 * @return	mixed	The corresponding value situated at the index.
+	 * @since	1.0.0
+	 */
+	public function at(int $index)
+	{
+		$this->check();
+		$elements = $this->get();
+
+		/** For associative array it always returns null. */
+		if (self::isAssociativeArray($elements))
+		{
+			return null;
+		}
+
+		$length = $this->length;
+
+		if ($index < 0)
+		{
+			$index = $length + $index;
+		}
+
+		if ($index >= $length || $index < 0)
+		{
+			throw new \OutOfRangeException(\sprintf('The provided index %d is out of range.', $index));
+		}
+
+		return $elements[$index];
+	}
+
+	/**
 	 * Array push method
 	 *
 	 * @param	mixed	...$items	Variable number of elements to push into the array

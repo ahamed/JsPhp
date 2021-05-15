@@ -1,11 +1,22 @@
 <?php
 
 use Ahamed\JsPhp\JsArray;
+use ArgumentCountError;
+use OutOfRangeException;
+use PharIo\Manifest\InvalidUrlException;
 use PHPUnit\Framework\TestCase;
 
 class ArrayBasicsTest extends TestCase
 {
 	/** ------------- Test Data Providers ------------- */
+
+	public function atDataProvider()
+	{
+		return [
+			[[1, 2, 3, 5, 6, 8 , 4, 0, 10], [0, 2, 8, 9, -1, -4, -10, -9], [1, 3, 10, 'OutOfRangeException', 10, 8, 'OutOfRangeException', 1]],
+			[['one' => 1, 'two' => 2, 'three' => 3, 4 => 40], [0, 1, -1, 4], [null, null, null, null]]
+		];
+	}
 
 	public function pushDataProvider()
 	{
@@ -280,6 +291,32 @@ class ArrayBasicsTest extends TestCase
 	}
 
 	/** ------------- Test Functions ------------- */
+	/**
+	 * @dataProvider	atDataProvider()
+	 */
+	public function testAt($data, $indics, $result)
+	{
+		$array = new JsArray($data);
+
+		foreach ($indics as $key => $index)
+		{
+			$value = $result[$key];
+
+			if ($value === 'OutOfRangeException')
+			{
+				$this->expectException(OutOfRangeException::class);
+				$this->expectExceptionMessage(\sprintf('The provided index %d is out of range.', $index));
+				$array->at($index);
+			}
+			else
+			{
+				$this->assertEquals($value, $array->at($index));
+			}
+		}
+
+		$this->expectException(ArgumentCountError::class);
+		$array->at();
+	}
 
 	/**
 	 * @dataProvider 	pushDataProvider()
