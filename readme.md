@@ -605,6 +605,39 @@ $array->forEach($callback($item [, $index [, $key]]));
 `NULL`
 ___
 
+### # JsArray::from
+The `JsArray::from` static method responsible for creating a JsArray instance from given sequential array or string. This can also create an array if you provide a special associative array `['length' => integer_value]`.
+
+#### Example
+```php
+$array = JsArray::from([1, 2, 3, 4]);
+print_r($array->get()); // Output: [1, 2, 3, 4]
+
+$array = JsArray::from("foo");
+print_r($array->get()); // Output: ['f', 'o', 'o'];
+
+$array = JsArray::from(['length' => 4], fn($x, $i) => $i);
+print_r($array->get()); // Output: [0, 1, 2, 3]
+
+$array = JsArray::from([1, 2, 3], fn($x) => $x * 2);
+print_r($array->get()); // Output: [2, 4, 6]
+```
+#### Syntax
+```php
+$array = JsArray::from($iterable [, $callable]);
+```
+
+#### Parameters
+- ___`$iterable`___
+    The iterable array or string to convert to JsArray. The `$iterable` can contains either array or string. There may be a special associative array with providing length property by which you can generate an array with the length value.
+- ___`$callable`___ _(optional)_
+    The map function to call on every item of the array.
+
+#### Return Value
+A JsArray Instance with generated array items.
+
+---
+
 ### # includes
 The `includes()` method determines whether an array includes a certain value among its entries, returning `true` or `false` as appropriate. This checks a loose equity for finding the value and for string it's case sensitive.
 

@@ -17,6 +17,66 @@ use Ahamed\JsPhp\JsArray;
 trait BasicsTrait
 {
 	/**
+	 * Array::from method for generating an array (or JsArray instance) from an iterable
+	 * with a user defined callable modifier.
+	 *
+	 * @param	array|string		$iterable	The iterable.
+	 * @param	callable			$callable	The user defined callable.
+	 *
+	 * @return	JsArray				The created JsArray instance.
+	 * @since	1.0.0
+	 */
+	public static function from($iterable, callable $callable = null) : JsArray
+	{
+		$array = new JsArray();
+		$localArray = [];
+
+		if ($iterable instanceof JsArray)
+		{
+			$iterable = $iterable->get();
+		}
+
+		if (\is_string($iterable))
+		{
+			$iterable = \str_split($iterable, 1);
+		}
+
+		$isAssoc = JsArray::isAssociativeArray($iterable);
+
+		if ($isAssoc && !isset($iterable['length']))
+		{
+			return $array->bind([], false);
+		}
+		elseif ($isAssoc && isset($iterable['length']))
+		{
+			$length = (int) $iterable['length'];
+
+			for ($i = 0; $i < $length; $i++)
+			{
+				if (!$callable)
+				{
+					$localArray[] = null;
+				}
+				else
+				{
+					$localArray[] = \call_user_func_array($callable, [null, $i]);
+				}
+			}
+
+			return $array->bind($localArray, false);
+		}
+
+		foreach ($iterable as $index => $item)
+		{
+			$localArray[$index] = $callable
+				? \call_user_func_array($callable, [$item, $index])
+				: $item;
+		}
+
+		return $array->bind($localArray, false);
+	}
+
+	/**
 	 * Array at method. This method will return the value of the array in the
 	 * provided at index. The benefit over the square bracket index is that it
 	 * can return you a value of negative index.
