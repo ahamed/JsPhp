@@ -231,5 +231,11 @@ class JsArrayTest extends TestCase
 
 		$array = JsArray::from('I love to play dota 2');
 		$this->assertEquals(["I", " ", "l", "o", "v", "e", " ", "t", "o", " ", "p", "l", "a", "y", " ", "d", "o", "t", "a", " ", "2"], $array->get());
+
+		$array = JsArray::from(9);
+		$this->assertEquals([], $array->get());
+
+		$array = JsArray::from(5, function($x, $i) {return $i;});
+		$this->assertEquals([], $array->get());
 	}
 }

@@ -31,18 +31,34 @@ trait BasicsTrait
 		$array = new JsArray();
 		$localArray = [];
 
+		/** If JsArray provided as iterable then get the array elements. */
 		if ($iterable instanceof JsArray)
 		{
 			$iterable = $iterable->get();
 		}
 
+		/** If string given as iterable then split the string and make an array of characters. */
 		if (\is_string($iterable))
 		{
 			$iterable = \str_split($iterable, 1);
 		}
 
+		/** If iterable is not an array then return an JsArray instance with empty array. */
+		if (!\is_array($iterable))
+		{
+			return $array->bind([], false);
+		}
+
 		$isAssoc = JsArray::isAssociativeArray($iterable);
 
+		/**
+		 * Check if the iterable is an associative array.
+		 * If so then check if this array contains the `length` property.
+		 * If length not found then return a JsArray instance with empty array.
+		 * Otherwise create an array from 0 to $length - 1 and if $callable provided
+		 * then create the array by using the $callable function's return value
+		 * otherwise fill by null and return the newly created array.
+		 */
 		if ($isAssoc && !isset($iterable['length']))
 		{
 			return $array->bind([], false);
@@ -66,6 +82,7 @@ trait BasicsTrait
 			return $array->bind($localArray, false);
 		}
 
+		/** If $iterable is a plain array. */
 		foreach ($iterable as $index => $item)
 		{
 			$localArray[$index] = $callable
