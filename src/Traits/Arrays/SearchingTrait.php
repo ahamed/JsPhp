@@ -28,12 +28,8 @@ trait SearchingTrait
 	 */
 	public function find(callable $callback)
 	{
-		$this->check();
-		$this->isCallable($callback);
-
 		$elements = $this->get();
 		$findValue = null;
-
 		$index = 0;
 
 		foreach ($elements as $key => $item)
@@ -84,11 +80,7 @@ trait SearchingTrait
 	 */
 	public function findIndex($callback) : int
 	{
-		$this->check();
-		$this->isCallable($callback);
-
 		$elements = $this->get();
-
 		$index = 0;
 		$findIndex = -1;
 		$arrayIndex = 0;
@@ -134,9 +126,6 @@ trait SearchingTrait
 	 */
 	public function findLastIndex($callback) : int
 	{
-		$this->check();
-		$this->isCallable($callback);
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -183,8 +172,6 @@ trait SearchingTrait
 	 */
 	public function includes($item, $fromIndex = 0)
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -225,8 +212,6 @@ trait SearchingTrait
 	 */
 	public function indexOf($item, $fromIndex = 0)
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -292,8 +277,6 @@ trait SearchingTrait
 	 */
 	public function lastIndexOf($item, $fromIndex = 0)
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 

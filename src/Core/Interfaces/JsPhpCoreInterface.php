@@ -18,13 +18,23 @@ interface JsPhpCoreInterface
 	 * The bind function to store the element
 	 * i.e. the array|object|string for being modification
 	 *
-	 * @param   array|object|string     $elements    	The element in which the methods will be applied.
-	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
+	 * @param   mixed	$elements    	The element in which the methods will be applied.
+	 * @param	boolean	$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
 	 * @return  void
 	 * @since   1.0.0
 	 */
 	public function bind($elements, $makeMutable = true);
+
+	/**
+	 * Check the elements is valid or not.
+	 *
+	 * @param	mixed	$elements	The elements to check.
+	 *
+	 * @return	bool	The checked result. True if the elements are valid, false otherwise.
+	 * @since	1.0.0
+	 */
+	public function check($elements) : bool;
 
 	/**
 	 * Reset the elements
@@ -41,13 +51,4 @@ interface JsPhpCoreInterface
 	 * @sine	1.0.0
 	 */
 	public function get();
-
-	/**
-	 * Perform __toString() using this method.
-	 *
-	 * @return	string
-	 * @since	1.0.0
-	 */
-	public function toString();
-
 }

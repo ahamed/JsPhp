@@ -28,11 +28,7 @@ trait IteratorTrait
 	 */
 	public function forEach(callable $callback) : void
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		$elements = $this->get();
-
 		$index = 0;
 
 		foreach ($elements as $key => $item)
@@ -61,13 +57,8 @@ trait IteratorTrait
 	 */
 	public function map(callable $callback) : JsArray
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		$elements = $this->get();
-
 		$modifiedArray = [];
-
 		$index = 0;
 
 		foreach ($elements as $key => $item)
@@ -136,12 +127,8 @@ trait IteratorTrait
 	 */
 	public function filter(callable $callback) : JsArray
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		$elements = $this->get();
 		$isAssoc = self::isAssociativeArray($elements);
-
 		$filteredArray = [];
 		$index = 0;
 
@@ -235,12 +222,8 @@ trait IteratorTrait
 	 */
 	public function reduce($callback, $initial = null)
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		// Get the array
 		$elements = $this->get();
-
 		$skipFirst = false;
 
 		/**

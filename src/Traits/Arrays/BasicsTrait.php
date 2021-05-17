@@ -107,7 +107,6 @@ trait BasicsTrait
 	 */
 	public function at(int $index)
 	{
-		$this->check();
 		$elements = $this->get();
 
 		/** For associative array it always returns null. */
@@ -141,7 +140,6 @@ trait BasicsTrait
 	 */
 	public function push(...$items) : int
 	{
-		$this->check();
 		$elements = $this->get();
 
 		if (empty($items))
@@ -171,8 +169,6 @@ trait BasicsTrait
 	 */
 	public function pop()
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -203,7 +199,7 @@ trait BasicsTrait
 	 */
 	public function shift()
 	{
-		$this->check();
+		
 
 		$elements = $this->get();
 		$length = $this->length;
@@ -254,11 +250,11 @@ trait BasicsTrait
 	 */
 	public function unshift(...$items) : int
 	{
-		$this->check();
-
 		if (!isset($items) || count($items) <= 0)
 		{
-			throw new \UnexpectedValueException(sprintf('You must have to pass at least one value to push'));
+			throw new \UnexpectedValueException(
+				\sprintf('You must have to pass at least one value to push')
+			);
 		}
 
 		$elements = $this->get();
@@ -324,8 +320,6 @@ trait BasicsTrait
 	 */
 	public function join(string $separator = ',') : string
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -430,8 +424,6 @@ trait BasicsTrait
 	 */
 	public function slice(int $start = 0, int $end = null) : JsArray
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -508,8 +500,6 @@ trait BasicsTrait
 	 */
 	public function splice(int $start = null, int $deleteCount = null, ...$items) : JsArray
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 		$keys = $this->keys()->get();
@@ -692,7 +682,6 @@ trait BasicsTrait
 	 */
 	public function concat(...$values) : JsArray
 	{
-		$this->check();
 		$elements = $this->get();
 
 		/**

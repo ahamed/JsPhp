@@ -27,8 +27,6 @@ trait SortingTrait
 	 */
 	public function sort(callable $callback = null)
 	{
-		$this->check();
-
 		$sorted = Utilities::mergeSort($this, $callback);
 
 		if ($sorted instanceof JsArray)

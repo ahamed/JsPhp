@@ -27,13 +27,8 @@ trait ConditionalTrait
 	 */
 	public function every(callable $callback) : bool
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		$elements = $this->get();
-
 		$passed = 0;
-
 		$index = 0;
 
 		foreach ($elements as $key => $item)
@@ -67,13 +62,8 @@ trait ConditionalTrait
 	 */
 	public function some(callable $callback) : bool
 	{
-		$this->isCallable($callback);
-		$this->check();
-
 		$elements = $this->get();
-
 		$passed = false;
-
 		$index = 0;
 
 		foreach ($elements as $key => $item)

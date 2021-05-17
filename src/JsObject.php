@@ -7,15 +7,18 @@
  */
 namespace Ahamed\JsPhp;
 
+use Ahamed\JsPhp\Core\Interfaces\JsPhpCoreInterface;
 use Ahamed\JsPhp\Core\JsBase;
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\Traits\Objects\FactoryTrait;
+use Exception;
+use stdClass;
 
 /**
  * JsObject the class implementation for various object methods.
  *
  */
-class JsObject extends JsBase implements \ArrayAccess
+class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
 {
 	use FactoryTrait;
 
@@ -42,7 +45,7 @@ class JsObject extends JsBase implements \ArrayAccess
 		 * Force user to pass a valid array|object as the argument
 		 * of the constructor function of the JsObject class.
 		 */
-		if (!(\is_object($elements) || \is_array($elements)))
+		if (!$this->check($elements))
 		{
 			throw new \InvalidArgumentException(
 				sprintf('You must have to provide Object or Array as the argument of the JsObject class, "%s" given!', ucfirst(gettype($elements)))
@@ -56,7 +59,7 @@ class JsObject extends JsBase implements \ArrayAccess
 		 */
 		if (\is_object($elements))
 		{
-			if ($elements instanceof self)
+			if ($elements instanceof JsObject)
 			{
 				$elements = $elements->get();
 			}
@@ -76,18 +79,18 @@ class JsObject extends JsBase implements \ArrayAccess
 	/**
 	 * Bind the elements which are being modified
 	 *
-	 * @param	array|object	$elements		The elements are being modified
-	 * @param	boolean			$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
+	 * @param	array|object|JsObject	$elements		The elements are being modified
+	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
-	 * @return	self
+	 * @return	JsObject
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $makeMutable = true) : self
+	public function bind($elements, $makeMutable = true) : JsObject
 	{
-		if (!isset($elements))
+		if (!$this->check($elements))
 		{
-			throw new \InvalidArgumentException(
-				\sprintf('`bind()` method expects first argument a valid object or array!')
+			throw new \Exception(
+				sprintf('The elements must be an stdClass or JsObject, %s given', gettype($elements))
 			);
 		}
 
@@ -103,7 +106,7 @@ class JsObject extends JsBase implements \ArrayAccess
 		 */
 		if (\is_object($elements))
 		{
-			if ($elements instanceof self)
+			if ($elements instanceof JsObject)
 			{
 				$elements = $elements->get();
 			}
@@ -117,14 +120,50 @@ class JsObject extends JsBase implements \ArrayAccess
 			$elements = (object) $elements;
 		}
 
-		parent::bind($elements, $makeMutable);
-
 		if ($makeMutable)
 		{
+			$this->elements = $elements;
 			$instance = $this;
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Check if the bind value is valid or not.
+	 * If the bind value i.e the elements are invalid then throw errors.
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function check($elements) : bool
+	{
+		return \is_object($elements)
+			|| \is_array($elements)
+			|| $elements instanceof JsObject;
+	}
+
+	/**
+	 * Get elements. This is not directly called with the class
+	 * but can call with any chaining method.
+	 *
+	 * @return	stdClass		The native elements for native operations.
+	 * @since	1.0.0
+	 */
+	public function get() : stdClass
+	{
+		return $this->elements;
+	}
+
+	/**
+	 * Reset the elements to null
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function reset()
+	{
+		$this->elements = new \stdClass;
 	}
 
 	/**

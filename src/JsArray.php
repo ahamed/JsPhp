@@ -7,6 +7,7 @@
  */
 namespace Ahamed\JsPhp;
 
+use Ahamed\JsPhp\Core\Interfaces\JsPhpCoreInterface;
 use Ahamed\JsPhp\Core\JsBase;
 use Ahamed\JsPhp\Traits\Arrays\BasicsTrait;
 use Ahamed\JsPhp\Traits\Arrays\ConditionalTrait;
@@ -19,16 +20,14 @@ use Ahamed\JsPhp\Traits\Arrays\SortingTrait;
  * JsArray class gives the array methods
  *
  */
-class JsArray extends JsBase implements
+class JsArray extends JsBase implements JsPhpCoreInterface,
 	\IteratorAggregate,
 	\ArrayAccess,
 	\Countable,
 	\Serializable,
 	\JsonSerializable
 {
-	/**
-	 * Import Array traits
-	 */
+	/** Import the Array traits. */
 	use BasicsTrait;
 	use ModifierTrait;
 	use SearchingTrait;
@@ -58,11 +57,16 @@ class JsArray extends JsBase implements
 		 * Force user to pass a valid php array as
 		 * the argument of the constructor function.
 		 */
-		if (!\is_array($elements))
+		if (!$this->check($elements))
 		{
 			throw new \InvalidArgumentException(
-				sprintf('You must have to pass a valid array as the argument of JsArray, "%s" given!', ucfirst(gettype($elements)))
+				sprintf('You must have to pass a valid array or JsArray object as the argument of JsArray, "%s" given!', ucfirst(gettype($elements)))
 			);
+		}
+
+		if ($elements instanceof JsArray)
+		{
+			$elements = $elements->get();
 		}
 
 		$this->length = count($elements);
@@ -77,12 +81,22 @@ class JsArray extends JsBase implements
 	 * @param	array|object|string		$elements		The elements are being modified
 	 * @param	boolean					$makeMutable	If true then bind will mutate the array, Otherwise it will create a new array.
 	 *
-	 * @return	self
+	 * @return	JsArray
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $makeMutable = true) : self
+	public function bind($elements, $makeMutable = true) : JsArray
 	{
-		parent::bind($elements, $makeMutable);
+		if (!$this->check($elements))
+		{
+			throw new \InvalidArgumentException(
+				sprintf('The elements must be an array or JsArray, %s given', gettype($elements))
+			);
+		}
+
+		if ($elements instanceof JsArray)
+		{
+			$elements = $elements->get();
+		}
 
 		/**
 		 * If makeMutable is enabled then it update the data of the
@@ -92,7 +106,7 @@ class JsArray extends JsBase implements
 		{
 			// Update the length of the array
 			$this->length = count($elements);
-
+			$this->elements = $elements;
 			$instance = $this;
 		}
 		else
@@ -104,6 +118,42 @@ class JsArray extends JsBase implements
 	}
 
 	/**
+	 * Check if the bind value is valid or not.
+	 * If the bind value i.e the elements are invalid then throw errors.
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function check($elements) : bool
+	{
+		return \is_array($elements)
+			|| $elements instanceof JsArray;
+	}
+
+	/**
+	 * Get elements. This is not directly called with the class
+	 * but can call with any chaining method.
+	 *
+	 * @return	array		The native elements for native operations.
+	 * @since	1.0.0
+	 */
+	public function get()
+	{
+		return $this->elements;
+	}
+
+	/**
+	 * Reset the elements to null
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function reset()
+	{
+		$this->elements = [];
+	}
+
+	/**
 	 * Get the length of the array.
 	 * This is an alias of the `length` property
 	 *
@@ -112,8 +162,6 @@ class JsArray extends JsBase implements
 	 */
 	public function length() : int
 	{
-		$this->check();
-
 		return count($this->get());
 	}
 
@@ -125,7 +173,6 @@ class JsArray extends JsBase implements
 	 */
 	public function keys()
 	{
-		$this->check();
 		$elements = $this->get();
 
 		return $this->bind(array_keys($elements), false);
@@ -139,7 +186,6 @@ class JsArray extends JsBase implements
 	 */
 	public function values()
 	{
-		$this->check();
 		$elements = $this->get();
 
 		return array_values($elements);
@@ -225,7 +271,6 @@ class JsArray extends JsBase implements
 	 */
 	public function getIterator()
 	{
-		$this->check();
 		$elements = $this->get();
 
 		return new \ArrayIterator($elements);

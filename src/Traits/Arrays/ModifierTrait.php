@@ -29,11 +29,9 @@ trait ModifierTrait
 	 */
 	public function fill($value, $start = null, $end = null)
 	{
-		$this->check();
-
 		if (!isset($value))
 		{
-			throw new \InvalidArgumentException(sprintf('Set fill value.'));
+			throw new \InvalidArgumentException(\sprintf('Set fill value.'));
 		}
 
 		$elements = $this->get();
@@ -111,8 +109,6 @@ trait ModifierTrait
 	 */
 	public function reverse()
 	{
-		$this->check();
-
 		$elements = $this->get();
 		$length = $this->length;
 
@@ -167,8 +163,6 @@ trait ModifierTrait
 	 */
 	public function flat(int $depth = 1)
 	{
-		$this->check();
-
 		/**
 		 * Created a stack with the array
 		 */
