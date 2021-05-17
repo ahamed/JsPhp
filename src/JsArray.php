@@ -121,7 +121,9 @@ class JsArray extends JsBase implements JsPhpCoreInterface,
 	 * Check if the bind value is valid or not.
 	 * If the bind value i.e the elements are invalid then throw errors.
 	 *
-	 * @return	void
+	 * @param	mixed	$elements	The elements to check.
+	 *
+	 * @return	bool
 	 * @since	1.0.0
 	 */
 	public function check($elements) : bool

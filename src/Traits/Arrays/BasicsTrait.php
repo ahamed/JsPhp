@@ -199,8 +199,6 @@ trait BasicsTrait
 	 */
 	public function shift()
 	{
-		
-
 		$elements = $this->get();
 		$length = $this->length;
 		$isAssoc = self::isAssociativeArray($elements);
