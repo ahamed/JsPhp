@@ -1,11 +1,24 @@
 <?php
 
-use Ahamed\JsPhp\JsObject;
 use Ahamed\JsPhp\JsArray;
+use Ahamed\JsPhp\JsObject;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ObjectBasicsTest extends TestCase
 {
+    public function objectAssignProvider()
+    {
+        return [
+            [[], [], []],
+            [[], [2, 3, 5], [2, 3, 5]],
+            [[], ['one' => 1, 'two' => 2, 'three' => 3], ['one' => 1, 'two' => 2, 'three' => 3]],
+            [['four' => 4, 'five' => 5], ['one' => 1, 'two' => 2, 'three' => 3], ['four' => 4, 'five' => 5, 'one' => 1, 'two' => 2, 'three' => 3]],
+            [['one' => 4, 'five' => 5], ['one' => 1, 'two' => 2, 'three' => 3], ['one' => 1, 'five' => 5, 'two' => 2, 'three' => 3]],
+            [['one' => 1, 2, 3], [5, 6, 7], ['one' => 1, 5, 6, 7]]
+        ];
+    }
+
     public function objectKeysProvider()
 	{
         $stdObj = new stdClass;
@@ -52,6 +65,27 @@ class ObjectBasicsTest extends TestCase
 			[['one' => 1, 'two' => 2, 'three' => 3], [['one', 1], ['two', 2], ['three', 3]]],
 			[$stdObj, [['name', 'John Doe'], ['email', 'john@example.com'], ['age', 24]]]
 		];
+    }
+
+    /**
+     * @dataProvider    objectAssignProvider()
+     */
+    public function testObjectAssign($target, $source, $result)
+    {
+        $merged = JsObject::assign($target, $source);
+        $this->assertEquals(new JsObject($result), $merged);
+
+        $this->expectException(InvalidArgumentException::class);
+        JsObject::assign([2, 3], 'string');
+        
+        $this->expectException(InvalidArgumentException::class);
+        JsObject::assign('string', [2, 3]);
+
+        $merged = JsObject::assign([1, 2], [3, 4, 5], [5, 4]);
+        $this->assertEquals(new JsObject([5, 4, 5]), $merged);
+
+        $merged = JsObject::assign(['name' => 'orange'], ['name' => 'apple', 'color' => 'darkred'], ['name' => 'lemon']);
+        $this->assertEquals(new JsObject(['name' => 'lemon', 'color' => 'darkred']), $merged);
     }
     
     /**

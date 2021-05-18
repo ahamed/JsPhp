@@ -7,20 +7,18 @@
  */
 namespace Ahamed\JsPhp;
 
-use Ahamed\JsPhp\Core\Interfaces\JsPhpCoreInterface;
+use Ahamed\JsPhp\Core\Interfaces\CoreInterface;
 use Ahamed\JsPhp\Core\JsBase;
 use Ahamed\JsPhp\JsArray;
-use Ahamed\JsPhp\Traits\Objects\FactoryTrait;
-use Exception;
-use stdClass;
+use Ahamed\JsPhp\Traits\Objects\StaticTrait;
 
 /**
  * JsObject the class implementation for various object methods.
  *
  */
-class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
+class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorAggregate
 {
-	use FactoryTrait;
+	use StaticTrait;
 
 	/**
 	 * Constructor function for the JsObject class
@@ -149,10 +147,10 @@ class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
 	 * Get elements. This is not directly called with the class
 	 * but can call with any chaining method.
 	 *
-	 * @return	stdClass		The native elements for native operations.
+	 * @return	\stdClass		The native elements for native operations.
 	 * @since	1.0.0
 	 */
-	public function get() : stdClass
+	public function get() : \stdClass
 	{
 		return $this->elements;
 	}
@@ -215,6 +213,22 @@ class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
 	}
 
 	/**
+	 * @see 	\IteratorAggregate::getIterator()
+	 *
+	 * Make the JsArray instance iterable.
+	 * Now one can iterate the JsArray instance using foreach
+	 *
+	 * @return	\Iterator
+	 * @since	1.0.0
+	 */
+	public function getIterator()
+	{
+		$elements = $this->get();
+
+		return new \ArrayIterator($elements);
+	}
+
+	/**
 	 * @see 	\ArrayAccess::offsetExists($offset)
 	 *
 	 * This will check if a specific key is exists in the elements array.
@@ -255,10 +269,8 @@ class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
 				\sprintf('You must have to provide the key/property of the object to set the value.')
 			);
 		}
-		else
-		{
-			$elements->$key = $value;
-		}
+
+		$elements->$key = $value;
 
 		// Bind and mutate the elements array by new array after setting the offset
 		$this->bind($elements);
@@ -422,7 +434,7 @@ class JsObject extends JsBase implements JsPhpCoreInterface, \ArrayAccess
 	public function __debugInfo() : array
 	{
 		return [
-			$this->get()
+			'data' => $this->get()
 		];
 	}
 }

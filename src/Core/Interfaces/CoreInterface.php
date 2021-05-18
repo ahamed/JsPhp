@@ -8,11 +8,11 @@
 namespace Ahamed\JsPhp\Core\Interfaces;
 
 /**
- * JavaScript into PHP core Interface
+ * The core Interface
  *
  * @since   1.0.0
  */
-interface JsPhpCoreInterface
+interface CoreInterface
 {
 	/**
 	 * The bind function to store the element

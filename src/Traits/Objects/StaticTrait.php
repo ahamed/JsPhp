@@ -15,8 +15,40 @@ use Ahamed\JsPhp\JsObject;
  *
  * @since   1.0.0
  */
-trait FactoryTrait
+trait StaticTrait
 {
+	/**
+	 * Assign a source object with a target object.
+	 *
+	 * @param	mixed	$target		The target object.
+	 * @param	mixed	$sources		The source object.
+	 *
+	 * @return	JsObject			The merged object.
+	 * @since	1.0.0
+	 */
+	public static function assign($target, ...$sources) : JsObject
+	{
+		$target = !($target instanceof JsObject) ? new JsObject($target) : $target;
+
+		if (!\is_null($sources))
+		{
+			foreach ($sources as $source)
+			{
+				$source = !($source instanceof JsObject) ? new JsObject($source) : $source;
+
+				if (JsObject::keys($source)->length() > 0)
+				{
+					foreach ($source as $key => $value)
+					{	
+						$target[$key] = $value;
+					}
+				}
+			}
+		}
+
+		return $target;
+	}
+
 	/**
 	 * Static method for getting the keys of an object.
 	 *

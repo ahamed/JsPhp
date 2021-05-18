@@ -13,12 +13,15 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ahamed\JsPhp\JsArray;
+use Ahamed\JsPhp\JsObject;
 
-$array = new JsArray([2, 3, 4, 6, 1]);
-$array[0] = 300;
-print_r($array[0]);
+$a = new JsObject(['name' => 'john', 'age' => 34]);
+$b = new JsObject(['gender' => 'male', 'name' => 'alice', 6, 7]);
 
-
-
+$c = JsObject::assign([2, 3], [4, 5]);
+echo '<xmp>';
+print_r($c);
+echo '</xmp>';
+die();
 
 

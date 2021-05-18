@@ -7,7 +7,7 @@
  */
 namespace Ahamed\JsPhp;
 
-use Ahamed\JsPhp\Core\Interfaces\JsPhpCoreInterface;
+use Ahamed\JsPhp\Core\Interfaces\CoreInterface;
 use Ahamed\JsPhp\Core\JsBase;
 use Ahamed\JsPhp\Traits\Arrays\BasicsTrait;
 use Ahamed\JsPhp\Traits\Arrays\ConditionalTrait;
@@ -20,7 +20,7 @@ use Ahamed\JsPhp\Traits\Arrays\SortingTrait;
  * JsArray class gives the array methods
  *
  */
-class JsArray extends JsBase implements JsPhpCoreInterface,
+class JsArray extends JsBase implements CoreInterface,
 	\IteratorAggregate,
 	\ArrayAccess,
 	\Countable,
