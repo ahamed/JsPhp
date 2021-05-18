@@ -20,8 +20,8 @@ trait StaticTrait
 	/**
 	 * Assign a source object with a target object.
 	 *
-	 * @param	mixed	$target		The target object.
-	 * @param	mixed	$sources		The source object.
+	 * @param	mixed	$target			The target object.
+	 * @param	mixed	...$sources		The source object.
 	 *
 	 * @return	JsObject			The merged object.
 	 * @since	1.0.0
@@ -39,7 +39,7 @@ trait StaticTrait
 				if (JsObject::keys($source)->length() > 0)
 				{
 					foreach ($source as $key => $value)
-					{	
+					{
 						$target[$key] = $value;
 					}
 				}

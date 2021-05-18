@@ -86,6 +86,15 @@ class ObjectBasicsTest extends TestCase
 
         $merged = JsObject::assign(['name' => 'orange'], ['name' => 'apple', 'color' => 'darkred'], ['name' => 'lemon']);
         $this->assertEquals(new JsObject(['name' => 'lemon', 'color' => 'darkred']), $merged);
+
+        $object = new \stdClass;
+        $object->name = new \stdClass;
+        $object->name->first = 'John';
+        $object->name->last = 'Doe';
+        $object->age = 24;
+
+        $merged = JsObject::assign($object, ['name' => 'Alice']);
+        $this->assertEquals(new JsObject(['name' => 'Alice', 'age' => 24]), $merged);
     }
     
     /**
