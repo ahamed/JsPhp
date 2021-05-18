@@ -15,12 +15,23 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\JsObject;
 
-$a = new JsObject(['name' => 'john', 'age' => 34]);
-$b = new JsObject(['gender' => 'male', 'name' => 'alice', 6, 7]);
+$obj = [
+	'name' => 'Jon Doe',
+	'age' => 24,
+	'sex' => 'male',
+	'email' => 'john@doe.com',
+	'contact' => [
+		'mobile' => '01xxxxxx',
+		'phone' => '09xxxxx'
+	],
+	'password' => 'secret'
+];
+$object = new JsObject($obj);
 
-$c = JsObject::assign([2, 3], [4, 5]);
+$v = JsObject::fromEntries(JsObject::entries($object)->filter(fn($item) => $item[0] !== 'password'));
+
 echo '<xmp>';
-print_r($c);
+print_r($v);
 echo '</xmp>';
 die();
 

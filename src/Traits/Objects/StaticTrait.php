@@ -50,6 +50,45 @@ trait StaticTrait
 	}
 
 	/**
+	 * Create a JsObject from entries. entries are map like array of arrays
+	 * which contains first value as key and the second value as value.
+	 *
+	 * @param	array|JsArray	$entries	The entries array or JsArray instance.
+	 *
+	 * @return	JsObject		The generated Object from entries.
+	 * @throws	InvalidArgumentException
+	 * @since	1.0.0
+	 */
+	public static function fromEntries($entries) : JsObject
+	{
+		if (!(\is_array($entries) || $entries instanceof JsArray))
+		{
+			throw new \InvalidArgumentException(
+				\sprintf('Invalid entries provided!')
+			);
+		}
+
+		if (empty($entries))
+		{
+			return new JsObject();
+		}
+
+		$object = new JsObject();
+
+		foreach ($entries as $item)
+		{
+			list ($key, $value) = $item;
+
+			if (isset($key, $value))
+			{
+				$object->$key = $value;
+			}
+		}
+
+		return $object;
+	}
+
+	/**
 	 * Static method for getting the keys of an object.
 	 *
 	 * @param	mixed	$object		The object elements for which the keys return.

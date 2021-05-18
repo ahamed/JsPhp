@@ -1,9 +1,6 @@
 <?php
 
 use Ahamed\JsPhp\JsArray;
-use ArgumentCountError;
-use OutOfRangeException;
-use PharIo\Manifest\InvalidUrlException;
 use PHPUnit\Framework\TestCase;
 
 class ArrayBasicsTest extends TestCase

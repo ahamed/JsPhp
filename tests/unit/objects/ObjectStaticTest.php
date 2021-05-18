@@ -2,7 +2,6 @@
 
 use Ahamed\JsPhp\JsArray;
 use Ahamed\JsPhp\JsObject;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ObjectBasicsTest extends TestCase
@@ -16,6 +15,15 @@ class ObjectBasicsTest extends TestCase
             [['four' => 4, 'five' => 5], ['one' => 1, 'two' => 2, 'three' => 3], ['four' => 4, 'five' => 5, 'one' => 1, 'two' => 2, 'three' => 3]],
             [['one' => 4, 'five' => 5], ['one' => 1, 'two' => 2, 'three' => 3], ['one' => 1, 'five' => 5, 'two' => 2, 'three' => 3]],
             [['one' => 1, 2, 3], [5, 6, 7], ['one' => 1, 5, 6, 7]]
+        ];
+    }
+
+    public function objectFromEntriesProvider()
+    {
+        return [
+            [[[1, 2], [3, 4]], new JsObject([1 => 2, 3 => 4])],
+            [[['name', 'john doe'], ['age', 24]], new JsObject(['name' => 'john doe', 'age' => 24])],
+            [[], new JsObject()]            
         ];
     }
 
@@ -122,5 +130,30 @@ class ObjectBasicsTest extends TestCase
     {
         $entries = JsObject::entries($data);
         $this->assertEquals($entries, (new JsArray($result)));
+    }
+
+    /**
+     * @dataProvider objectFromEntriesProvider()
+     */
+    public function testObjectFromEntries($data, $result)
+    {
+        $object = JsObject::fromEntries($data);
+        $this->assertEquals($result, $object);
+    }
+
+    public function testInvalidFromEntries()
+    {
+        $obj = new stdClass;
+        $obj->name = 'john';
+        $obj->age = 24;
+
+        $arr = [$obj, 'string', 20, null, false];
+
+        foreach ($arr as $v)
+        {
+            $this->expectException(InvalidArgumentException::class);
+            $this->expectExceptionMessage('Invalid entries provided!');
+            JsObject::fromEntries($v);
+        }
     }
 }
