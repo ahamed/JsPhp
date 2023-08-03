@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @package Jhp
  * @author Sajeeb Ahamed <sajeeb07ahamed@gmail.com>
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
+
 namespace Ahamed\JsPhp;
 
 use Ahamed\JsPhp\Core\Interfaces\CoreInterface;
@@ -83,7 +85,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	JsObject
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $makeMutable = true) : JsObject
+	public function bind($elements, $makeMutable = true): JsObject
 	{
 		if (!$this->check($elements))
 		{
@@ -136,7 +138,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	bool
 	 * @since	1.0.0
 	 */
-	public function check($elements) : bool
+	public function check($elements): bool
 	{
 		return \is_object($elements)
 			|| \is_array($elements)
@@ -150,7 +152,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	\stdClass		The native elements for native operations.
 	 * @since	1.0.0
 	 */
-	public function get() : \stdClass
+	public function get(): \stdClass
 	{
 		return $this->elements;
 	}
@@ -175,7 +177,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	\stdClass	A \stdClass with public properties
 	 * @since	1.0.0
 	 */
-	private function parseObject(object $elements) : \stdClass
+	private function parseObject(object $elements): \stdClass
 	{
 		/**
 		 * Create a \ReflectionObject instance with the $elements object
@@ -197,13 +199,15 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 		{
 			$properties = new JsArray($properties);
 			$publicProperties = $properties->map(
-				function ($prop) {
+				function ($prop)
+				{
 					return $prop->name;
 				}
 			);
 
 			$publicProperties->forEach(
-				function ($prop) use ($elements, $parsedObject) {
+				function ($prop) use ($elements, $parsedObject)
+				{
 					$parsedObject->$prop = $elements->$prop;
 				}
 			);
@@ -218,7 +222,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * Make the JsArray instance iterable.
 	 * Now one can iterate the JsArray instance using foreach
 	 *
-	 * @return	\Iterator
+	 * @return	\ArrayIterator
 	 * @since	1.0.0
 	 */
 	public function getIterator()
@@ -238,11 +242,11 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	boolean		True if key exists on the elements array, false otherwise.
 	 * @since	1.0.0
 	 */
-	public function offsetExists($key) : bool
+	public function offsetExists($key): bool
 	{
-		$elements = $this->get();
+		$elements = (array) $this->get();
 
-		return isset($elements->$key);
+		return array_key_exists($key, $elements);
 	}
 
 	/**
@@ -256,7 +260,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function offsetSet($key, $value) : void
+	public function offsetSet($key, $value): void
 	{
 		$elements = $this->get();
 
@@ -308,7 +312,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function offsetUnset($key) : void
+	public function offsetUnset($key): void
 	{
 		$elements = $this->get();
 
@@ -350,7 +354,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function __set($name, $value) : void
+	public function __set($name, $value): void
 	{
 		$elements = $this->get();
 		$elements->$name = $value;
@@ -397,7 +401,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	string	Object echo message
 	 * @since	1.0.0
 	 */
-	public function __toString() : string
+	public function __toString(): string
 	{
 		return sprintf('Call `get()` if a method is returning a `JsObject` instance for getting the native stdClass object.');
 	}
@@ -408,7 +412,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return	string	The return string of __toString()
 	 * @since	1.0.0
 	 */
-	public function toString() : string
+	public function toString(): string
 	{
 		return (string) $this;
 	}
@@ -431,7 +435,7 @@ class JsObject extends JsBase implements CoreInterface, \ArrayAccess, \IteratorA
 	 * @return 	array	Object echo message
 	 * @since	1.0.0
 	 */
-	public function __debugInfo() : array
+	public function __debugInfo(): array
 	{
 		return [
 			'data' => $this->get()

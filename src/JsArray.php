@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @package Jhp
  * @author Sajeeb Ahamed <sajeeb07ahamed@gmail.com>
  * @copyright Copyright (c) 2020 Sajeeb Ahamed
  * @license MIT https://opensource.org/licenses/MIT
  */
+
 namespace Ahamed\JsPhp;
 
 use Ahamed\JsPhp\Core\Interfaces\CoreInterface;
@@ -15,16 +17,18 @@ use Ahamed\JsPhp\Traits\Arrays\IteratorTrait;
 use Ahamed\JsPhp\Traits\Arrays\ModifierTrait;
 use Ahamed\JsPhp\Traits\Arrays\SearchingTrait;
 use Ahamed\JsPhp\Traits\Arrays\SortingTrait;
+use ArrayAccess;
+use Traversable;
 
 /**
  * JsArray class gives the array methods
  *
  */
-class JsArray extends JsBase implements CoreInterface,
+class JsArray extends JsBase implements
+	CoreInterface,
 	\IteratorAggregate,
 	\ArrayAccess,
 	\Countable,
-	\Serializable,
 	\JsonSerializable
 {
 	/** Import the Array traits. */
@@ -84,7 +88,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	JsArray
 	 * @since	1.0.0
 	 */
-	public function bind($elements, $makeMutable = true) : JsArray
+	public function bind($elements, $makeMutable = true): JsArray
 	{
 		if (!$this->check($elements))
 		{
@@ -111,7 +115,7 @@ class JsArray extends JsBase implements CoreInterface,
 		}
 		else
 		{
-			$instance = new $this($elements);
+			$instance = new static($elements);
 		}
 
 		return $instance;
@@ -126,7 +130,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	bool
 	 * @since	1.0.0
 	 */
-	public function check($elements) : bool
+	public function check($elements): bool
 	{
 		return \is_array($elements)
 			|| $elements instanceof JsArray;
@@ -162,7 +166,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	integer		The array length
 	 * @since	1.0.0
 	 */
-	public function length() : int
+	public function length(): int
 	{
 		return count($this->get());
 	}
@@ -201,7 +205,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	boolean			True if is an associative array, False otherwise.
 	 * @since	1.0.0
 	 */
-	public static function isAssociativeArray($array) : bool
+	public static function isAssociativeArray($array): bool
 	{
 		/**
 		 * If the array is an instance of this class then retrieve the original array
@@ -249,7 +253,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	boolean			True if it's an array, false otherwise.
 	 * @since	1.0.0
 	 */
-	public static function isArray($array) : bool
+	public static function isArray($array): bool
 	{
 		/**
 		 * If the array is an instance of this class then retrieve the original array
@@ -269,9 +273,9 @@ class JsArray extends JsBase implements CoreInterface,
 	 * Now one can iterate the JsArray instance using foreach
 	 *
 	 * @return	\Iterator
-	 * @since	1.0.0
+	 * @since		1.0.0
 	 */
-	public function getIterator()
+	public function getIterator(): Traversable
 	{
 		$elements = $this->get();
 
@@ -288,7 +292,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	boolean		True if key exists on the elements array, false otherwise.
 	 * @since	1.0.0
 	 */
-	public function offsetExists($key) : bool
+	public function offsetExists($key): bool
 	{
 		$elements = $this->get();
 
@@ -306,7 +310,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function offsetSet($key, $value) : void
+	public function offsetSet($key, $value): void
 	{
 		$elements = $this->get();
 
@@ -336,6 +340,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	mixed			If key found then return the value, otherwise returns null
 	 * @since	1.0.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key)
 	{
 		$elements = $this->get();
@@ -360,7 +365,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function offsetUnset($key) : void
+	public function offsetUnset($key): void
 	{
 		$elements = $this->get();
 
@@ -385,7 +390,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	integer		The length of the array
 	 * @since	1.0.0
 	 */
-	public function count() : int
+	public function count(): int
 	{
 		return $this->length;
 	}
@@ -395,14 +400,14 @@ class JsArray extends JsBase implements CoreInterface,
 	 *
 	 * Serialize the object.
 	 *
-	 * @return	string		The serialized string.
+	 * @return	array		The serialized string.
 	 * @since	1.0.0
 	 */
-	public function serialize() : string
+	public function __serialize(): array
 	{
 		$elements = $this->get();
 
-		return serialize($elements);
+		return $elements;
 	}
 
 	/**
@@ -415,7 +420,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function unserialize($serialized) : void
+	public function __unserialize($serialized): void
 	{
 		if (!empty($serialized))
 		{
@@ -446,7 +451,7 @@ class JsArray extends JsBase implements CoreInterface,
 	 * @return	array	The elements array
 	 * @since	1.0.0
 	 */
-	public function jsonSerialize()
+	public function jsonSerialize(): mixed
 	{
 		return $this->get();
 	}
@@ -477,7 +482,7 @@ class JsArray extends JsBase implements CoreInterface,
 		{
 			case 'length':
 				return $this->length;
-			break;
+				break;
 			default:
 				throw new \Exception('You are not allowed to get the property');
 		}
@@ -519,7 +524,7 @@ class JsArray extends JsBase implements CoreInterface,
 					$this->bind($newArray->get());
 				}
 
-			break;
+				break;
 
 			default:
 				throw new \InvalidArgumentException(sprintf('This property is not accepted to set'));
