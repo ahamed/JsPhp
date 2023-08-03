@@ -1,30 +1,30 @@
 {
-	"name": "ahamed/jsphp",
-	"description": "A php library for implementing Array, Object, String methods in JavaScript way.",
-	"type": "library",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Sajeeb Ahamed",
-			"email": "sajeeb07ahamed@gmail.com"
-		}
-	],
-	"scripts": {
-		"test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
-		"phpcs": "./vendor/bin/phpcs --extensions=php -p ."
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"require": {
-		"php": "^7.0|^8.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"Ahamed\\JsPhp\\": "src/"
-		}
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^9.2",
-		"squizlabs/php_codesniffer": "*"
-	}
+    "name": "ahamed/jsphp",
+    "description": "A php library for implementing Array, Object, String methods in JavaScript way.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sajeeb Ahamed",
+            "email": "sajeeb07ahamed@gmail.com"
+        }
+    ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
+        "phpcs": "./vendor/bin/phpcs --extensions=php -p ."
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ahamed\\JsPhp\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2",
+        "squizlabs/php_codesniffer": "*"
+    }
 }
